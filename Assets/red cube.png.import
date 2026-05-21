@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://daqsd41ipt77n"
-path="res://.godot/imported/red cube.png-70132b2d078daf2964e6a5af17e7e016.ctex"
+path="res://.godot/imported/red cube.png-7537961e442179cac8cbd52689e0a35e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://red cube.png"
-dest_files=["res://.godot/imported/red cube.png-70132b2d078daf2964e6a5af17e7e016.ctex"]
+source_file="res://Assets/red cube.png"
+dest_files=["res://.godot/imported/red cube.png-7537961e442179cac8cbd52689e0a35e.ctex"]
 
 [params]
 

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c6qn3ovk2nvmt"]
+
+[ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/red cube.png" id="2_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
+[ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/tile_map_layer.gd" id="3_kry3j"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
+texture = ExtResource("2_jjvhh")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ig7tw"]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetAtlasSource_h2yge")
+
+[node name="Main" type="Node2D" unique_id=1049118499 node_paths=PackedStringArray("_grid", "_place_building_button")]
+script = ExtResource("1_8gbba")
+_grid = NodePath("TileMapLayer")
+_building_scene = ExtResource("2_kry3j")
+_place_building_button = NodePath("Button")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1977800345]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_ig7tw")
+script = ExtResource("3_kry3j")
+
+[node name="Button" type="Button" parent="." unique_id=1338902737]
+offset_top = 591.0
+offset_right = 102.0
+offset_bottom = 622.0
+text = "Place House"
