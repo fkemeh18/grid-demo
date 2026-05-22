@@ -1,24 +1,41 @@
 class_name TileGrid
 extends TileMapLayer
 
-var temp_tile_pos = Vector2i(0, 0)
+var _visible_tile = false
+var _temp_tile_pos = Vector2i(0, 0)
 
+# changes mouse_pos to Vector2i
 func process_mouse_pos(mouse_pos: Vector2) -> Vector2i:
 	var grid_pos = local_to_map(to_local(mouse_pos))
 	return grid_pos
-	
+
+# handles tile grid rect
 func set_tile(pos: Vector2i) -> void:
 	if tile_checker(pos):
-		#print("I'm here!")
 		set_cell(pos, 1, Vector2i(0, 0))
-	if pos != temp_tile_pos:
-		set_cell(temp_tile_pos, -1, Vector2i(-1, -1))
+	if pos != _temp_tile_pos:
+		erase_cell(_temp_tile_pos)
 		
-	temp_tile_pos = pos
-		
+	_temp_tile_pos = pos
+
+# Checks conditions for placing tile
 func tile_checker(mouse_pos: Vector2i) -> bool:
 	if (get_cell_source_id(mouse_pos) == -1) && (
-		get_cell_atlas_coords(mouse_pos) == Vector2i(-1, -1)):
+		get_cell_atlas_coords(mouse_pos) == Vector2i(-1, -1)) && (
+			_visible_tile):
 		return true
 	else:
 		return false
+
+# change visibility
+func _toggle_visibility(tile: Vector2i) -> void:
+	match _visible_tile:
+		true:
+			_visible_tile = false
+			_clear_tile(tile)
+		false:
+			_visible_tile = true
+
+# clears tile
+func _clear_tile(tile: Vector2i) -> void:
+	erase_cell(tile)
