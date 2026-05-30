@@ -1,8 +1,9 @@
-class_name TileGrid
+class_name MainTML
 extends TileMapLayer
 
 var _visible_tile = false
-var _temp_tile_pos = Vector2i(0, 0)
+var _temp_tile_pos: Vector2i
+var _occupied_tile_dict: Dictionary[Vector2i, bool]
 
 # changes mouse_pos to Vector2i
 func process_mouse_pos(mouse_pos: Vector2) -> Vector2i:
@@ -29,6 +30,8 @@ func tile_checker(mouse_pos: Vector2i) -> bool:
 
 # change visibility
 func _toggle_visibility(tile: Vector2i) -> void:
+	
+	
 	match _visible_tile:
 		true:
 			_visible_tile = false
@@ -39,3 +42,6 @@ func _toggle_visibility(tile: Vector2i) -> void:
 # clears tile
 func _clear_tile(tile: Vector2i) -> void:
 	erase_cell(tile)
+
+func _register_built_tile(tile_pos: Vector2i) -> void:
+	_occupied_tile_dict.set(tile_pos, true)

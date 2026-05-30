@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/red cube.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/tile_map_layer.gd" id="3_kry3j"]
+[ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/highlight_tile_map_l.gd" id="4_21xkr"]
+[ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/highlight_tileset.tres" id="5_kry3j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("2_jjvhh")
@@ -14,13 +16,19 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node2D" unique_id=1049118499 node_paths=PackedStringArray("_tile_grid", "_place_building_button")]
+[node name="Main" type="Node2D" unique_id=1049118499 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_place_building_button")]
 script = ExtResource("1_8gbba")
-_tile_grid = NodePath("TileMapLayer")
+_main_tml_ = NodePath("MainTileMapLayer")
+_highlight_tml = NodePath("HighlightTileMapL")
 _building_scene = ExtResource("2_kry3j")
 _place_building_button = NodePath("Button")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1977800345]
+[node name="HighlightTileMapL" type="TileMapLayer" parent="." unique_id=32821524]
+modulate = Color(1, 1, 1, 0.49803922)
+tile_set = ExtResource("5_kry3j")
+script = ExtResource("4_21xkr")
+
+[node name="MainTileMapLayer" type="TileMapLayer" parent="." unique_id=1977800345]
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_ig7tw")
 script = ExtResource("3_kry3j")

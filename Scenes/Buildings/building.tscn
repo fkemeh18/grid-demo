@@ -7,5 +7,6 @@ size = Vector2(64, 64)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=774024146]
 modulate = Color(0, 0.48813415, 0.8261662, 1)
+z_index = -1
 texture = SubResource("PlaceholderTexture2D_lcji4")
 centered = false
