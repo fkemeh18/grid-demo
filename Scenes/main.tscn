@@ -16,7 +16,7 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node2D" unique_id=1049118499 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_place_building_button")]
+[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_place_building_button")]
 script = ExtResource("1_8gbba")
 _main_tml_ = NodePath("MainTileMapLayer")
 _highlight_tml = NodePath("HighlightTileMapL")
