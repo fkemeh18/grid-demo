@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://c6qn3ovk2nvmt"]
+[gd_scene format=4 uid="uid://c6qn3ovk2nvmt"]
 
-[ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
-[ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/red cube.png" id="2_jjvhh"]
+[ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/TileMapLayers/main.gd" id="1_8gbba"]
+[ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
-[ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/tile_map_layer.gd" id="3_kry3j"]
-[ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/highlight_tile_map_l.gd" id="4_21xkr"]
+[ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/terrain_tileset.tres" id="3_6bp64"]
+[ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/tile_map_layer.gd" id="3_kry3j"]
+[ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/TileMapLayers/highlight_tile_map_l.gd" id="4_21xkr"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/highlight_tileset.tres" id="5_kry3j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
@@ -18,18 +19,24 @@ sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
 [node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_place_building_button")]
 script = ExtResource("1_8gbba")
-_main_tml_ = NodePath("MainTileMapLayer")
-_highlight_tml = NodePath("HighlightTileMapL")
+_main_tml_ = NodePath("TMLs/MainTileMapLayer")
+_highlight_tml = NodePath("TMLs/HighlightTileMapL")
 _building_scene = ExtResource("2_kry3j")
 _place_building_button = NodePath("Button")
 
-[node name="HighlightTileMapL" type="TileMapLayer" parent="." unique_id=32821524]
+[node name="TMLs" type="Node" parent="." unique_id=71661811]
+
+[node name="TerrainLayer" type="TileMapLayer" parent="TMLs" unique_id=1353236464]
+tile_map_data = PackedByteArray("AAAHAAQAAAAGAAEAAAAGAAQAAAAGAAEAAAAGAAUAAAAGAAEAAAAHAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAIAAQAAAAGAAEAAAABAAQAAAAGAAAAAAAAAAQAAAAFAAAAAAAAAAUAAAAFAAIAAAABAAUAAAAGAAIAAAACAAUAAAAGAAEAAAADAAUAAAAGAAEAAAADAAYAAAAGAAEAAAADAAQAAAAGAAAAAAACAAQAAAAGAAAAAAAEAAQAAAAGAAAAAAAEAAUAAAAGAAEAAAAFAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAEAAYAAAAGAAEAAAAEAAcAAAAGAAEAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAHAAgAAAAGAAEAAAAIAAgAAAAGAAEAAAAJAAgAAAAGAAEAAAAKAAgAAAAGAAIAAAAKAAcAAAAGAAEAAAAJAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAAHAAYAAAAGAAEAAAAIAAYAAAAGAAEAAAAJAAYAAAAGAAEAAAAKAAYAAAAGAAEAAAAKAAUAAAAGAAEAAAAKAAQAAAAGAAEAAAALAAQAAAAGAAEAAAALAAMAAAAGAAEAAAAJAAUAAAAGAAEAAAAJAAQAAAAGAAEAAAAGAAYAAAAGAAEAAAAFAAQAAAAGAAEAAAAFAAMAAAAFAAAAAAAGAAMAAAAGAAAAAAAHAAMAAAAGAAAAAAAIAAMAAAAGAAAAAAAKAAMAAAAGAAEAAAAMAAQAAAAGAAEAAAAMAAUAAAAGAAEAAAALAAUAAAAGAAEAAAANAAUAAAAGAAEAAAANAAQAAAAGAAEAAAANAAMAAAAGAAEAAAAOAAMAAAAGAAEAAAAOAAIAAAAGAAAAAAANAAIAAAAGAAAAAAAMAAMAAAAGAAEAAAAMAAIAAAAGAAAAAAALAAIAAAAGAAAAAAAKAAIAAAAGAAAAAAAJAAIAAAAFAAAAAAAJAAMAAAAGAAEAAAALAAcAAAAGAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAANAAYAAAAGAAEAAAAOAAUAAAAGAAEAAAAOAAQAAAAGAAEAAAAPAAQAAAAGAAEAAAAPAAMAAAAGAAEAAAAQAAMAAAAGAAEAAAAPAAIAAAAGAAAAAAAQAAIAAAAGAAAAAAARAAIAAAAGAAAAAAACAAYAAAAFAAEAAAACAAcAAAAFAAIAAAADAAcAAAAGAAEAAAADAAgAAAAFAAIAAAAEAAgAAAAGAAIAAAAFAAgAAAAGAAIAAAAGAAgAAAAGAAEAAAAIAAkAAAAGAAIAAAAJAAkAAAAHAAIAAAALAAgAAAAGAAIAAAAMAAcAAAAGAAEAAAAMAAgAAAAHAAIAAAANAAcAAAAGAAIAAAAOAAcAAAAHAAIAAAAOAAYAAAAGAAEAAAAPAAYAAAAHAAIAAAAPAAUAAAAGAAEAAAAQAAUAAAAHAAIAAAAQAAQAAAAGAAEAAAARAAQAAAAHAAIAAAARAAMAAAAGAAEAAAASAAMAAAAHAAIAAAASAAIAAAAHAAAAAAAHAAkAAAAGAAIAAAAGAAkAAAAFAAIAAAA=")
+tile_set = ExtResource("3_6bp64")
+
+[node name="HighlightTileMapL" type="TileMapLayer" parent="TMLs" unique_id=32821524]
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("5_kry3j")
 script = ExtResource("4_21xkr")
 
-[node name="MainTileMapLayer" type="TileMapLayer" parent="." unique_id=1977800345]
-tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+[node name="MainTileMapLayer" type="TileMapLayer" parent="TMLs" unique_id=1977800345]
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_ig7tw")
 script = ExtResource("3_kry3j")
 
