@@ -30,8 +30,6 @@ func tile_checker(mouse_pos: Vector2i) -> bool:
 
 # change visibility
 func _toggle_visibility(tile: Vector2i) -> void:
-	
-	
 	match _visible_tile:
 		true:
 			_visible_tile = false

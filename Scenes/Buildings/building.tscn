@@ -5,7 +5,6 @@
 [node name="Building" type="Node2D" unique_id=757697784]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=774024146]
-z_index = -1
 texture = ExtResource("1_3x4vu")
 centered = false
 offset = Vector2(-32, -164)

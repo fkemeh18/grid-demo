@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/terrain_tileset.tres" id="3_6bp64"]
-[ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/tile_map_layer.gd" id="3_kry3j"]
+[ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/base_tile_map_layer.gd" id="3_kry3j"]
 [ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/TileMapLayers/highlight_tile_map_l.gd" id="4_21xkr"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/highlight_tileset.tres" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://dy2cptdx8fjs0" path="res://Scenes/Mgmt/grid_manager.tscn" id="8_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://bcuopf3tu5kdd" path="res://Scenes/Mgmt/button_manager.tscn" id="9_hptm8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("2_jjvhh")
@@ -17,16 +19,25 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_place_building_button")]
+[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_grid_manager", "_button_manager")]
 script = ExtResource("1_8gbba")
-_main_tml_ = NodePath("TMLs/MainTileMapLayer")
-_highlight_tml = NodePath("TMLs/HighlightTileMapL")
 _building_scene = ExtResource("2_kry3j")
-_place_building_button = NodePath("Button")
+_grid_manager = NodePath("Management/GridManager")
+_button_manager = NodePath("Management/ButtonManager")
+
+[node name="Management" type="Node" parent="." unique_id=300734742]
+
+[node name="GridManager" parent="Management" unique_id=795174114 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_main_terrain_tml") instance=ExtResource("8_ynf5e")]
+_main_tml_ = NodePath("../../TMLs/MainTileMapLayer")
+_highlight_tml = NodePath("../../TMLs/HighlightTileMapL")
+_main_terrain_tml = NodePath("../../TMLs/BaseTerrainLayer")
+
+[node name="ButtonManager" parent="Management" unique_id=838342003 node_paths=PackedStringArray("_place_building_button") instance=ExtResource("9_hptm8")]
+_place_building_button = NodePath("../../Button")
 
 [node name="TMLs" type="Node" parent="." unique_id=71661811]
 
-[node name="TerrainLayer" type="TileMapLayer" parent="TMLs" unique_id=1353236464]
+[node name="BaseTerrainLayer" type="TileMapLayer" parent="TMLs" unique_id=1353236464]
 tile_map_data = PackedByteArray("AAAHAAQAAAAGAAEAAAAGAAQAAAAGAAEAAAAGAAUAAAAGAAEAAAAHAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAIAAQAAAAGAAEAAAABAAQAAAAGAAAAAAAAAAQAAAAFAAAAAAAAAAUAAAAFAAIAAAABAAUAAAAGAAIAAAACAAUAAAAGAAEAAAADAAUAAAAGAAEAAAADAAYAAAAGAAEAAAADAAQAAAAGAAAAAAACAAQAAAAGAAAAAAAEAAQAAAAGAAAAAAAEAAUAAAAGAAEAAAAFAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAEAAYAAAAGAAEAAAAEAAcAAAAGAAEAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAHAAgAAAAGAAEAAAAIAAgAAAAGAAEAAAAJAAgAAAAGAAEAAAAKAAgAAAAGAAIAAAAKAAcAAAAGAAEAAAAJAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAAHAAYAAAAGAAEAAAAIAAYAAAAGAAEAAAAJAAYAAAAGAAEAAAAKAAYAAAAGAAEAAAAKAAUAAAAGAAEAAAAKAAQAAAAGAAEAAAALAAQAAAAGAAEAAAALAAMAAAAGAAEAAAAJAAUAAAAGAAEAAAAJAAQAAAAGAAEAAAAGAAYAAAAGAAEAAAAFAAQAAAAGAAEAAAAFAAMAAAAFAAAAAAAGAAMAAAAGAAAAAAAHAAMAAAAGAAAAAAAIAAMAAAAGAAAAAAAKAAMAAAAGAAEAAAAMAAQAAAAGAAEAAAAMAAUAAAAGAAEAAAALAAUAAAAGAAEAAAANAAUAAAAGAAEAAAANAAQAAAAGAAEAAAANAAMAAAAGAAEAAAAOAAMAAAAGAAEAAAAOAAIAAAAGAAAAAAANAAIAAAAGAAAAAAAMAAMAAAAGAAEAAAAMAAIAAAAGAAAAAAALAAIAAAAGAAAAAAAKAAIAAAAGAAAAAAAJAAIAAAAFAAAAAAAJAAMAAAAGAAEAAAALAAcAAAAGAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAANAAYAAAAGAAEAAAAOAAUAAAAGAAEAAAAOAAQAAAAGAAEAAAAPAAQAAAAGAAEAAAAPAAMAAAAGAAEAAAAQAAMAAAAGAAEAAAAPAAIAAAAGAAAAAAAQAAIAAAAGAAAAAAARAAIAAAAGAAAAAAACAAYAAAAFAAEAAAACAAcAAAAFAAIAAAADAAcAAAAGAAEAAAADAAgAAAAFAAIAAAAEAAgAAAAGAAIAAAAFAAgAAAAGAAIAAAAGAAgAAAAGAAEAAAAIAAkAAAAGAAIAAAAJAAkAAAAHAAIAAAALAAgAAAAGAAIAAAAMAAcAAAAGAAEAAAAMAAgAAAAHAAIAAAANAAcAAAAGAAIAAAAOAAcAAAAHAAIAAAAOAAYAAAAGAAEAAAAPAAYAAAAHAAIAAAAPAAUAAAAGAAEAAAAQAAUAAAAHAAIAAAAQAAQAAAAGAAEAAAARAAQAAAAHAAIAAAARAAMAAAAGAAEAAAASAAMAAAAHAAIAAAASAAIAAAAHAAAAAAAHAAkAAAAGAAIAAAAGAAkAAAAFAAIAAAA=")
 tile_set = ExtResource("3_6bp64")
 
