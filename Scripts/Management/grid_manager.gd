@@ -36,6 +36,5 @@ func _on_placed_building_() -> void:
 	_main_tml_._toggle_visibility(_temp_grid_pos)
 	_highlight_tml._clear()
 
-func _update_highlight_tml(radius: int) -> void:
-	_highlight_tml.update_highlighted_tiles(_temp_grid_pos, 
-		radius, self)
+func _update_highlight_tml() -> void:
+	_highlight_tml.highlight_buildable_tiles()

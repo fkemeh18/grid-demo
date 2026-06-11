@@ -22,7 +22,7 @@ func _process(delta):
 			&& (_grid_manager._temp_grid_pos != null || 
 			_grid_manager._temp_grid_pos != 
 			_grid_manager._get_mouse_grid_pos_without_update())):
-		_grid_manager._update_highlight_tml(3)
+		_grid_manager._update_highlight_tml()
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
