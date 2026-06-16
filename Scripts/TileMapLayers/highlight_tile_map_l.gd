@@ -6,18 +6,19 @@ extends TileMapLayer
 func _clear() -> void:
 	clear()
 
-func highlight_buildable_tiles() -> void:
+func highlight_buildable_tiles(gm: GridManager) -> void:
 	_clear()
 	
 	var building_components: Array[BuildingComponent]
 
 #	here
-	for node in get_tree().get_nodes_in_group(bc._title):
+	for node in get_tree().get_nodes_in_group(bc.name):
 		building_components.append(node)
 
 	for building_component in building_components:
-		_update_highlighted_tiles(building_component._get_grid_pos(), 
-			building_component.build_radius, building_component._grid_manager)
+		_update_highlighted_tiles(
+			building_component._get_grid_pos(gm._main_tml_), 
+			building_component.build_radius, gm)
 
 func _update_highlighted_tiles(grid_tile_pos: Vector2i, radius: int, 
 		occupied_tiles: GridManager) -> void:

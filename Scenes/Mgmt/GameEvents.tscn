@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://du1qp4tpa11yp"]
+
+[ext_resource type="Script" uid="uid://dlme3p7d1e4hv" path="res://Scripts/Management/game_events.gd" id="1_dalbb"]
+
+[node name="GameEvents" type="Node" unique_id=464563433]
+script = ExtResource("1_dalbb")
+
+[connection signal="building_placed" from="." to="." method="_on_building_placed"]

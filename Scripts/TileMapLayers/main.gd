@@ -32,7 +32,7 @@ func _place_building() -> void:
 	var building = _building_scene.instantiate() as Node2D
 	add_child(building)
 	building.global_position = _grid_manager._temp_grid_pos * 64
-	_grid_manager._on_placed_building_()
+	_grid_manager._on_placed_building_completed()
 	_button_manager._place_building_button_active = false
 
 #resolves pressed signal functionality
