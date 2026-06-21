@@ -3,28 +3,25 @@ extends TileMapLayer
 
 @export var bc: BuildingComponent
 
+var _valid_buildable_tiles: Dictionary[Vector2i, bool]
+
 func _clear() -> void:
 	clear()
 
-func highlight_buildable_tiles(gm: GridManager) -> void:
-	_clear()
+func highlight_buildable_tiles() -> void:
+	for tile_pos in _valid_buildable_tiles:
+		set_cell(tile_pos, 0, Vector2i())
+
+func _update_valid_buildable_tiles(comp: BuildingComponent, 
+									gm: GridManager) -> void:
 	
-	var building_components: Array[BuildingComponent]
+	var grid_tile_pos = comp._get_grid_pos(gm._main_tml_)
+	var radius = comp.build_radius
 
-#	here
-	for node in get_tree().get_nodes_in_group(bc.name):
-		building_components.append(node)
-
-	for building_component in building_components:
-		_update_highlighted_tiles(
-			building_component._get_grid_pos(gm._main_tml_), 
-			building_component.build_radius, gm)
-
-func _update_highlighted_tiles(grid_tile_pos: Vector2i, radius: int, 
-		occupied_tiles: GridManager) -> void:
-	#_clear()
-	
 	for i in range(grid_tile_pos.x - radius, grid_tile_pos.x + (radius + 1)):
 		for j in range(grid_tile_pos.y - radius, grid_tile_pos.y + (radius + 1)):
-			if occupied_tiles._is_cell_occupied(Vector2i(i, j)): continue
-			set_cell(Vector2i(i, j), 0, Vector2i())
+			if !gm._is_terrain_buildable(Vector2i(i, j)): continue
+			#set_cell(Vector2i(i, j), 0, Vector2i())
+			_valid_buildable_tiles.set(Vector2i(i, j), true)
+
+	_valid_buildable_tiles.erase(comp._get_grid_pos(gm._main_tml_))

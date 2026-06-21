@@ -6,9 +6,11 @@ extends Node
 @export var _base_terrain_tml: TileMapLayer
 
 var _temp_grid_pos: Vector2i
+var player_placed_building = false
 
 func _ready():
 	GameEvents._instance.building_placed.connect(_on_placed_building)
+	#print(player_placed_building)
 
 func _process(delta):
 	_main_tml_.set_tile(_get_mouse_grid_pos())
@@ -21,24 +23,21 @@ func _get_mouse_grid_pos_without_update() -> Vector2i:
 	var mouse_pos = _highlight_tml.get_global_mouse_position()
 	return _main_tml_.process_mouse_pos(mouse_pos)
 
-func _is_cell_occupied(pos: Vector2i) -> bool:
-	var custom_data = _base_terrain_tml.get_cell_tile_data(pos)
+func _is_terrain_buildable(pos: Vector2i) -> bool:
+	var custom_terrain_data = _base_terrain_tml.get_cell_tile_data(pos)
 	
-	if custom_data == null: 
-		return true
+	if custom_terrain_data == null: return false
 	
-	if !custom_data.get_custom_data("buildable") as bool: 
-		return true
-	
-	return _main_tml_._occupied_tile_dict.has(pos)
+	return custom_terrain_data.get_custom_data("buildable") as bool
+
+func _is_cell_currently_buildable(pos: Vector2i) -> bool:
+	return _highlight_tml._valid_buildable_tiles.has(pos)
 
 func _on_placed_building(bc: BuildingComponent) -> void:
-	_main_tml_._register_built_tile(bc._get_grid_pos(_main_tml_))
-
-func _on_placed_building_completed() -> void:
-	_main_tml_._register_built_tile(_temp_grid_pos)
-	_main_tml_._toggle_visibility(_temp_grid_pos)
-	_highlight_tml._clear()
+	_highlight_tml._update_valid_buildable_tiles(bc, self)
 
 func _update_highlight_tml() -> void:
-	_highlight_tml.highlight_buildable_tiles(self)
+	_highlight_tml.highlight_buildable_tiles()
+
+func _player_pressed() -> void:
+	player_placed_building = true

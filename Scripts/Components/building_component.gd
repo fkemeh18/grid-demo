@@ -6,7 +6,8 @@ extends Node2D
 
 func _ready():
 	add_to_group(self.name)
-	GameEvents.emit_on_building_placed(self)
+	var emit := func(): GameEvents.emit_on_building_placed(self)
+	emit.call_deferred()
 
 func _get_grid_pos(main: MainTML) -> Vector2i:
 	return main.process_mouse_pos(self.global_position)

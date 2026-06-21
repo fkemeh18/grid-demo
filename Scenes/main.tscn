@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://c6qn3ovk2nvmt"]
 
-[ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/TileMapLayers/main.gd" id="1_8gbba"]
+[ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/terrain_tileset.tres" id="3_6bp64"]
