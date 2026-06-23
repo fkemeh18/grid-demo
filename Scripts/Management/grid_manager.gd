@@ -36,8 +36,11 @@ func _is_cell_currently_buildable(pos: Vector2i) -> bool:
 func _on_placed_building(bc: BuildingComponent) -> void:
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
 
-func _update_highlight_tml() -> void:
+func _update_highlight_tiles() -> void:
 	_highlight_tml.highlight_buildable_tiles()
+
+func _update_expanded_tiles(pos: Vector2i, radius: int) -> void:
+	_highlight_tml.highlight_expanded_buildable_tiles(pos, radius, self)
 
 func _player_pressed() -> void:
 	player_placed_building = true

@@ -4,8 +4,11 @@ extends Node2D
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var build_radius: int
 
+var bc_name: StringName
+
 func _ready():
-	add_to_group(self.name)
+	bc_name = self.name
+	add_to_group(bc_name)
 	var emit := func(): GameEvents.emit_on_building_placed(self)
 	emit.call_deferred()
 
