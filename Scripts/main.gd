@@ -4,6 +4,7 @@ extends Node
 @export var _building_scene : PackedScene
 @export var _grid_manager: GridManager
 @export var _button_manager: ButtonManager
+@export var _y_sort_root: Node2D
 
 #deals with setting up pressed signal
 func _ready():
@@ -31,7 +32,7 @@ func _place_building() -> void:
 	if _grid_manager._temp_grid_pos == null: return
 	
 	var building = _building_scene.instantiate() as Node2D
-	add_child(building)
+	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._temp_grid_pos * 64
 
 	_button_manager._place_building_button_active = false

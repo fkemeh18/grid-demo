@@ -20,37 +20,47 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_grid_manager", "_button_manager")]
+[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_grid_manager", "_button_manager", "_y_sort_root")]
 script = ExtResource("1_8gbba")
 _building_scene = ExtResource("2_kry3j")
 _grid_manager = NodePath("Management/GridManager")
 _button_manager = NodePath("Management/ButtonManager")
+_y_sort_root = NodePath("YSortRoot")
 
 [node name="Management" type="Node" parent="." unique_id=300734742]
 
 [node name="GridManager" parent="Management" unique_id=795174114 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_base_terrain_tml") instance=ExtResource("8_ynf5e")]
 _main_tml_ = NodePath("../../TMLs/MainTileMapLayer")
 _highlight_tml = NodePath("../../TMLs/HighlightTileMapL")
-_base_terrain_tml = NodePath("../../TMLs/BaseTerrainLayer")
+_base_terrain_tml = NodePath("../../YSortRoot/BaseTerrainLayer")
 
 [node name="ButtonManager" parent="Management" unique_id=838342003 node_paths=PackedStringArray("_place_building_button") instance=ExtResource("9_hptm8")]
 _place_building_button = NodePath("../../Button")
 
-[node name="TMLs" type="Node" parent="." unique_id=71661811]
+[node name="YSortRoot" type="Node2D" parent="." unique_id=505001936]
+y_sort_enabled = true
 
-[node name="BaseTerrainLayer" type="TileMapLayer" parent="TMLs" unique_id=1353236464]
+[node name="BaseTerrainLayer" type="TileMapLayer" parent="YSortRoot" unique_id=1353236464]
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAHAAQAAAAGAAEAAAAGAAQAAAAGAAEAAAAGAAUAAAAGAAEAAAAHAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAIAAQAAAAGAAEAAAABAAQAAAAGAAAAAAAAAAQAAAAFAAAAAAAAAAUAAAAFAAIAAAABAAUAAAAGAAIAAAACAAUAAAAGAAEAAAADAAUAAAAGAAEAAAADAAYAAAAGAAEAAAADAAQAAAAGAAAAAAACAAQAAAAGAAAAAAAEAAQAAAAGAAAAAAAEAAUAAAAGAAEAAAAFAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAEAAYAAAAGAAEAAAAEAAcAAAAGAAEAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAHAAgAAAAGAAEAAAAIAAgAAAAGAAEAAAAJAAgAAAAGAAEAAAAKAAgAAAAGAAEAAAAKAAcAAAAGAAEAAAAJAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAAHAAYAAAAGAAEAAAAIAAYAAAAGAAEAAAAJAAYAAAAGAAEAAAAKAAYAAAAGAAEAAAAKAAUAAAAGAAEAAAAKAAQAAAAGAAEAAAALAAQAAAAGAAEAAAALAAMAAAAGAAEAAAAJAAUAAAAGAAEAAAAJAAQAAAAGAAEAAAAGAAYAAAAGAAEAAAAFAAQAAAAGAAEAAAAFAAMAAAAFAAAAAAAGAAMAAAAGAAAAAAAHAAMAAAAGAAAAAAAIAAMAAAAGAAEAAAAKAAMAAAAGAAEAAAAMAAQAAAAGAAEAAAAMAAUAAAAGAAEAAAALAAUAAAAGAAEAAAANAAUAAAAGAAEAAAANAAQAAAAGAAEAAAANAAMAAAAGAAEAAAAOAAMAAAAGAAEAAAAOAAIAAAAGAAAAAAANAAIAAAAGAAAAAAAMAAMAAAAGAAEAAAAMAAIAAAAGAAAAAAALAAIAAAAGAAAAAAAJAAMAAAAGAAEAAAALAAcAAAAGAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAANAAYAAAAGAAEAAAAOAAUAAAAGAAEAAAAOAAQAAAAGAAEAAAAPAAQAAAAGAAEAAAAPAAMAAAAGAAEAAAAQAAMAAAAGAAEAAAAPAAIAAAAGAAAAAAAQAAIAAAAGAAAAAAARAAIAAAAGAAAAAAACAAYAAAAFAAEAAAACAAcAAAAFAAIAAAADAAcAAAAGAAEAAAADAAgAAAAFAAIAAAAEAAgAAAAGAAIAAAAFAAgAAAAGAAIAAAAGAAgAAAAGAAEAAAAIAAkAAAAGAAIAAAAJAAkAAAAGAAIAAAALAAgAAAAGAAIAAAAMAAcAAAAGAAEAAAAMAAgAAAAGAAIAAAANAAcAAAAGAAEAAAAOAAcAAAAHAAIAAAAOAAYAAAAGAAEAAAAPAAYAAAAHAAIAAAAPAAUAAAAGAAEAAAAQAAUAAAAHAAIAAAAQAAQAAAAGAAEAAAARAAQAAAAHAAIAAAARAAMAAAAGAAEAAAASAAMAAAAHAAIAAAASAAIAAAAHAAAAAAAHAAkAAAAGAAIAAAAGAAkAAAAFAAIAAAANAAgAAAAHAAIAAAAKAAkAAAAHAAIAAAAKAAIAAAAGAAAAAAAJAAIAAAAGAAAAAAAIAAIAAAAFAAAAAAA=")
 tile_set = ExtResource("3_6bp64")
 
-[node name="ResourceTileMapLayer" type="TileMapLayer" parent="TMLs/BaseTerrainLayer" unique_id=442228459]
-tile_map_data = PackedByteArray("AAANAAMAAQAAAAAAAAABAAcAAQAAAAAAAAARAAkAAQAAAAAAAAAHAAUAAQAAAAAAAAAEAAQAAQAAAAAAAAADAAQAAQAAAAAAAAACAAQAAQAAAAAAAAAOAAYAAQAAAAAAAAARAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAGAAkAAQAAAAAAAAAEAAEAAQAAAAAAAAA=")
+[node name="ResourceTileMapLayer" type="TileMapLayer" parent="YSortRoot/BaseTerrainLayer" unique_id=442228459]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAANAAMAAQAAAAAAAAABAAcAAQAAAAAAAAARAAkAAQAAAAAAAAAHAAUAAQAAAAAAAAAEAAQAAQAAAAAAAAADAAQAAQAAAAAAAAACAAQAAQAAAAAAAAAOAAYAAQAAAAAAAAARAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAGAAkAAQAAAAAAAAAEAAEAAQAAAAAAAAAJAAQAAQAAAAAAAAAIAAQAAQAAAAAAAAA=")
 tile_set = ExtResource("3_6bp64")
+
+[node name="B-Base" parent="YSortRoot" unique_id=584149431 instance=ExtResource("10_hptm8")]
+y_sort_enabled = true
+position = Vector2(640, 512)
+
+[node name="TMLs" type="Node" parent="." unique_id=71661811]
 
 [node name="HighlightTileMapL" type="TileMapLayer" parent="TMLs" unique_id=32821524 node_paths=PackedStringArray("bc")]
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("5_kry3j")
 script = ExtResource("4_21xkr")
-bc = NodePath("../../B-Base/BuildingComponent")
+bc = NodePath("../../YSortRoot/B-Base/BuildingComponent")
 
 [node name="MainTileMapLayer" type="TileMapLayer" parent="TMLs" unique_id=1977800345]
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAA=")
@@ -62,6 +72,3 @@ offset_top = 680.0
 offset_right = 102.0
 offset_bottom = 711.0
 text = "Place House"
-
-[node name="B-Base" parent="." unique_id=584149431 instance=ExtResource("10_hptm8")]
-position = Vector2(640, 512)
