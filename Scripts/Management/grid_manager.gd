@@ -6,7 +6,6 @@ extends Node
 @export var _base_terrain_tml: TileMapLayer
 
 var _temp_grid_pos: Vector2i
-var _player_placed_building = false
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 
 func _ready():
@@ -43,9 +42,6 @@ func _update_highlight_tiles() -> void:
 
 func _update_expanded_tiles(pos: Vector2i, radius: int) -> void:
 	_highlight_tml.highlight_expanded_buildable_tiles(pos, radius, self)
-
-func _player_pressed() -> void:
-	_player_placed_building = true
 
 func _get_all_tile_map_layers(
 		base_layer: TileMapLayer) -> Dictionary[TileMapLayer, bool]:

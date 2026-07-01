@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://c6qn3ovk2nvmt"]
 
 [ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/tower.tscn" id="2_hptm8"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
-[ext_resource type="PackedScene" uid="uid://buhxelu7r53sk" path="res://Scenes/Buildings/building.tscn" id="2_kry3j"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/terrain_tileset.tres" id="3_6bp64"]
+[ext_resource type="PackedScene" uid="uid://dyuy6eeuqg57a" path="res://Scenes/Buildings/village.tscn" id="3_d1ilt"]
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/base_tile_map_layer.gd" id="3_kry3j"]
 [ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/TileMapLayers/highlight_tile_map_l.gd" id="4_21xkr"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/highlight_tileset.tres" id="5_kry3j"]
@@ -22,7 +23,8 @@ sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
 [node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_grid_manager", "_button_manager", "_y_sort_root")]
 script = ExtResource("1_8gbba")
-_building_scene = ExtResource("2_kry3j")
+_tower_scene = ExtResource("2_hptm8")
+_village_scene = ExtResource("3_d1ilt")
 _grid_manager = NodePath("Management/GridManager")
 _button_manager = NodePath("Management/ButtonManager")
 _y_sort_root = NodePath("YSortRoot")
@@ -34,8 +36,9 @@ _main_tml_ = NodePath("../../TMLs/MainTileMapLayer")
 _highlight_tml = NodePath("../../TMLs/HighlightTileMapL")
 _base_terrain_tml = NodePath("../../YSortRoot/BaseTerrainLayer")
 
-[node name="ButtonManager" parent="Management" unique_id=838342003 node_paths=PackedStringArray("_place_building_button") instance=ExtResource("9_hptm8")]
-_place_building_button = NodePath("../../Button")
+[node name="ButtonManager" parent="Management" unique_id=838342003 node_paths=PackedStringArray("_place_tower_button", "_place_village_button") instance=ExtResource("9_hptm8")]
+_place_tower_button = NodePath("../../Tower Button")
+_place_village_button = NodePath("../../Village Button")
 
 [node name="YSortRoot" type="Node2D" parent="." unique_id=505001936]
 y_sort_enabled = true
@@ -51,7 +54,6 @@ tile_map_data = PackedByteArray("AAANAAMAAQAAAAAAAAABAAcAAQAAAAAAAAARAAkAAQAAAAA
 tile_set = ExtResource("3_6bp64")
 
 [node name="B-Base" parent="YSortRoot" unique_id=584149431 instance=ExtResource("10_hptm8")]
-y_sort_enabled = true
 position = Vector2(640, 512)
 
 [node name="TMLs" type="Node" parent="." unique_id=71661811]
@@ -67,8 +69,15 @@ tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_ig7tw")
 script = ExtResource("3_kry3j")
 
-[node name="Button" type="Button" parent="." unique_id=1338902737]
+[node name="Tower Button" type="Button" parent="." unique_id=1338902737]
 offset_top = 680.0
 offset_right = 102.0
 offset_bottom = 711.0
-text = "Place House"
+text = "Place Tower"
+
+[node name="Village Button" type="Button" parent="." unique_id=1970038947]
+offset_left = 110.0
+offset_top = 680.0
+offset_right = 212.0
+offset_bottom = 711.0
+text = "Place Village"
