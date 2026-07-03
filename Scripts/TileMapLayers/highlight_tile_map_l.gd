@@ -27,7 +27,7 @@ func _get_valid_tiles_in_radius(pos: Vector2i, radius: int,
 func _update_valid_buildable_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:
 	var grid_tile_pos = comp._get_grid_pos(gm._main_tml_)
-	var radius = comp.build_radius
+	var radius = comp.building_resource.buildable_radius
 	var valid_tiles = _get_valid_tiles_in_radius(grid_tile_pos, radius, gm)
 	var occupied_tiles = _get_occupied_tiles(comp, gm)
 	

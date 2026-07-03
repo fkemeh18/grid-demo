@@ -13,6 +13,7 @@ func _button_pressed(gm: GridManager, button_type: String) -> void:
 		"tower" when not _place_tower_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_tower_button_active = true
+			print(_place_tower_button_active)
 		"village" when not _place_village_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_village_button_active = true
@@ -36,3 +37,10 @@ func _resolve_button_pressed(gm: GridManager, type: String) -> void:
 	
 	gm._main_tml_._toggle_visibility_on(gm._temp_grid_pos)
 	gm._update_highlight_tiles()
+
+func _active_button_checker() -> bool:
+	match _current_building_type:
+		"tower": return _place_tower_button_active
+		"village": return _place_village_button_active
+		_: return false
+	

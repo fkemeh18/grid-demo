@@ -7,7 +7,7 @@
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." unique_id=1013691913 instance=ExtResource("1_wnsun")]
-build_radius = 3
+building_resource_path = "uid://dy1cir41tjt3f"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=774024146]
 position = Vector2(32, 32)

@@ -1,11 +1,13 @@
 class_name Game
 extends Node
 
-@export var _tower_scene: PackedScene
-@export var _village_scene: PackedScene
+@export var _tower_resource: BuildingResource
+@export var _village_resource: BuildingResource
 @export var _grid_manager: GridManager
 @export var _button_manager: ButtonManager
 @export var _y_sort_root: Node2D
+
+var _building_resource: BuildingResource
 
 #deals with setting up pressed signal
 func _ready():
@@ -24,11 +26,13 @@ func _unhandled_input(event):
 
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
-	if (_button_manager._place_tower_button_active 
-			&& (_grid_manager._temp_grid_pos != null || 
-			_grid_manager._temp_grid_pos != 
+	if (_building_resource != null 
+			&& _button_manager._active_button_checker() 
+			&& (_grid_manager._temp_grid_pos != null 
+			|| _grid_manager._temp_grid_pos != 
 			_grid_manager._get_mouse_grid_pos_without_update())):
-		_grid_manager._update_expanded_tiles(_grid_manager._temp_grid_pos, 3)
+		_grid_manager._update_expanded_tiles(_grid_manager._temp_grid_pos, 
+			_building_resource.buildable_radius)
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
@@ -36,15 +40,8 @@ func _place_building() -> void:
 	
 	if _grid_manager._temp_grid_pos == null: return
 	
-	match _button_manager._current_building_type:
-		"tower":
-			building = _tower_scene.instantiate() as Node2D
-			_button_manager._building_placed("tower")
-		"village":
-			building = _village_scene.instantiate() as Node2D
-			_button_manager._building_placed("village")
-		_:
-			_button_manager._building_placed("")
+	building = _building_resource.building_scene.instantiate() as Node2D
+	_button_manager._building_placed(_button_manager._current_building_type)
 	
 	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._temp_grid_pos * 64
@@ -56,3 +53,9 @@ func _place_building() -> void:
 #resolves pressed signal functionality
 func _button_pressed(button: String):
 	_button_manager._button_pressed(_grid_manager, button)
+	
+	match button:
+		"tower":
+			_building_resource = _tower_resource
+		"village":
+			_building_resource = _village_resource

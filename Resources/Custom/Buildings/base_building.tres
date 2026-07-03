@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://b2jd8fo0dysq7"]
+
+[ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="1_py6ng"]
+[ext_resource type="Script" uid="uid://dj3x22bpxcd2v" path="res://Scripts/ResourceScripts/Buildings/building_resource.gd" id="2_hm4v7"]
+
+[resource]
+script = ExtResource("2_hm4v7")
+buildable_radius = 3
+building_scene = ExtResource("1_py6ng")
+metadata/_custom_type_script = "uid://dj3x22bpxcd2v"
