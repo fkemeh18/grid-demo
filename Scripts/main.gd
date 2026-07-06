@@ -31,8 +31,11 @@ func _process(delta):
 			&& (_grid_manager._temp_grid_pos != null 
 			|| _grid_manager._temp_grid_pos != 
 			_grid_manager._get_mouse_grid_pos_without_update())):
+		_grid_manager._highlight_tml._clear()
 		_grid_manager._update_expanded_tiles(_grid_manager._temp_grid_pos, 
 			_building_resource.buildable_radius)
+		_grid_manager._update_resource_tiles(_grid_manager._temp_grid_pos, 
+			_building_resource.resource_radius)
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:

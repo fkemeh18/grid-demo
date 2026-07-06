@@ -23,11 +23,11 @@ func _get_mouse_grid_pos_without_update() -> Vector2i:
 	var mouse_pos = _highlight_tml.get_global_mouse_position()
 	return _main_tml_.process_mouse_pos(mouse_pos)
 
-func _is_terrain_buildable(pos: Vector2i) -> bool:
+func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	for layer in _all_tile_map_layers:
 		var custom_terrain_data = layer.get_cell_tile_data(pos)
 		if custom_terrain_data == null: continue
-		return custom_terrain_data.get_custom_data("buildable") as bool
+		return custom_terrain_data.get_custom_data(data_name) as bool
 	
 	return false
 
@@ -42,6 +42,9 @@ func _update_highlight_tiles() -> void:
 
 func _update_expanded_tiles(pos: Vector2i, radius: int) -> void:
 	_highlight_tml.highlight_expanded_buildable_tiles(pos, radius, self)
+
+func _update_resource_tiles(pos: Vector2i, radius: int) -> void:
+	_highlight_tml.highlight_resource_tiles(pos, radius, self)
 
 func _get_all_tile_map_layers(
 		base_layer: TileMapLayer) -> Dictionary[TileMapLayer, bool]:
