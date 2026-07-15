@@ -36,6 +36,7 @@ func _is_cell_currently_buildable(pos: Vector2i) -> bool:
 
 func _on_placed_building(bc: BuildingComponent) -> void:
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
+	_highlight_tml._update_collected_resource_tiles(bc, self)
 
 func _update_highlight_tiles() -> void:
 	_highlight_tml.highlight_buildable_tiles()

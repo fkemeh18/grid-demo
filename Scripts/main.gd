@@ -3,18 +3,17 @@ extends Node
 
 @export var _tower_resource: BuildingResource
 @export var _village_resource: BuildingResource
+@export var _game_ui: GameUI
 @export var _grid_manager: GridManager
-@export var _button_manager: ButtonManager
 @export var _y_sort_root: Node2D
 
 var _building_resource: BuildingResource
 
 #deals with setting up pressed signal
 func _ready():
-	_button_manager._place_tower_button.pressed.connect(
-		_button_pressed.bind("tower"))
-	_button_manager._place_village_button.pressed.connect(
-		_button_pressed.bind("village"))
+	_game_ui._pressed_button_type.connect(_change_building)
+	_grid_manager._highlight_tml._resource_tiles_updated.connect(
+		_on_resource_tiles_updated)
 
 #checks and enacts the pressed signal
 func _unhandled_input(event):
@@ -27,7 +26,7 @@ func _unhandled_input(event):
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
 	if (_building_resource != null 
-			&& _button_manager._active_button_checker() 
+			&& _game_ui._button_manager._active_button_checker() 
 			&& (_grid_manager._temp_grid_pos != null 
 			|| _grid_manager._temp_grid_pos != 
 			_grid_manager._get_mouse_grid_pos_without_update())):
@@ -44,7 +43,8 @@ func _place_building() -> void:
 	if _grid_manager._temp_grid_pos == null: return
 	
 	building = _building_resource.building_scene.instantiate() as Node2D
-	_button_manager._building_placed(_button_manager._current_building_type)
+	_game_ui._button_manager._building_placed(
+		_game_ui._button_manager._current_building_type)
 	
 	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._temp_grid_pos * 64
@@ -54,11 +54,17 @@ func _place_building() -> void:
 		_grid_manager._temp_grid_pos)
 
 #resolves pressed signal functionality
-func _button_pressed(button: String):
-	_button_manager._button_pressed(_grid_manager, button)
+func _change_building(button: String):
+	_ui_button_pressed()
 	
 	match button:
 		"tower":
 			_building_resource = _tower_resource
 		"village":
 			_building_resource = _village_resource
+
+func _on_resource_tiles_updated(resource_count: int) -> void:
+	print(resource_count)
+
+func _ui_button_pressed() -> void:
+	_game_ui._access_gm(_grid_manager)

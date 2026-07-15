@@ -4,10 +4,13 @@ extends TileMapLayer
 const IS_BUILDABLE = "is_buildable"
 const IS_WOOD = "is_wood"
 
+signal _resource_tiles_updated(collected_tiles: int)
+
 @export var bc: BuildingComponent
 
 var _valid_buildable_tiles: Dictionary[Vector2i, bool]
 var _built_tile_locations: Dictionary[Vector2i, bool]
+var _collected_resource_tiles: Dictionary[Vector2i, bool]
 
 func _clear() -> void:
 	clear()
@@ -54,6 +57,19 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	
 	for existing_bc in occupied_tiles:
 		_valid_buildable_tiles.erase(existing_bc)
+
+func _update_collected_resource_tiles(comp: BuildingComponent, 
+										gm: GridManager) -> void:
+	var grid_tile_pos = comp._get_grid_pos(gm._main_tml_)
+	var radius = comp.building_resource.resource_radius
+	var resource_tiles = _get_resource_tiles_in_radius(grid_tile_pos, radius, 
+		gm)
+	var old_resource_tile_count = _collected_resource_tiles.size()
+	
+	_collected_resource_tiles.merge(resource_tiles)
+	
+	if old_resource_tile_count != _collected_resource_tiles.size():
+		_resource_tiles_updated.emit(_collected_resource_tiles.size())
 
 func highlight_expanded_buildable_tiles(pos: Vector2i, radius: int,
 		gm: GridManager) -> void:

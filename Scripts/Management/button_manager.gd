@@ -13,7 +13,6 @@ func _button_pressed(gm: GridManager, button_type: String) -> void:
 		"tower" when not _place_tower_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_tower_button_active = true
-			print(_place_tower_button_active)
 		"village" when not _place_village_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_village_button_active = true
