@@ -2,8 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bcuopf3tu5kdd" path="res://Scenes/Mgmt/button_manager.tscn" id="1_3fiko"]
 [ext_resource type="Script" uid="uid://cyxqtd1tc72tr" path="res://Scripts/UI/game_ui.gd" id="1_vo2tu"]
+[ext_resource type="Script" uid="uid://dj3x22bpxcd2v" path="res://Scripts/ResourceScripts/Buildings/building_resource.gd" id="2_lolt2"]
+[ext_resource type="Resource" uid="uid://dy1cir41tjt3f" path="res://Resources/Custom/Buildings/tower.tres" id="3_tig4k"]
+[ext_resource type="Resource" uid="uid://clq04tbn1cvrs" path="res://Resources/Custom/Buildings/village.tres" id="4_plf53"]
 
-[node name="GameUI" type="MarginContainer" unique_id=2137080717 node_paths=PackedStringArray("_button_manager")]
+[node name="GameUI" type="MarginContainer" unique_id=2137080717 node_paths=PackedStringArray("_button_manager", "_hbox_container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,20 +18,12 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 script = ExtResource("1_vo2tu")
 _button_manager = NodePath("ButtonManager")
+_building_resources = Array[ExtResource("2_lolt2")]([ExtResource("3_tig4k"), ExtResource("4_plf53")])
+_hbox_container = NodePath("HBoxContainer")
 
-[node name="ButtonManager" parent="." unique_id=838342003 node_paths=PackedStringArray("_place_tower_button", "_place_village_button") instance=ExtResource("1_3fiko")]
-_place_tower_button = NodePath("../HBoxContainer/Tower Button")
-_place_village_button = NodePath("../HBoxContainer/Village Button")
+[node name="ButtonManager" parent="." unique_id=838342003 instance=ExtResource("1_3fiko")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2004232169]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 16
-
-[node name="Tower Button" type="Button" parent="HBoxContainer" unique_id=1473317489]
-layout_mode = 2
-text = "Place Tower"
-
-[node name="Village Button" type="Button" parent="HBoxContainer" unique_id=1145444619]
-layout_mode = 2
-text = "Place Village"

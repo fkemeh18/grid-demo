@@ -1,10 +1,8 @@
 [gd_scene format=4 uid="uid://c6qn3ovk2nvmt"]
 
 [ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
-[ext_resource type="Resource" uid="uid://dy1cir41tjt3f" path="res://Resources/Custom/Buildings/tower.tres" id="2_hptm8"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="3_6bp64"]
-[ext_resource type="Resource" uid="uid://clq04tbn1cvrs" path="res://Resources/Custom/Buildings/village.tres" id="3_d1ilt"]
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/base_tile_map_layer.gd" id="3_kry3j"]
 [ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/TileMapLayers/highlight_tile_map_l.gd" id="4_21xkr"]
 [ext_resource type="PackedScene" uid="uid://c4newqswu33l4" path="res://Scenes/UI/game_ui.tscn" id="4_d1ilt"]
@@ -23,8 +21,6 @@ sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
 [node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_game_ui", "_grid_manager", "_y_sort_root")]
 script = ExtResource("1_8gbba")
-_tower_resource = ExtResource("2_hptm8")
-_village_resource = ExtResource("3_d1ilt")
 _game_ui = NodePath("GameUI")
 _grid_manager = NodePath("Management/GridManager")
 _y_sort_root = NodePath("YSortRoot")

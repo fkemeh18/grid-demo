@@ -1,27 +1,24 @@
 class_name ButtonManager
 extends Node
 
-@export var _place_tower_button: Button
-@export var _place_village_button: Button
-
 var _current_building_type: String
 var _place_tower_button_active := false
 var _place_village_button_active := false
 
 func _button_pressed(gm: GridManager, button_type: String) -> void:
 	match button_type:
-		"tower" when not _place_tower_button_active:
+		"Tower" when not _place_tower_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_tower_button_active = true
-		"village" when not _place_village_button_active:
+		"Village" when not _place_village_button_active:
 			_resolve_button_pressed(gm, button_type)
 			_place_village_button_active = true
 
 func _building_placed(button: String) -> void:
 	match button:
-		"tower":
+		"Tower":
 			_place_tower_button_active = false
-		"village":
+		"Village":
 			_place_village_button_active = false
 		_:
 			_deactivate_all_placement_buttons()
@@ -39,7 +36,7 @@ func _resolve_button_pressed(gm: GridManager, type: String) -> void:
 
 func _active_button_checker() -> bool:
 	match _current_building_type:
-		"tower": return _place_tower_button_active
-		"village": return _place_village_button_active
+		"Tower": return _place_tower_button_active
+		"Village": return _place_village_button_active
 		_: return false
 	

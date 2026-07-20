@@ -1,8 +1,6 @@
 class_name Game
 extends Node
 
-@export var _tower_resource: BuildingResource
-@export var _village_resource: BuildingResource
 @export var _game_ui: GameUI
 @export var _grid_manager: GridManager
 @export var _y_sort_root: Node2D
@@ -12,6 +10,8 @@ var _building_resource: BuildingResource
 #deals with setting up pressed signal
 func _ready():
 	_game_ui._pressed_button_type.connect(_change_building)
+	_game_ui._waiting_on_main.connect(_main_is_ready)
+	
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
 
@@ -54,17 +54,15 @@ func _place_building() -> void:
 		_grid_manager._temp_grid_pos)
 
 #resolves pressed signal functionality
-func _change_building(button: String):
+func _change_building(resource: BuildingResource):
 	_ui_button_pressed()
-	
-	match button:
-		"tower":
-			_building_resource = _tower_resource
-		"village":
-			_building_resource = _village_resource
+	_building_resource = resource
 
 func _on_resource_tiles_updated(resource_count: int) -> void:
 	print(resource_count)
 
 func _ui_button_pressed() -> void:
 	_game_ui._access_gm(_grid_manager)
+
+func _main_is_ready():
+	_game_ui._create_building_buttons()

@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_xj1b2")
+display_name = "Village"
 resource_radius = 3
 building_scene = ExtResource("1_o6tr1")
 metadata/_custom_type_script = "uid://dj3x22bpxcd2v"

@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_hm4v7")
+display_name = "Base"
 buildable_radius = 3
 building_scene = ExtResource("1_py6ng")
 metadata/_custom_type_script = "uid://dj3x22bpxcd2v"
