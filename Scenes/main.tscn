@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://c6qn3ovk2nvmt"]
 
 [ext_resource type="Script" uid="uid://cr4op28xqfrab" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://cv15cff7myt7k" path="res://Scenes/Mgmt/building_manager.tscn" id="2_hptm8"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="2_jjvhh"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="3_6bp64"]
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/base_tile_map_layer.gd" id="3_kry3j"]
@@ -19,13 +20,16 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_game_ui", "_grid_manager", "_y_sort_root")]
+[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_building_manager")]
 script = ExtResource("1_8gbba")
-_game_ui = NodePath("GameUI")
-_grid_manager = NodePath("Management/GridManager")
-_y_sort_root = NodePath("YSortRoot")
+_building_manager = NodePath("Management/BuildingManager")
 
 [node name="Management" type="Node" parent="." unique_id=300734742]
+
+[node name="BuildingManager" parent="Management" unique_id=776791469 node_paths=PackedStringArray("_grid_manager", "_game_ui", "_y_sort_root") instance=ExtResource("2_hptm8")]
+_grid_manager = NodePath("../GridManager")
+_game_ui = NodePath("../../GameUI")
+_y_sort_root = NodePath("../../YSortRoot")
 
 [node name="GridManager" parent="Management" unique_id=795174114 node_paths=PackedStringArray("_main_tml_", "_highlight_tml", "_base_terrain_tml") instance=ExtResource("8_ynf5e")]
 _main_tml_ = NodePath("../../TMLs/MainTileMapLayer")

@@ -7,5 +7,6 @@
 script = ExtResource("2_gayef")
 display_name = "Tower"
 buildable_radius = 3
+resource_cost = 4
 building_scene = ExtResource("1_tjdwm")
 metadata/_custom_type_script = "uid://dj3x22bpxcd2v"
