@@ -1,7 +1,7 @@
 class_name GridManager
 extends Node
 
-@export var _main_tml_: MainTML
+@export var _cursor_tml: CursorTML
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
 
@@ -13,7 +13,7 @@ func _ready():
 	_all_tile_map_layers = _get_all_tile_map_layers(_base_terrain_tml)
 
 func _process(delta):
-	_main_tml_.set_tile(_get_mouse_grid_pos())
+	_cursor_tml.set_tile(_get_mouse_grid_pos())
 	
 func _get_mouse_grid_pos() -> Vector2i:
 	_temp_grid_pos = _get_mouse_grid_pos_without_update()
@@ -21,7 +21,7 @@ func _get_mouse_grid_pos() -> Vector2i:
 
 func _get_mouse_grid_pos_without_update() -> Vector2i:
 	var mouse_pos = _highlight_tml.get_global_mouse_position()
-	return _main_tml_.process_mouse_pos(mouse_pos)
+	return _cursor_tml.process_mouse_pos(mouse_pos)
 
 func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	for layer in _all_tile_map_layers:

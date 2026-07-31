@@ -11,3 +11,5 @@ extends Resource
 				PROPERTY_USAGE_DEFAULT) var resource_cost: int
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var building_scene: PackedScene
+@export_custom(PROPERTY_HINT_NONE,"", 
+				PROPERTY_USAGE_DEFAULT) var sprite_scene: PackedScene

@@ -31,7 +31,7 @@ func _resolve_button_pressed(gm: GridManager, type: String) -> void:
 	_deactivate_all_placement_buttons()
 	_current_building_type = type
 	
-	gm._main_tml_._toggle_visibility_on(gm._temp_grid_pos)
+	gm._cursor_tml._toggle_visibility_on()
 	gm._update_highlight_tiles()
 
 func _active_button_checker() -> bool:

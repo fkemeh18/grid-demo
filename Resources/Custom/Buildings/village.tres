@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dyuy6eeuqg57a" path="res://Scenes/Buildings/village.tscn" id="1_o6tr1"]
 [ext_resource type="Script" uid="uid://dj3x22bpxcd2v" path="res://Scripts/ResourceScripts/Buildings/building_resource.gd" id="1_xj1b2"]
+[ext_resource type="PackedScene" uid="uid://buasia7gbyvxr" path="res://Scenes/Buildings/Sprites/village_sprite.tscn" id="3_3ga6g"]
 
 [resource]
 script = ExtResource("1_xj1b2")
@@ -9,4 +10,5 @@ display_name = "Village"
 resource_radius = 3
 resource_cost = 2
 building_scene = ExtResource("1_o6tr1")
+sprite_scene = ExtResource("3_3ga6g")
 metadata/_custom_type_script = "uid://dj3x22bpxcd2v"
