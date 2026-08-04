@@ -73,8 +73,6 @@ func _update_collected_resource_tiles(comp: BuildingComponent,
 
 func highlight_expanded_buildable_tiles(pos: Vector2i, radius: int,
 		gm: GridManager) -> void:
-	highlight_buildable_tiles()
-	
 	var expanded_tiles = _get_valid_tiles_in_radius(pos, radius, gm)
 	var atlas_coords = Vector2i(1, 0)
 	

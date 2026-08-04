@@ -1,7 +1,7 @@
 class_name CursorTML
 extends TileMapLayer
 
-@export var _ghost_cursor: Node2D
+@export var _ghost_cursor: BuildingGhost
 @export var _cursor_sprite: Sprite2D
 
 #var _visible_tile = false
@@ -36,7 +36,6 @@ func set_tile(pos: Vector2i) -> void:
 func _toggle_visibility_on() -> void:
 	#_visible_tile = true
 	if !is_instance_valid(_ghost_cursor): return
-	print("yo")
 	_ghost_cursor.visible = true
 
 func _toggle_visibility_off() -> void:

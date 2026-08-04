@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://cae17urkfnx6s"]
 
+[ext_resource type="Script" uid="uid://myf52nxcnc6q" path="res://Scripts/UI/building_ghost.gd" id="1_8v0ut"]
+
 [node name="BuildingGhost" type="Node2D" unique_id=551851122]
 visible = false
 y_sort_enabled = true
+script = ExtResource("1_8v0ut")
