@@ -3,6 +3,9 @@ extends Node
 
 const ACTION_LEFT_CLICK: StringName = "left_click"
 const ACTION_CANCEL: StringName = "cancel"
+const ACTION_RIGHT_CLICK: StringName = "right_click"
+
+enum State{Base, PlacingBuilding}
 
 @export var _grid_manager: GridManager
 @export var _game_ui: GameUI
@@ -13,6 +16,7 @@ var _building_resource: BuildingResource
 var _base_resource_count:= 4
 var _curr_resource_count: int
 var _used_resource_count: int
+var _curr_state: State
 
 var _available_resource_count = func() -> int: 
 	return _base_resource_count + _curr_resource_count - _used_resource_count
@@ -24,6 +28,21 @@ func _ready():
 
 func _unhandled_input(event):
 	if !is_instance_valid(_grid_manager._cursor_tml._ghost_cursor): return
+	
+	match(_curr_state):
+		State.Base:
+			pass
+		State.PlacingBuilding:
+			if (event.is_action_pressed(ACTION_CANCEL)):
+				_cancel_building()
+			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
+					&& _building_resource != null
+					&& _grid_manager._cursor_tml._ghost_cursor.visible
+					&& _is_building_placable(_grid_manager._temp_grid_pos)):
+				_place_building()
+		_:
+			pass
+	
 	
 	if (event.is_action_pressed(ACTION_CANCEL)):
 		_cancel_building()
