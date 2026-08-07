@@ -1,6 +1,8 @@
 class_name Autoloader
 extends Node
 
+enum State{Base, PlacingBuilding}
+
 static var _instance: GameEvents:
 	get:
 		return _instance

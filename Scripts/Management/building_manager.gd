@@ -5,9 +5,8 @@ const ACTION_LEFT_CLICK: StringName = "left_click"
 const ACTION_CANCEL: StringName = "cancel"
 const ACTION_RIGHT_CLICK: StringName = "right_click"
 
-enum State{Base, PlacingBuilding}
-
 @export var _grid_manager: GridManager
+@export var _state_manager: StateManager
 @export var _game_ui: GameUI
 @export var _y_sort_root: Node2D
 @export var _building_ghost_scene: PackedScene
@@ -16,7 +15,7 @@ var _building_resource: BuildingResource
 var _base_resource_count:= 4
 var _curr_resource_count: int
 var _used_resource_count: int
-var _curr_state: State
+var _curr_state: GameEvents.State
 
 var _available_resource_count = func() -> int: 
 	return _base_resource_count + _curr_resource_count - _used_resource_count
@@ -27,14 +26,13 @@ func _ready():
 	_game_ui._pressed_button_type.connect(_change_building)
 
 func _unhandled_input(event):
-	if !is_instance_valid(_grid_manager._cursor_tml._ghost_cursor): return
-	
 	match(_curr_state):
-		State.Base:
-			pass
-		State.PlacingBuilding:
+		GameEvents.State.Base:
+			if event.is_action_pressed(ACTION_RIGHT_CLICK):
+				_destroy_building()
+		GameEvents.State.PlacingBuilding:
 			if (event.is_action_pressed(ACTION_CANCEL)):
-				_cancel_building()
+				_state_manager._change_state(GameEvents.State.Base, self)
 			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
 					&& _building_resource != null
 					&& _grid_manager._cursor_tml._ghost_cursor.visible
@@ -42,30 +40,22 @@ func _unhandled_input(event):
 				_place_building()
 		_:
 			pass
-	
-	
-	if (event.is_action_pressed(ACTION_CANCEL)):
-		_cancel_building()
-	elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
-			&& _building_resource != null
-			&& _grid_manager._cursor_tml._ghost_cursor.visible
-			&& _is_building_placable(_grid_manager._temp_grid_pos)):
-		_place_building()
 
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
-	if !is_instance_valid(_grid_manager._cursor_tml._ghost_cursor): return
-	
-	if (_building_resource != null 
-			&& (_game_ui._button_manager._active_button_checker())
-			&& (_grid_manager._temp_grid_pos != null 
-			|| _grid_manager._temp_grid_pos != 
-			_grid_manager._get_mouse_grid_pos_without_update())):
-		_update_grid_display()
+	if (_grid_manager._temp_grid_pos != 
+				_grid_manager._get_mouse_grid_pos_without_update()):
+		_grid_manager._get_mouse_grid_pos()
+		_update_grid_pos()
+
+func _update_grid_pos() -> void:
+	match _curr_state:
+		GameEvents.State.Base:
+			pass
+		GameEvents.State.PlacingBuilding:
+			_update_grid_display()
 
 func _update_grid_display() -> void:
-	if _grid_manager._temp_grid_pos == null: return
-	
 	_grid_manager._update_grid()
 	
 	if _is_building_placable(_grid_manager._temp_grid_pos):
@@ -83,19 +73,12 @@ func _is_building_placable(pos: Vector2i) -> bool:
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
-	var building: Node2D
-	
-	if _grid_manager._temp_grid_pos == null: return
-	
-	building = _building_resource.building_scene.instantiate() as Node2D
-	_game_ui._button_manager._building_placed(
-		_game_ui._button_manager._current_building_type)
-	
+	var building = _building_resource.building_scene.instantiate() as Node2D
 	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._temp_grid_pos * 64
 	
 	_used_resource_count += _building_resource.resource_cost
-	_cancel_building()
+	_state_manager._change_state(GameEvents.State.Base, self)
 
 func _cancel_building() -> void:
 	_grid_manager._highlight_tml._clear()
@@ -103,16 +86,14 @@ func _cancel_building() -> void:
 	if is_instance_valid(_grid_manager._cursor_tml._ghost_cursor):
 		_grid_manager._cursor_tml._ghost_cursor.queue_free()
 
+func _destroy_building() -> void:
+	pass
+
 func _on_resource_tiles_updated(count: int):
 	_curr_resource_count = count
 
 func _change_building(resource: BuildingResource):
-	if is_instance_valid(_grid_manager._cursor_tml._ghost_cursor): 
-		_grid_manager._cursor_tml._ghost_cursor.queue_free()
-	
-	var building_ghost = _building_ghost_scene.instantiate() as BuildingGhost
-	_grid_manager._cursor_tml._ghost_cursor = building_ghost
-	_grid_manager._cursor_tml.add_child(building_ghost)
+	_state_manager._change_state(GameEvents.State.PlacingBuilding, self)
 	var building_ghost_sprite = resource.sprite_scene.instantiate() as Sprite2D
 	_grid_manager._cursor_tml._cursor_sprite = building_ghost_sprite
 	_grid_manager._cursor_tml._ghost_cursor.add_child(building_ghost_sprite)

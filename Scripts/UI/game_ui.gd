@@ -23,7 +23,7 @@ func _create_building_buttons() -> void:
 
 func _button_pressed(button: BuildingResource):
 	_pressed_button_type.emit(button)
-	_button_manager._button_pressed(_grid_manager, button.display_name)
+	_button_manager._button_pressed(_grid_manager)
 
 func _access_gm(gm: GridManager) -> void:
 	self._grid_manager = gm

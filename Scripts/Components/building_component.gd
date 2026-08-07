@@ -18,4 +18,4 @@ func _ready():
 	emit.call_deferred()
 
 func _get_grid_pos(cursor: CursorTML) -> Vector2i:
-	return cursor.process_mouse_pos(self.global_position)
+	return cursor._process_global_pos(self.global_position)

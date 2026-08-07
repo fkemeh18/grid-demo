@@ -7,21 +7,25 @@ extends Node
 
 var _temp_grid_pos: Vector2i
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
+var _curr_state = GameEvents.State.Base
 
 func _ready():
 	GameEvents._instance.building_placed.connect(_on_placed_building)
 	_all_tile_map_layers = _get_all_tile_map_layers(_base_terrain_tml)
 
 func _process(delta):
-	_cursor_tml.set_tile(_get_mouse_grid_pos())
-	
+	match _curr_state:
+		GameEvents.State.Base:
+			pass
+		GameEvents.State.PlacingBuilding:
+			_cursor_tml.set_tile(_get_mouse_grid_pos())
+
 func _get_mouse_grid_pos() -> Vector2i:
 	_temp_grid_pos = _get_mouse_grid_pos_without_update()
 	return _temp_grid_pos
 
 func _get_mouse_grid_pos_without_update() -> Vector2i:
-	var mouse_pos = _highlight_tml.get_global_mouse_position()
-	return _cursor_tml.process_mouse_pos(mouse_pos)
+	return _cursor_tml.process_mouse_pos()
 
 func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	for layer in _all_tile_map_layers:
