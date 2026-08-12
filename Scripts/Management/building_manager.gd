@@ -87,7 +87,18 @@ func _cancel_building() -> void:
 		_grid_manager._cursor_tml._ghost_cursor.queue_free()
 
 func _destroy_building() -> void:
-	pass
+	var buildings = (get_tree().get_nodes_in_group(
+					GameEvents.BUILDING_COMPONENT) as Array[BuildingComponent])
+	var target_building = buildings.filter(func(building): 
+		return (building._get_grid_pos(_grid_manager._cursor_tml) 
+		== _grid_manager._temp_grid_pos)).front()
+	
+	if target_building == null: return
+	
+	_used_resource_count -= target_building.building_resource.resource_cost
+	
+	target_building._self_destruct()
+	print(_available_resource_count.call())
 
 func _on_resource_tiles_updated(count: int):
 	_curr_resource_count = count

@@ -48,14 +48,15 @@ func _resource_tile_filter_fn(pos: Vector2i, gm: GridManager) -> bool:
 
 func _update_valid_buildable_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:
+	_built_tile_locations[comp._get_grid_pos(gm._cursor_tml)] = true
 	var grid_tile_pos = comp._get_grid_pos(gm._cursor_tml)
 	var radius = comp.building_resource.buildable_radius
 	var valid_tiles = _get_valid_tiles_in_radius(grid_tile_pos, radius, gm)
-	var occupied_tiles = _get_occupied_tiles(comp, gm)
+	#var occupied_tiles = _get_occupied_tiles(comp, gm)
 	
 	_valid_buildable_tiles.merge(valid_tiles)
 	
-	for existing_bc in occupied_tiles:
+	for existing_bc in _built_tile_locations:
 		_valid_buildable_tiles.erase(existing_bc)
 
 func _update_collected_resource_tiles(comp: BuildingComponent, 
@@ -78,10 +79,8 @@ func highlight_expanded_buildable_tiles(pos: Vector2i, radius: int,
 	
 	for tile in _valid_buildable_tiles:
 		expanded_tiles.erase(tile)
-	
 	for tile in _built_tile_locations:
 		expanded_tiles.erase(tile)
-	
 	for tile_pos in expanded_tiles:
 		set_cell(tile_pos, 0, atlas_coords)
 
@@ -93,14 +92,13 @@ func highlight_resource_tiles(pos: Vector2i, radius: int,
 	for tile_pos in resource_tiles:
 		set_cell(tile_pos, 0, atlas_coords)
 
-func _get_occupied_tiles(comp: BuildingComponent, 
-							gm: GridManager) -> Dictionary[Vector2i, bool]:
-	var building_components: Array[BuildingComponent]
-	
-	for node in get_tree().get_nodes_in_group(comp.bc_name):
-		building_components.append(node as BuildingComponent)
-	
-	for tile in building_components:
-		_built_tile_locations[tile._get_grid_pos(gm._cursor_tml)] = true
-	
-	return _built_tile_locations
+#func _get_occupied_tiles(comp: BuildingComponent, 
+							#gm: GridManager) -> Dictionary[Vector2i, bool]:
+	#var building_components: Array[BuildingComponent]
+	#
+	#for node in get_tree().get_nodes_in_group(comp.bc_name):
+		#building_components.append(node as BuildingComponent)
+	#for tile in building_components:
+		#_built_tile_locations[tile._get_grid_pos(gm._cursor_tml)] = true
+	#
+	#return _built_tile_locations

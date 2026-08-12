@@ -19,3 +19,7 @@ func _ready():
 
 func _get_grid_pos(cursor: CursorTML) -> Vector2i:
 	return cursor._process_global_pos(self.global_position)
+
+func _self_destruct() -> void:
+	GameEvents.emit_on_building_destroyed(self)
+	owner.queue_free()
