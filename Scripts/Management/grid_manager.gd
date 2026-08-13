@@ -66,9 +66,6 @@ func _refresh_grid(excluded_bc: BuildingComponent) -> void:
 	
 	var buildings = (get_tree().get_nodes_in_group(
 					GameEvents.BUILDING_COMPONENT) as Array[BuildingComponent])
-	var test: Array[BuildingComponent]
-	
-	print(buildings.is_same_typed(test))
 	buildings = buildings.filter(func(building): return building != excluded_bc)
 	
 	for building in buildings:
@@ -77,6 +74,7 @@ func _refresh_grid(excluded_bc: BuildingComponent) -> void:
 	
 	_highlight_tml._resource_tiles_updated.emit(
 					_highlight_tml._collected_resource_tiles.size())
+	_highlight_tml._grid_updated.emit()
 
 func _get_all_tile_map_layers(
 		base_layer: TileMapLayer) -> Dictionary[TileMapLayer, bool]:

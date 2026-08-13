@@ -4,6 +4,7 @@ extends TileMapLayer
 const IS_BUILDABLE = "is_buildable"
 const IS_WOOD = "is_wood"
 
+signal _grid_updated()
 signal _resource_tiles_updated(collected_tiles: int)
 
 @export var bc: BuildingComponent
@@ -58,6 +59,8 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	
 	for existing_bc in _built_tile_locations:
 		_valid_buildable_tiles.erase(existing_bc)
+	
+	_grid_updated.emit()
 
 func _update_collected_resource_tiles(comp: BuildingComponent, 
 										gm: GridManager) -> void:
@@ -71,6 +74,8 @@ func _update_collected_resource_tiles(comp: BuildingComponent,
 	
 	if old_resource_tile_count != _collected_resource_tiles.size():
 		_resource_tiles_updated.emit(_collected_resource_tiles.size())
+	
+	_grid_updated.emit()
 
 func highlight_expanded_buildable_tiles(pos: Vector2i, radius: int,
 		gm: GridManager) -> void:
@@ -91,14 +96,3 @@ func highlight_resource_tiles(pos: Vector2i, radius: int,
 	
 	for tile_pos in resource_tiles:
 		set_cell(tile_pos, 0, atlas_coords)
-
-#func _get_occupied_tiles(comp: BuildingComponent, 
-							#gm: GridManager) -> Dictionary[Vector2i, bool]:
-	#var building_components: Array[BuildingComponent]
-	#
-	#for node in get_tree().get_nodes_in_group(comp.bc_name):
-		#building_components.append(node as BuildingComponent)
-	#for tile in building_components:
-		#_built_tile_locations[tile._get_grid_pos(gm._cursor_tml)] = true
-	#
-	#return _built_tile_locations

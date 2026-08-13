@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c4newqswu33l4" path="res://Scenes/UI/game_ui.tscn" id="4_d1ilt"]
 [ext_resource type="Script" uid="uid://b8cbnbo0xyu3r" path="res://Scripts/Management/state_manager.gd" id="5_6iyac"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/Tiles/highlight_tileset.tres" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="8_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://dy2cptdx8fjs0" path="res://Scenes/Mgmt/grid_manager.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://cae17urkfnx6s" path="res://Scenes/UI/building_ghost.tscn" id="10_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="10_hptm8"]
@@ -22,9 +23,11 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_building_manager")]
+[node name="Main" type="Node" unique_id=753930638 node_paths=PackedStringArray("_building_manager", "_grid_manager", "_gold_mine")]
 script = ExtResource("1_8gbba")
 _building_manager = NodePath("Management/BuildingManager")
+_grid_manager = NodePath("Management/GridManager")
+_gold_mine = NodePath("TMLs/YSortRoot/GoldMine")
 
 [node name="Management" type="Node" parent="." unique_id=300734742]
 
@@ -61,6 +64,9 @@ tile_set = ExtResource("3_6bp64")
 
 [node name="B-Base" parent="TMLs/YSortRoot" unique_id=584149431 instance=ExtResource("10_hptm8")]
 position = Vector2(640, 512)
+
+[node name="GoldMine" parent="TMLs/YSortRoot" unique_id=410088829 instance=ExtResource("8_fdnlq")]
+position = Vector2(960, 192)
 
 [node name="CursorTileMapLayer" type="TileMapLayer" parent="TMLs/YSortRoot" unique_id=1977800345]
 y_sort_enabled = true
