@@ -56,6 +56,10 @@ y_sort_enabled = true
 y_sort_enabled = true
 tile_set = ExtResource("3_6bp64")
 
+[node name="FoamMapLayer" type="TileMapLayer" parent="TMLs/YSortRoot/BaseTerrainLayer" unique_id=2014037067]
+y_sort_enabled = true
+tile_set = ExtResource("3_6bp64")
+
 [node name="B-Base" parent="TMLs/YSortRoot" unique_id=584149431 instance=ExtResource("10_hptm8")]
 
 [node name="GoldMine" parent="TMLs/YSortRoot" unique_id=410088829 instance=ExtResource("8_fdnlq")]
