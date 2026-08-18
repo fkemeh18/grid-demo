@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GridDemo"
-run/main_scene="uid://c6qn3ovk2nvmt"
+run/main_scene="uid://bfnwsvcja4kjo"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/Other/icon.svg"
 

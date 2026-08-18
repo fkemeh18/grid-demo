@@ -1,4 +1,4 @@
-class_name Game
+class_name BaseLevel
 extends Node
 
 @export var _building_manager: BuildingManager
