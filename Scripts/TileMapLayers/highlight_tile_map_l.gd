@@ -3,6 +3,7 @@ extends TileMapLayer
 
 const IS_BUILDABLE = "is_buildable"
 const IS_WOOD = "is_wood"
+const IS_IGNORED = "is_ignored"
 
 signal _grid_updated()
 signal _resource_tiles_updated(collected_tiles: int)

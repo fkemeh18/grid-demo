@@ -1,5 +1,5 @@
 class_name GameUI
-extends MarginContainer
+extends CanvasLayer
 
 signal _waiting_on_main
 signal _pressed_button_type(resource: BuildingResource)

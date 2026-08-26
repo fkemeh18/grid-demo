@@ -20,3 +20,6 @@ func _set_boundary(bounds: Rect2i) -> void:
 	limit_right = bounds.end.x * TILE_SIZE
 	limit_top = bounds.position.y * TILE_SIZE
 	limit_bottom = bounds.end.y * TILE_SIZE
+
+func _center_on_pos(pos: Vector2) -> void:
+	global_position = pos

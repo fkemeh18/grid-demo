@@ -4,6 +4,7 @@ extends Node
 @export var _building_manager: BuildingManager
 @export var _grid_manager: GridManager
 @export var _game_camera: GameCamera
+@export var _base_building: Node2D
 @export var _gold_mine: GoldMine
 
 func _ready():
@@ -11,6 +12,7 @@ func _ready():
 	_grid_manager._highlight_tml._grid_updated.connect(_on_grid_updated)
 	
 	_game_camera._set_boundary(_grid_manager._base_terrain_tml.get_used_rect())
+	_game_camera._center_on_pos(_base_building.global_position)
 
 func _main_is_ready():
 	_building_manager._game_ui._create_building_buttons()

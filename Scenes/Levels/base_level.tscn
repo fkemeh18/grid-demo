@@ -24,11 +24,12 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="BaseLevel" type="Node" unique_id=753930638 node_paths=PackedStringArray("_building_manager", "_grid_manager", "_game_camera", "_gold_mine")]
+[node name="BaseLevel" type="Node" unique_id=753930638 node_paths=PackedStringArray("_building_manager", "_grid_manager", "_game_camera", "_base_building", "_gold_mine")]
 script = ExtResource("1_8gbba")
 _building_manager = NodePath("Management/BuildingManager")
 _grid_manager = NodePath("Management/GridManager")
 _game_camera = NodePath("GameCamera")
+_base_building = NodePath("TMLs/YSortRoot/B-Base")
 _gold_mine = NodePath("TMLs/YSortRoot/GoldMine")
 
 [node name="Management" type="Node" parent="." unique_id=300734742]
@@ -48,6 +49,8 @@ _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
 [node name="StateManager" type="Node" parent="Management" unique_id=513992422 node_paths=PackedStringArray("_gm")]
 script = ExtResource("5_6iyac")
 _gm = NodePath("../GridManager")
+
+[node name="GameUI" parent="." unique_id=2137080717 instance=ExtResource("4_d1ilt")]
 
 [node name="GameCamera" parent="." unique_id=380319505 instance=ExtResource("6_3o7cg")]
 
@@ -78,5 +81,3 @@ modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("5_kry3j")
 script = ExtResource("4_21xkr")
 bc = NodePath("../YSortRoot/B-Base/BuildingComponent")
-
-[node name="GameUI" parent="." unique_id=2137080717 instance=ExtResource("4_d1ilt")]

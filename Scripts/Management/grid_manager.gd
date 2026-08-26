@@ -31,7 +31,8 @@ func _get_mouse_grid_pos_without_update() -> Vector2i:
 func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	for layer in _all_tile_map_layers:
 		var custom_terrain_data = layer.get_cell_tile_data(pos)
-		if custom_terrain_data == null: continue
+		if (custom_terrain_data == null || custom_terrain_data.get_custom_data(
+					_highlight_tml.IS_IGNORED)): continue
 		return custom_terrain_data.get_custom_data(data_name) as bool
 	
 	return false

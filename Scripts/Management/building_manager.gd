@@ -10,9 +10,9 @@ const ACTION_RIGHT_CLICK: StringName = "right_click"
 @export var _game_ui: GameUI
 @export var _y_sort_root: Node2D
 @export var _building_ghost_scene: PackedScene
+@export var _base_resource_count: int
 
 var _building_resource: BuildingResource
-var _base_resource_count:= 4
 var _curr_resource_count: int
 var _used_resource_count: int
 var _curr_state: GameEvents.State
