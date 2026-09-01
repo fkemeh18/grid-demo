@@ -36,15 +36,16 @@ func _unhandled_input(event):
 			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
 					&& _building_resource != null
 					&& _grid_manager._cursor_tml._ghost_cursor.visible
-					&& _is_building_placable(_grid_manager._temp_grid_pos)):
+					&& _is_building_placable(_grid_manager._hovered_rect_pos)):
 				_place_building()
 		_:
 			pass
 
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
-	if (_grid_manager._temp_grid_pos != 
-				_grid_manager._get_mouse_grid_pos_without_update()):
+	var root_cell = _grid_manager._hovered_rect_pos.position
+	
+	if (root_cell != _grid_manager._get_mouse_grid_pos_without_update()):
 		_grid_manager._get_mouse_grid_pos()
 		_update_grid_pos()
 
@@ -58,24 +59,37 @@ func _update_grid_pos() -> void:
 func _update_grid_display() -> void:
 	_grid_manager._update_grid()
 	
-	if _is_building_placable(_grid_manager._temp_grid_pos):
-		_grid_manager._update_expanded_tiles(_grid_manager._temp_grid_pos, 
+	if _is_building_placable(_grid_manager._hovered_rect_pos):
+		_grid_manager._update_expanded_tiles(_grid_manager._hovered_rect_pos, 
 			_building_resource.buildable_radius)
-		_grid_manager._update_resource_tiles(_grid_manager._temp_grid_pos, 
+		_grid_manager._update_resource_tiles(_grid_manager._hovered_rect_pos, 
 			_building_resource.resource_radius)
 		_grid_manager._cursor_tml._ghost_cursor._set_valid()
 	else: _grid_manager._cursor_tml._ghost_cursor._set_invalid()
 
-func _is_building_placable(pos: Vector2i) -> bool:
-	return (_grid_manager._is_cell_currently_buildable(pos)
-			&& (_available_resource_count.call() 
-			>= _building_resource.resource_cost))
+func _is_building_placable(pos: Rect2i) -> bool:
+	var tiles_at_pos : Array[Vector2i] = _get_tiles_at_pos(pos).keys()
+	var all_tiles_buildable = tiles_at_pos.all(func(tile):
+							_grid_manager._is_cell_currently_buildable(tile))
+	
+	#print(all_tiles_buildable)
+	return all_tiles_buildable && (_available_resource_count.call() 
+			>= _building_resource.resource_cost)
+
+func _get_tiles_at_pos(pos: Rect2i) -> Dictionary[Vector2i, bool]:
+	var tiles: Dictionary[Vector2i, bool]
+	
+	for x in range(pos.position.x, pos.end.x):
+		for y in range(pos.position.y, pos.end.y):
+			tiles[Vector2i(x, y)] = true
+	
+	return tiles
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
 	var building = _building_resource.building_scene.instantiate() as Node2D
 	_y_sort_root.add_child(building)
-	building.global_position = _grid_manager._temp_grid_pos * 64
+	building.global_position = _grid_manager._hovered_rect_pos.position * 64
 	
 	_used_resource_count += _building_resource.resource_cost
 	_state_manager._change_state(GameEvents.State.Base, self)
@@ -87,11 +101,13 @@ func _cancel_building() -> void:
 		_grid_manager._cursor_tml._ghost_cursor.queue_free()
 
 func _destroy_building() -> void:
+	var root_cell = _grid_manager._hovered_rect_pos.position
+	
 	var buildings = (get_tree().get_nodes_in_group(
 					GameEvents.BUILDING_COMPONENT) as Array[BuildingComponent])
 	var target_building = buildings.filter(func(building): 
 		return (building._get_grid_pos(_grid_manager._cursor_tml) 
-		== _grid_manager._temp_grid_pos)).front()
+		== root_cell)).front()
 	
 	if target_building == null: return
 	
@@ -105,6 +121,8 @@ func _on_resource_tiles_updated(count: int):
 
 func _change_building(resource: BuildingResource):
 	_state_manager._change_state(GameEvents.State.PlacingBuilding, self)
+	_grid_manager._hovered_rect_pos.size = resource.dimensions
+	
 	var building_ghost_sprite = resource.sprite_scene.instantiate() as Sprite2D
 	_grid_manager._cursor_tml._cursor_sprite = building_ghost_sprite
 	_grid_manager._cursor_tml._ghost_cursor.add_child(building_ghost_sprite)

@@ -20,6 +20,17 @@ func _ready():
 func _get_grid_pos(cursor: CursorTML) -> Vector2i:
 	return cursor._process_global_pos(self.global_position)
 
+func _get_occupied_cell_positions(
+							cursor: CursorTML) -> Dictionary[Vector2i, bool]:
+	var tiles: Dictionary[Vector2i, bool]
+	var grid_pos = _get_grid_pos(cursor)
+	
+	for x in range(grid_pos.x, grid_pos.x + building_resource.dimensions.x):
+		for y in range(grid_pos.y, grid_pos.y + building_resource.dimensions.y):
+			tiles[Vector2i(x,y)] = true
+	
+	return tiles
+
 func _self_destruct() -> void:
 	GameEvents.emit_on_building_destroyed(self)
 	owner.queue_free()

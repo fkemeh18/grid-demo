@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_gayef")
 display_name = "Tower"
+dimensions = Vector2i(2, 2)
 buildable_radius = 3
 resource_cost = 4
 building_scene = ExtResource("1_tjdwm")

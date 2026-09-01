@@ -13,8 +13,8 @@ func _process_global_pos(pos: Vector2) -> Vector2i:
 	return local_to_map(to_local(pos))
 
 # handles tile grid rect location
-func set_tile(pos: Vector2i) -> void:
-	_ghost_cursor.position = pos * 64
+func set_tile(pos: Rect2i) -> void:
+	_ghost_cursor.position = pos.position * 64
 
 func _toggle_visibility_on() -> void:
 	if !is_instance_valid(_ghost_cursor): return

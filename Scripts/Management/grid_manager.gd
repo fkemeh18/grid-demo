@@ -5,7 +5,7 @@ extends Node
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
 
-var _temp_grid_pos: Vector2i
+var _hovered_rect_pos: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE)
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 var _curr_state = GameEvents.State.Base
 
@@ -21,9 +21,9 @@ func _process(delta):
 		GameEvents.State.PlacingBuilding:
 			_cursor_tml.set_tile(_get_mouse_grid_pos())
 
-func _get_mouse_grid_pos() -> Vector2i:
-	_temp_grid_pos = _get_mouse_grid_pos_without_update()
-	return _temp_grid_pos
+func _get_mouse_grid_pos() -> Rect2i:
+	_hovered_rect_pos.position = _get_mouse_grid_pos_without_update()
+	return _hovered_rect_pos
 
 func _get_mouse_grid_pos_without_update() -> Vector2i:
 	return _cursor_tml.process_mouse_pos()
@@ -38,6 +38,7 @@ func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	return false
 
 func _is_cell_currently_buildable(pos: Vector2i) -> bool:
+	print(_highlight_tml._valid_buildable_tiles.has(pos))
 	return _highlight_tml._valid_buildable_tiles.has(pos)
 
 func _on_placed_building(bc: BuildingComponent) -> void:
@@ -54,10 +55,10 @@ func _update_grid() -> void:
 func _update_highlight_tiles() -> void:
 	_highlight_tml.highlight_buildable_tiles()
 
-func _update_expanded_tiles(pos: Vector2i, radius: int) -> void:
+func _update_expanded_tiles(pos: Rect2i, radius: int) -> void:
 	_highlight_tml.highlight_expanded_buildable_tiles(pos, radius, self)
 
-func _update_resource_tiles(pos: Vector2i, radius: int) -> void:
+func _update_resource_tiles(pos: Rect2i, radius: int) -> void:
 	_highlight_tml.highlight_resource_tiles(pos, radius, self)
 
 func _refresh_grid(excluded_bc: BuildingComponent) -> void:
