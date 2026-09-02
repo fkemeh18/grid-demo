@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dybvi08are3vt" path="res://Assets/Buildings/house_blue.png" id="1_o2gcr"]
 
 [node name="VillageSprite" type="Sprite2D" unique_id=1133643605]
-position = Vector2(32, 32)
+position = Vector2(64, 96)
 texture = ExtResource("1_o2gcr")
 centered = false
-offset = Vector2(-64, -140)
+offset = Vector2(-64, -172)

@@ -69,9 +69,11 @@ func _update_grid_display() -> void:
 
 func _is_building_placable(pos: Rect2i) -> bool:
 	var tiles_at_pos : Array[Vector2i] = _get_tiles_at_pos(pos).keys()
+	#print(tiles_at_pos)
 	var all_tiles_buildable = tiles_at_pos.all(func(tile):
-							_grid_manager._is_cell_currently_buildable(tile))
+					return _grid_manager._is_cell_currently_buildable(tile))
 	
+	#print("")
 	#print(all_tiles_buildable)
 	return all_tiles_buildable && (_available_resource_count.call() 
 			>= _building_resource.resource_cost)

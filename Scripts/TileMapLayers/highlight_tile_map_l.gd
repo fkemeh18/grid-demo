@@ -43,14 +43,14 @@ func highlight_resource_tiles(pos: Rect2i, radius: int,
 
 func _get_tiles_in_radius(pos: Rect2i, radius: int,
 		filter_func: Callable) -> Dictionary[Vector2i, bool]:
-	var resource_tiles: Dictionary[Vector2i, bool]
+	var tiles: Dictionary[Vector2i, bool]
 	
 	for i in range(pos.position.x - radius, pos.end.x + (radius + 1)):
 		for j in range(pos.position.y - radius, pos.end.y + (radius + 1)):
 			if !filter_func.call(Rect2i(Vector2i(i, j), pos.size)): continue
-			resource_tiles[Vector2i(i, j)] = true
+			tiles[Vector2i(i, j)] = true
 	
-	return resource_tiles
+	return tiles
 
 func _get_valid_tiles_in_radius(pos: Rect2i, radius: int,
 		gm: GridManager) -> Dictionary[Vector2i, bool]:

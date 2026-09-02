@@ -10,4 +10,3 @@ y_sort_enabled = true
 building_resource_path = "uid://dy1cir41tjt3f"
 
 [node name="TowerSprite" parent="." unique_id=1777519973 instance=ExtResource("2_wnsun")]
-position = Vector2(32, 32)

@@ -48,7 +48,7 @@ tile_map_data = PackedByteArray("AAAFAAMAAQAAAAAAAAAGAAIAAQAAAAAAAAAFAAIAAQAAAAA
 tile_set = ExtResource("2_4dpyx")
 
 [node name="B-Base" parent="TMLs/YSortRoot" parent_id_path=PackedInt32Array(505001936) index="1" unique_id=584149431]
-position = Vector2(448, 576)
+position = Vector2(448, 640)
 
 [node name="GoldMine" parent="TMLs/YSortRoot" parent_id_path=PackedInt32Array(505001936) index="2" unique_id=410088829]
 position = Vector2(576, 128)

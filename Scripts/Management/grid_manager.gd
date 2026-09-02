@@ -28,6 +28,7 @@ func _get_mouse_grid_pos() -> Rect2i:
 func _get_mouse_grid_pos_without_update() -> Vector2i:
 	return _cursor_tml.process_mouse_pos()
 
+#not here
 func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	for layer in _all_tile_map_layers:
 		var custom_terrain_data = layer.get_cell_tile_data(pos)
@@ -38,7 +39,7 @@ func _does_tile_have_custom_data(pos: Vector2i, data_name: String) -> bool:
 	return false
 
 func _is_cell_currently_buildable(pos: Vector2i) -> bool:
-	print(_highlight_tml._valid_buildable_tiles.has(pos))
+	#print(_highlight_tml._valid_buildable_tiles.has(pos))
 	return _highlight_tml._valid_buildable_tiles.has(pos)
 
 func _on_placed_building(bc: BuildingComponent) -> void:
