@@ -7,6 +7,6 @@
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." unique_id=1013691913 instance=ExtResource("1_wnsun")]
-building_resource_path = "uid://dy1cir41tjt3f"
+_building_resource_path = "uid://dy1cir41tjt3f"
 
 [node name="TowerSprite" parent="." unique_id=1777519973 instance=ExtResource("2_wnsun")]

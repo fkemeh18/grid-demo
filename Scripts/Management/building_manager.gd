@@ -110,8 +110,7 @@ func _destroy_building() -> void:
 	
 	var target_building = buildings.filter(func(building): 
 		return (building.building_resource.is_deletable
-				&& building._get_grid_pos(_grid_manager._cursor_tml) 
-		== root_cell)).front()
+				&& building.is_tile_in_built_area(root_cell))).front()
 	
 	if target_building == null: return
 	

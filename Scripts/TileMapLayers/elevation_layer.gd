@@ -1,0 +1,2 @@
+class_name ElevationLayer
+extends Node2D

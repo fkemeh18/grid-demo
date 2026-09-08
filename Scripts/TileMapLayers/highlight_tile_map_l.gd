@@ -70,8 +70,8 @@ func _resource_tile_filter_fn(pos: Rect2i, gm: GridManager) -> bool:
 
 func _update_valid_buildable_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:
-	_built_tile_locations.merge(comp._get_occupied_cell_positions(
-																gm._cursor_tml))
+	comp._calculate_occupied_cell_positions(gm._cursor_tml)
+	_built_tile_locations.merge(comp._get_occupied_cell_positions())
 	
 	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
 	var radius = comp.building_resource.buildable_radius

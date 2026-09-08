@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cl6uejf0lvjgg"]
+
+[ext_resource type="Script" uid="uid://dlh3lbvbd0iwh" path="res://Scripts/TileMapLayers/elevation_layer.gd" id="1_orv4d"]
+[ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="2_w5ye3"]
+
+[node name="ElevationLayer" type="Node2D" unique_id=1348278162]
+y_sort_enabled = true
+script = ExtResource("1_orv4d")
+
+[node name="ShadowLayer" type="TileMapLayer" parent="." unique_id=1119269593]
+y_sort_enabled = true
+tile_set = ExtResource("2_w5ye3")
+
+[node name="ShadowLayer2" type="TileMapLayer" parent="." unique_id=1178792843]
+y_sort_enabled = true
+tile_set = ExtResource("2_w5ye3")
+
+[node name="TerrainLayer" type="TileMapLayer" parent="." unique_id=844594824]
+y_sort_enabled = true
+tile_set = ExtResource("2_w5ye3")
