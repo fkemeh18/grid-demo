@@ -47,8 +47,11 @@ func _get_tiles_in_radius(pos: Rect2i, radius: int,
 	
 	for i in range(pos.position.x - radius, pos.end.x + (radius + 1)):
 		for j in range(pos.position.y - radius, pos.end.y + (radius + 1)):
-			if !filter_func.call(Rect2i(Vector2i(i, j), pos.size)): continue
-			tiles[Vector2i(i, j)] = true
+			var custom_data = filter_func.call(Rect2i(Vector2i(i, j), pos.size))
+			var data_key = custom_data.keys()
+			if data_key.size() != 0:
+				if (!(custom_data.get(data_key[0]))): continue
+				tiles[Vector2i(i, j)] = true
 	
 	return tiles
 
@@ -62,11 +65,13 @@ func _get_resource_tiles_in_radius(pos: Rect2i, radius: int,
 	return _get_tiles_in_radius(pos, radius,
 			Callable(self, "_resource_tile_filter_fn").bind(gm))
 
-func _buildable_tile_filter_fn(pos: Rect2i, gm: GridManager) -> bool:
-	return gm._does_tile_have_custom_data(pos.position, IS_BUILDABLE)
+func _buildable_tile_filter_fn(pos: Rect2i,
+							gm: GridManager) -> Dictionary[TileMapLayer, bool]:
+	return gm._get_tile_custom_data(pos.position, IS_BUILDABLE)
 
-func _resource_tile_filter_fn(pos: Rect2i, gm: GridManager) -> bool:
-	return gm._does_tile_have_custom_data(pos.position, IS_WOOD)
+func _resource_tile_filter_fn(pos: Rect2i,
+							gm: GridManager) -> Dictionary[TileMapLayer, bool]:
+	return gm._get_tile_custom_data(pos.position, IS_WOOD)
 
 func _update_valid_buildable_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:

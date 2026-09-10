@@ -68,21 +68,20 @@ func _update_grid_display() -> void:
 	else: _grid_manager._cursor_tml._ghost_cursor._set_invalid()
 
 func _is_building_placable(pos: Rect2i) -> bool:
-	var tiles_at_pos : Array[Vector2i] = _get_tiles_at_pos(pos).keys()
-	var all_tiles_buildable = tiles_at_pos.all(func(tile):
-					return _grid_manager._is_cell_currently_buildable(tile))
+	
+	var all_tiles_buildable = _grid_manager._is_area_currently_buildable(pos)
 	
 	return all_tiles_buildable && (_available_resource_count.call() 
 			>= _building_resource.resource_cost)
 
-func _get_tiles_at_pos(pos: Rect2i) -> Dictionary[Vector2i, bool]:
-	var tiles: Dictionary[Vector2i, bool]
-	
-	for x in range(pos.position.x, pos.end.x):
-		for y in range(pos.position.y, pos.end.y):
-			tiles[Vector2i(x, y)] = true
-	
-	return tiles
+#func _get_tiles_at_pos(pos: Rect2i) -> Dictionary[Vector2i, bool]:
+	#var tiles: Dictionary[Vector2i, bool]
+	#
+	#for x in range(pos.position.x, pos.end.x):
+		#for y in range(pos.position.y, pos.end.y):
+			#tiles[Vector2i(x, y)] = true
+	#
+	#return tiles
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
