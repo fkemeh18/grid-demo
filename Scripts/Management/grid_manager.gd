@@ -49,12 +49,7 @@ func _is_cell_currently_buildable(pos: Vector2i) -> bool:
 	return _highlight_tml._valid_buildable_tiles.has(pos)
 
 func _is_area_currently_buildable(pos: Rect2i) -> bool:
-	var tiles: Dictionary[Vector2i, bool]
-	
-#	finds checkable tiles
-	for x in range(pos.position.x, pos.end.x):
-		for y in range(pos.position.y, pos.end.y):
-			tiles[Vector2i(x, y)] = true
+	var tiles := Rect2IExtension.to_tiles(pos)
 	
 #	stops if there are no checkable tiles
 	if tiles.is_empty(): return false
