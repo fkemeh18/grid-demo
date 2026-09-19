@@ -43,16 +43,7 @@ func highlight_resource_tiles(pos: Rect2i, radius: int,
 
 func _get_tiles_in_radius(pos: Rect2i, radius: int,
 		filter_func: Callable) -> Dictionary[Vector2i, bool]:
-	var tiles: Dictionary[Vector2i, bool]
-	
-	for i in range(pos.position.x - radius, pos.end.x + (radius + 1)):
-		for j in range(pos.position.y - radius, pos.end.y + (radius + 1)):
-			var custom_data = filter_func.call(Rect2i(Vector2i(i, j), pos.size))
-			var data_key = custom_data.keys()
-			if data_key.size() != 0:
-				if (!(custom_data.get(data_key[0]))): continue
-				tiles[Vector2i(i, j)] = true
-	
+	var tiles = GridMethods.get_tiles_in_radius(pos, radius, filter_func)
 	return tiles
 
 func _get_valid_tiles_in_radius(pos: Rect2i, radius: int,
@@ -81,7 +72,6 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
 	var radius = comp.building_resource.buildable_radius
 	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
-	
 	var valid_tiles = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
 	
 	_valid_buildable_tiles.merge(valid_tiles)
@@ -96,7 +86,6 @@ func _update_collected_resource_tiles(comp: BuildingComponent,
 	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
 	var radius = comp.building_resource.resource_radius
 	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
-	
 	var resource_tiles = _get_resource_tiles_in_radius(grid_rect_pos, radius, 
 		gm)
 	var old_resource_tile_count = _collected_resource_tiles.size()

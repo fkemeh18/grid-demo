@@ -74,15 +74,6 @@ func _is_building_placable(pos: Rect2i) -> bool:
 	return all_tiles_buildable && (_available_resource_count.call() 
 			>= _building_resource.resource_cost)
 
-#func _get_tiles_at_pos(pos: Rect2i) -> Dictionary[Vector2i, bool]:
-	#var tiles: Dictionary[Vector2i, bool]
-	#
-	#for x in range(pos.position.x, pos.end.x):
-		#for y in range(pos.position.y, pos.end.y):
-			#tiles[Vector2i(x, y)] = true
-	#
-	#return tiles
-
 #deals with the placement of sprite "building"
 func _place_building() -> void:
 	var building = _building_resource.building_scene.instantiate() as Node2D
@@ -120,6 +111,7 @@ func _destroy_building() -> void:
 
 func _on_resource_tiles_updated(count: int):
 	_curr_resource_count = count
+	print(_curr_resource_count)
 
 func _change_building(resource: BuildingResource):
 	_state_manager._change_state(GameEvents.State.PlacingBuilding, self)

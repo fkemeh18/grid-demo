@@ -30,7 +30,6 @@ func _get_mouse_grid_pos() -> Rect2i:
 func _get_mouse_grid_pos_without_update() -> Vector2i:
 	return _cursor_tml.process_mouse_pos()
 
-#not here
 func _get_tile_custom_data(pos: Vector2i,
 						data_name: String) -> Dictionary[TileMapLayer,bool]:
 	var custom_data: Dictionary[TileMapLayer, bool]
@@ -49,35 +48,17 @@ func _is_cell_currently_buildable(pos: Vector2i) -> bool:
 	return _highlight_tml._valid_buildable_tiles.has(pos)
 
 func _is_area_currently_buildable(pos: Rect2i) -> bool:
-	var tiles := Rect2IExtension.to_tiles(pos)
+	var tiles := GridMethods.to_tiles(pos)
 	
 #	stops if there are no checkable tiles
 	if tiles.is_empty(): return false
 	
-#	checkable tiles in array form
 	var tile_list = tiles.keys()
-#	checks for the layer of the first checkable tile 
-	var first_tml_dict = _get_tile_custom_data(
-								tile_list[0], _highlight_tml.IS_BUILDABLE)
-	var first_tml = first_tml_dict.keys().front()
+	var first_tml = GridMethods.get_first_tml(tile_list, self)
 #	gets the elevation of the layer of the first checkable tile
 	var target_elevation_layer = _tile_map_elevations.get(first_tml)
-	
-#	final check
-	var is_area_valid = tile_list.all(func(tile_pos): 
-#		checks the tilemaplayer of each tile
-		var valid_dict = _get_tile_custom_data(tile_pos, _highlight_tml.IS_BUILDABLE)
-		var valid_tml = valid_dict.keys().front()
-#		finds the associated elevation layer of that tilemaplayer
-		var elevation_layer = _tile_map_elevations[valid_tml]
-
-#		passes for the tile if builidable is true for it on that layer,
-		return (valid_dict[valid_tml]
-#		if the tile is valid for building at that location,
-				&& _highlight_tml._valid_buildable_tiles.has(tile_pos)
-#		and if the elevation level is the same as the target elevation
-				&& elevation_layer == target_elevation_layer))
-	
+	var is_area_valid = GridMethods.get_is_area_valid(self, tile_list,
+														target_elevation_layer)
 	return is_area_valid
 
 func _on_placed_building(bc: BuildingComponent) -> void:
@@ -101,37 +82,19 @@ func _update_resource_tiles(pos: Rect2i, radius: int) -> void:
 	_highlight_tml.highlight_resource_tiles(pos, radius, self)
 
 func _refresh_grid(excluded_bc: BuildingComponent) -> void:
-	_highlight_tml._built_tile_locations.clear()
-	_highlight_tml._valid_buildable_tiles.clear()
-	_highlight_tml._collected_resource_tiles.clear()
+	GridMethods.refresh_grids(self)
 	
-	var buildings = (get_tree().get_nodes_in_group(
-					GameEvents.BUILDING_COMPONENT) as Array[BuildingComponent])
-	buildings = buildings.filter(func(building): return building != excluded_bc)
+	var building_nodes: Array = (get_tree().get_nodes_in_group(
+					GameEvents.BUILDING_COMPONENT))
+	var buildings = GridMethods.get_other_building_components(excluded_bc, 
+																building_nodes)
 	
-	for building in buildings:
-		_highlight_tml._update_valid_buildable_tiles(building, self)
-		_highlight_tml._update_collected_resource_tiles(building, self)
-	
-	_highlight_tml._resource_tiles_updated.emit(
-					_highlight_tml._collected_resource_tiles.size())
-	_highlight_tml._grid_updated.emit()
+	GridMethods.update_tiles_for_other_bcs(buildings, self)
+	GridMethods.emit_tile_updates(self)
 
 func _get_all_tile_map_layers(
 		current_layer: Node2D) -> Dictionary[TileMapLayer, bool]:
-	var layer_list: Dictionary[TileMapLayer, bool]
-	var children = current_layer.get_children()
-	children.reverse()
-	
-	for child_layer in children:
-		if child_layer is Node2D:
-			var child_node: Node2D = child_layer
-			layer_list.merge(_get_all_tile_map_layers(child_node))
-	
-	if current_layer is TileMapLayer:
-		var layer: TileMapLayer = current_layer
-		layer_list[layer] = true
-	
+	var layer_list = GridMethods.get_layer_list(current_layer, self)
 	return layer_list
 
 func _map_layers_to_elevations() -> void:
