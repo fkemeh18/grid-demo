@@ -15,7 +15,7 @@ func _ready():
 	_game_camera._center_on_pos(_base_building.global_position)
 
 func _main_is_ready():
-	_building_manager._game_ui._create_building_buttons()
+	_building_manager._game_ui._create_building_sections()
 
 func _on_grid_updated() -> void:
 	var _gold_mine_pos = _grid_manager._cursor_tml._process_global_pos(

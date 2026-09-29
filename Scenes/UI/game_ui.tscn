@@ -5,11 +5,14 @@
 [ext_resource type="Script" uid="uid://dj3x22bpxcd2v" path="res://Scripts/ResourceScripts/Buildings/building_resource.gd" id="2_lolt2"]
 [ext_resource type="Resource" uid="uid://dy1cir41tjt3f" path="res://Resources/Custom/Buildings/tower.tres" id="3_tig4k"]
 [ext_resource type="Resource" uid="uid://clq04tbn1cvrs" path="res://Resources/Custom/Buildings/village.tres" id="4_plf53"]
+[ext_resource type="PackedScene" uid="uid://cwhj30aixnk11" path="res://Scenes/UI/building_section.tscn" id="6_tig4k"]
 
-[node name="GameUI" type="CanvasLayer" unique_id=1188910722 node_paths=PackedStringArray("_button_manager")]
+[node name="GameUI" type="CanvasLayer" unique_id=1188910722 node_paths=PackedStringArray("_button_manager", "building_section_container")]
 script = ExtResource("1_vo2tu")
 _button_manager = NodePath("MarginContainer/ButtonManager")
 _building_resources = Array[ExtResource("2_lolt2")]([ExtResource("4_plf53"), ExtResource("3_tig4k")])
+building_section_container = NodePath("MarginContainer/PanelContainer/BuildingSectionContainer")
+_building_section = ExtResource("6_tig4k")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2137080717]
 anchors_preset = 15
@@ -28,13 +31,6 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=593631800]
+[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=593631800]
 layout_mode = 2
-
-[node name="BuildingButton" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=944487585]
-layout_mode = 2
-theme_type_variation = &"PanelContainerAlt"
-
-[node name="Button" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/BuildingButton" unique_id=657447820]
-layout_mode = 2
-text = "Place Building"
+theme_override_constants/separation = 16

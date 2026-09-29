@@ -24,6 +24,7 @@ func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
 	_game_ui._pressed_button_type.connect(_change_building)
+	_game_ui._access_gm(_grid_manager)
 
 func _unhandled_input(event):
 	match(_curr_state):
@@ -122,5 +123,4 @@ func _change_building(resource: BuildingResource):
 	_grid_manager._cursor_tml._ghost_cursor.add_child(building_ghost_sprite)
 	
 	_building_resource = resource
-	_game_ui._access_gm(_grid_manager)
 	_update_grid_display()
