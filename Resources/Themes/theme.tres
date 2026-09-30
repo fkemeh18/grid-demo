@@ -1,7 +1,44 @@
 [gd_resource type="Theme" format=3 uid="uid://6ocdy3rr0ed"]
 
+[ext_resource type="Texture2D" uid="uid://nghxaq002ab8" path="res://Assets/UI/button_hover_9slides.png" id="1_sdhml"]
+[ext_resource type="Texture2D" uid="uid://bci474c5pn1o0" path="res://Assets/UI/button_red_9slides.png" id="1_un6fk"]
 [ext_resource type="Texture2D" uid="uid://d212w125fdwq" path="res://Assets/UI/banner_vertical.png" id="1_xmxca"]
+[ext_resource type="Texture2D" uid="uid://dtaryw1fvknwr" path="res://Assets/UI/button_red_9slides_pressed.png" id="2_3atox"]
 [ext_resource type="Texture2D" uid="uid://dtnjniafs5uh" path="res://Assets/UI/carved_9slides.png" id="2_wsp14"]
+[ext_resource type="FontFile" uid="uid://di5lka046que" path="res://Assets/UI/Bitfantasy.ttf" id="3_l01l7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3atox"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sdhml"]
+texture = ExtResource("1_sdhml")
+texture_margin_left = 23.0
+texture_margin_top = 20.0
+texture_margin_right = 23.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(7, 0, 178, 184)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3atox"]
+content_margin_bottom = 16.0
+texture = ExtResource("2_3atox")
+texture_margin_left = 23.0
+texture_margin_top = 20.0
+texture_margin_right = 23.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(5, 0, 182, 184)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_un6fk"]
+texture = ExtResource("1_un6fk")
+texture_margin_left = 23.0
+texture_margin_top = 20.0
+texture_margin_right = 23.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(7, 0, 178, 184)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_plf53"]
 texture = ExtResource("1_xmxca")
@@ -22,6 +59,18 @@ texture_margin_bottom = 24.0
 region_rect = Rect2(0, 0, 192, 192)
 
 [resource]
+default_font = ExtResource("3_l01l7")
+default_font_size = 16
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_3atox")
+Button/styles/hover = SubResource("StyleBoxTexture_sdhml")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_3atox")
+Button/styles/normal = SubResource("StyleBoxTexture_un6fk")
+Button/styles/pressed = SubResource("StyleBoxTexture_3atox")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_plf53")
 PanelContainerAlt/base_type = &"PanelContainer"
 PanelContainerAlt/styles/panel = SubResource("StyleBoxTexture_tig4k")
