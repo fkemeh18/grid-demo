@@ -1,22 +1,61 @@
 [gd_scene format=3 uid="uid://cwhj30aixnk11"]
 
 [ext_resource type="Script" uid="uid://bcg5o6nwbxnnq" path="res://Scripts/UI/building_section.gd" id="1_8w6s2"]
+[ext_resource type="Texture2D" uid="uid://bhqjkj3p62wsi" path="res://Assets/UI/wood_icon.png" id="2_w45sx"]
 
-[node name="BuildingSection" type="PanelContainer" unique_id=1966241508 node_paths=PackedStringArray("title_label", "select_button")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_w45sx"]
+atlas = ExtResource("2_w45sx")
+region = Rect2(39, 73, 32, 27)
+
+[node name="BuildingSection" type="PanelContainer" unique_id=1966241508 node_paths=PackedStringArray("title_label", "cost_label", "description_label", "select_button")]
 theme_type_variation = &"PanelContainerAlt"
 script = ExtResource("1_8w6s2")
-title_label = NodePath("VBoxContainer/Label")
-select_button = NodePath("VBoxContainer/Button")
+title_label = NodePath("VBoxContainer/VBoxContainer/TitleLabel")
+cost_label = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/CostLabel")
+description_label = NodePath("VBoxContainer/VBoxContainer/DescriptionLabel")
+select_button = NodePath("VBoxContainer/SelectButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1829021819]
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=25471732]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=340680740]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=25471732]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
 theme_override_font_sizes/font_size = 32
 text = "Village"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=1149426061]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=1055429507]
 layout_mode = 2
-text = "Select (Cost 3)"
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1817628745]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w45sx")
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1343287]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 32
+text = "4"
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=1768510789]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+text = "Collects Wood"
+horizontal_alignment = 1
+
+[node name="SelectButton" type="Button" parent="VBoxContainer" unique_id=1149426061]
+layout_mode = 2
+text = "Select"

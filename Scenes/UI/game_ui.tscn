@@ -6,13 +6,19 @@
 [ext_resource type="Resource" uid="uid://dy1cir41tjt3f" path="res://Resources/Custom/Buildings/tower.tres" id="3_tig4k"]
 [ext_resource type="Resource" uid="uid://clq04tbn1cvrs" path="res://Resources/Custom/Buildings/village.tres" id="4_plf53"]
 [ext_resource type="PackedScene" uid="uid://cwhj30aixnk11" path="res://Scenes/UI/building_section.tscn" id="6_tig4k"]
+[ext_resource type="Texture2D" uid="uid://bhqjkj3p62wsi" path="res://Assets/UI/wood_icon.png" id="7_plf53"]
 
-[node name="GameUI" type="CanvasLayer" unique_id=1188910722 node_paths=PackedStringArray("_button_manager", "building_section_container")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8jce"]
+atlas = ExtResource("7_plf53")
+region = Rect2(39, 73, 32, 27)
+
+[node name="GameUI" type="CanvasLayer" unique_id=1188910722 node_paths=PackedStringArray("_button_manager", "building_section_container", "_resource_label")]
 script = ExtResource("1_vo2tu")
 _button_manager = NodePath("MarginContainer/ButtonManager")
 _building_resources = Array[ExtResource("2_lolt2")]([ExtResource("4_plf53"), ExtResource("3_tig4k")])
-building_section_container = NodePath("MarginContainer/PanelContainer/BuildingSectionContainer")
+building_section_container = NodePath("MarginContainer/PanelContainer/VBoxContainer/BuildingSectionContainer")
 _building_section = ExtResource("6_tig4k")
+_resource_label = NodePath("MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/ResourceLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2137080717]
 anchors_preset = 15
@@ -31,6 +37,28 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=593631800]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1660140102]
 layout_mode = 2
-theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=802120810]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1123474785]
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_p8jce")
+stretch_mode = 3
+
+[node name="ResourceLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=912640384]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 48
+text = "4"
+
+[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=593631800]
+layout_mode = 2
+theme_override_constants/separation = 8

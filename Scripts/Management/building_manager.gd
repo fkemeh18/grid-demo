@@ -1,6 +1,8 @@
 class_name BuildingManager
 extends Node
 
+signal available_resource_count_changed(available_resource_count: int)
+
 const ACTION_LEFT_CLICK: StringName = "left_click"
 const ACTION_CANCEL: StringName = "cancel"
 const ACTION_RIGHT_CLICK: StringName = "right_click"
@@ -24,7 +26,9 @@ func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
 	_game_ui._pressed_button_type.connect(_change_building)
-	_game_ui._access_gm(_grid_manager)
+	#_game_ui._access_gm(_grid_manager)
+	available_resource_count_changed.emit.call_deferred(
+											_available_resource_count.call())
 
 func _unhandled_input(event):
 	match(_curr_state):
@@ -83,6 +87,7 @@ func _place_building() -> void:
 	
 	_used_resource_count += _building_resource.resource_cost
 	_state_manager._change_state(GameEvents.State.Base, self)
+	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _cancel_building() -> void:
 	_grid_manager._highlight_tml._clear()
@@ -108,11 +113,11 @@ func _destroy_building() -> void:
 	_used_resource_count -= target_building.building_resource.resource_cost
 	
 	target_building._self_destruct()
-	print(_available_resource_count.call())
+	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _on_resource_tiles_updated(count: int):
 	_curr_resource_count = count
-	print(_curr_resource_count)
+	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _change_building(resource: BuildingResource):
 	_state_manager._change_state(GameEvents.State.PlacingBuilding, self)

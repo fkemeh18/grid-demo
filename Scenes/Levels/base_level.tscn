@@ -50,7 +50,8 @@ _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
 script = ExtResource("5_6iyac")
 _gm = NodePath("../GridManager")
 
-[node name="GameUI" parent="." unique_id=2137080717 instance=ExtResource("4_d1ilt")]
+[node name="GameUI" parent="." unique_id=2137080717 node_paths=PackedStringArray("_building_manager") instance=ExtResource("4_d1ilt")]
+_building_manager = NodePath("../Management/BuildingManager")
 
 [node name="GameCamera" parent="." unique_id=380319505 instance=ExtResource("6_3o7cg")]
 

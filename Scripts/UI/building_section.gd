@@ -4,6 +4,8 @@ extends PanelContainer
 signal select_button_pressed
 
 @export var title_label: Label
+@export var cost_label: Label
+@export var description_label: Label
 @export var select_button: Button
 
 func _ready():
@@ -11,7 +13,8 @@ func _ready():
 
 func set_building_section(br: BuildingResource) -> void:
 	title_label.text = br.display_name
-	select_button.text = "Select (Cost %s)" % br.resource_cost
+	cost_label.text = "%s" % br.resource_cost
+	description_label.text = br.description
 
 func _on_select_button_pressed() -> void:
 	select_button_pressed.emit()
