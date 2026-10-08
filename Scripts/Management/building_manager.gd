@@ -17,7 +17,7 @@ const ACTION_RIGHT_CLICK: StringName = "right_click"
 var _building_resource: BuildingResource
 var _curr_resource_count: int
 var _used_resource_count: int
-var _curr_state: GameEvents.State
+var _curr_state: GameEventsAutoloader.State
 
 var _available_resource_count = func() -> int: 
 	return _base_resource_count + _curr_resource_count - _used_resource_count
@@ -32,12 +32,12 @@ func _ready():
 
 func _unhandled_input(event):
 	match(_curr_state):
-		GameEvents.State.Base:
+		GameEventsAutoloader.State.Base:
 			if event.is_action_pressed(ACTION_RIGHT_CLICK):
 				_destroy_building()
-		GameEvents.State.PlacingBuilding:
+		GameEventsAutoloader.State.PlacingBuilding:
 			if (event.is_action_pressed(ACTION_CANCEL)):
-				_state_manager._change_state(GameEvents.State.Base, self)
+				_state_manager._change_state(GameEventsAutoloader.State.Base, self)
 			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
 					&& _building_resource != null
 					&& _grid_manager._cursor_tml._ghost_cursor.visible
@@ -56,9 +56,9 @@ func _process(delta):
 
 func _update_grid_pos() -> void:
 	match _curr_state:
-		GameEvents.State.Base:
+		GameEventsAutoloader.State.Base:
 			pass
-		GameEvents.State.PlacingBuilding:
+		GameEventsAutoloader.State.PlacingBuilding:
 			_update_grid_display()
 
 func _update_grid_display() -> void:
@@ -86,7 +86,7 @@ func _place_building() -> void:
 	building.global_position = _grid_manager._hovered_rect_pos.position * 64
 	
 	_used_resource_count += _building_resource.resource_cost
-	_state_manager._change_state(GameEvents.State.Base, self)
+	_state_manager._change_state(GameEventsAutoloader.State.Base, self)
 	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _cancel_building() -> void:
@@ -99,7 +99,7 @@ func _destroy_building() -> void:
 	var root_cell = _grid_manager._hovered_rect_pos.position
 	
 	var temp_buildings = get_tree().get_nodes_in_group(
-					GameEvents.BUILDING_COMPONENT)
+					GameEventsAutoloader.BUILDING_COMPONENT)
 	var buildings: Array[BuildingComponent]
 	
 	buildings.assign(temp_buildings)
@@ -120,7 +120,7 @@ func _on_resource_tiles_updated(count: int):
 	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _change_building(resource: BuildingResource):
-	_state_manager._change_state(GameEvents.State.PlacingBuilding, self)
+	_state_manager._change_state(GameEventsAutoloader.State.PlacingBuilding, self)
 	_grid_manager._hovered_rect_pos.size = resource.dimensions
 	
 	var building_ghost_sprite = resource.sprite_scene.instantiate() as Sprite2D

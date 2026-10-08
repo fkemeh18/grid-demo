@@ -5,22 +5,22 @@ extends Node
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
 
-var _curr_state = GameEvents.State.Base
+var _curr_state = GameEventsAutoloader.State.Base
 var _hovered_rect_pos: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE)
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 var _tile_map_elevations: Dictionary[TileMapLayer,ElevationLayer]
 
 func _ready():
-	GameEvents._instance.building_placed.connect(_on_placed_building)
-	GameEvents._instance.building_destroyed.connect(_on_destroyed_building)
+	GameEventsAutoloader._instance.building_placed.connect(_on_placed_building)
+	GameEventsAutoloader._instance.building_destroyed.connect(_on_destroyed_building)
 	_all_tile_map_layers = _get_all_tile_map_layers(_base_terrain_tml)
 	_map_layers_to_elevations()
 
 func _process(delta):
 	match _curr_state:
-		GameEvents.State.Base:
+		GameEventsAutoloader.State.Base:
 			pass
-		GameEvents.State.PlacingBuilding:
+		GameEventsAutoloader.State.PlacingBuilding:
 			_cursor_tml.set_tile(_get_mouse_grid_pos())
 
 func _get_mouse_grid_pos() -> Rect2i:
@@ -85,7 +85,7 @@ func _refresh_grid(excluded_bc: BuildingComponent) -> void:
 	GridMethods.refresh_grids(self)
 	
 	var building_nodes: Array = (get_tree().get_nodes_in_group(
-					GameEvents.BUILDING_COMPONENT))
+					GameEventsAutoloader.BUILDING_COMPONENT))
 	var buildings = GridMethods.get_other_building_components(excluded_bc, 
 																building_nodes)
 	

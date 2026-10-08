@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="GridDemo"
-run/main_scene="uid://d3ewofjxrctfc"
+run/main_scene="uid://bfug7xggmm36m"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/Other/icon.svg"
 
 [autoload]
 
 GameEvents="*uid://du1qp4tpa11yp"
+LevelManager="*uid://c0a6b8tregm0t"
 
 [display]
 

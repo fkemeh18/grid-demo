@@ -1,4 +1,4 @@
-class_name Autoloader
+class_name GameEventsAutoloader
 extends Node
 
 enum State{Base, PlacingBuilding}
@@ -8,7 +8,7 @@ signal building_destroyed(bc: BuildingComponent)
 
 const BUILDING_COMPONENT: StringName = "BuildingComponent"
 
-static var _instance: GameEvents:
+static var _instance: GameEventsAutoloader:
 	get:
 		return _instance
 	set(value):
