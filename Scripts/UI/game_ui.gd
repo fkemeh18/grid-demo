@@ -10,7 +10,6 @@ signal _pressed_button_type(resource: BuildingResource)
 @export var building_section_container: VBoxContainer
 @export var _building_section: PackedScene
 @export var _resource_label: Label
-#var _grid_manager: GridManager
 
 func _ready():
 	_waiting_on_main.emit.call_deferred()
@@ -23,5 +22,6 @@ func _create_building_sections() -> void:
 
 func _on_available_resource_count_changed(available_resource_count :int) -> void:
 	_resource_label.text = "%s" % available_resource_count
-#func _access_gm(gm: GridManager) -> void:
-	#self._grid_manager = gm
+
+func hide_UI() -> void:
+	visible = false

@@ -9,4 +9,4 @@ func _ready():
 	_play_button.pressed.connect(_on_play_button_pressed)
 
 func _on_play_button_pressed():
-	LevelManager._instance.change_to_level(0)
+	LevelManagerAutoloader._instance.change_to_level(0)
