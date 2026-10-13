@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c6qn3ovk2nvmt" path="res://Scenes/Levels/base_level.tscn" id="1_tlcug"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="2_4dpyx"]
-[ext_resource type="PackedScene" uid="uid://cl6uejf0lvjgg" path="res://Scenes/Levels/Level1/elevation_layer.tscn" id="3_d5ic6"]
+[ext_resource type="PackedScene" uid="uid://cl6uejf0lvjgg" path="res://Scenes/Levels/elevation_layer.tscn" id="3_d5ic6"]
 
 [node name="Level1" unique_id=753930638 instance=ExtResource("1_tlcug")]
 

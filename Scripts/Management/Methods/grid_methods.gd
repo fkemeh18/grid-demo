@@ -29,9 +29,14 @@ static func get_is_area_valid(gm: GridManager,
 		var valid_dict = gm._get_tile_custom_data(tile_pos,
 												gm._highlight_tml.IS_BUILDABLE)
 		var valid_tml = valid_dict.keys().front()
+		#print(valid_tml)
 		
 #		finds the associated elevation layer of that tilemaplayer
-		var elevation_layer = gm._tile_map_elevations[valid_tml]
+		var elevation_layer = null
+		if valid_tml != null:
+			elevation_layer = gm._tile_map_elevations[valid_tml]
+		else: return false
+#		FIX ERROR LATER (OUTSIDE BOUNDS)
 		
 #		passes for the tile if builidable is true for it on that layer,
 		return (valid_dict[valid_tml]

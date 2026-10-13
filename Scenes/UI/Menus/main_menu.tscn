@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ct4vgbqm7glif" path="res://Scripts/UI/main_menu.gd" id="1_ss2nv"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="2_hqjfr"]
-[ext_resource type="PackedScene" uid="uid://cl6uejf0lvjgg" path="res://Scenes/Levels/Level1/elevation_layer.tscn" id="3_cxfnb"]
+[ext_resource type="PackedScene" uid="uid://cl6uejf0lvjgg" path="res://Scenes/Levels/elevation_layer.tscn" id="3_cxfnb"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="3_pmpos"]
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="4_ss2nv"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="5_mjy7j"]
