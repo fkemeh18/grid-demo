@@ -104,16 +104,26 @@ func _destroy_building() -> void:
 	
 	buildings.assign(temp_buildings)
 	
-	var target_building = buildings.filter(func(building): 
+	var target_building
+	var target_building_array = buildings.filter(func(building): 
 		return (building.building_resource.is_deletable
-				&& building.is_tile_in_built_area(root_cell))).front()
+				&& building.is_tile_in_built_area(root_cell)))
 	
-	if target_building == null: return
+	if !target_building_array.is_empty():
+		target_building = target_building_array.front()
+	else: return
+	
+	#var target_buildin = buildings.filter(func(building): 
+		#return (building.building_resource.is_deletable
+				#&& building.is_tile_in_built_area(root_cell))).front()
+	
+	#if target_buildin == null: return
 	
 	_used_resource_count -= target_building.building_resource.resource_cost
 	
-	target_building._self_destruct()
-	available_resource_count_changed.emit(_available_resource_count.call())
+	if target_building.building_resource.display_name != "Base":
+		target_building._self_destruct()
+		available_resource_count_changed.emit(_available_resource_count.call())
 
 func _on_resource_tiles_updated(count: int):
 	_curr_resource_count = count

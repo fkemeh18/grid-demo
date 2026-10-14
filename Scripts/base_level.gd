@@ -21,7 +21,7 @@ func _main_is_ready():
 func _on_grid_updated() -> void:
 	var _gold_mine_pos = _grid_manager._cursor_tml._process_global_pos(
 							_gold_mine.global_position)
-	if _grid_manager._is_cell_currently_buildable(_gold_mine_pos):
+	if _grid_manager._is_cell_in_view_of_a_building(_gold_mine_pos):
 		var level_complete_screen = (_level_completed_screen_scene.instantiate()
 									as LevelCompleteScreen) 
 		add_child(level_complete_screen)

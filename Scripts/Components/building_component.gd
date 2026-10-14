@@ -18,9 +18,6 @@ func _ready():
 	var emit := func(): GameEvents.emit_on_building_placed(self)
 	emit.call_deferred()
 
-#func _initialize(cursor: CursorTML) -> void:
-	#_calculate_occupied_cell_positions(cursor)
-
 func _get_grid_pos(cursor: CursorTML) -> Vector2i:
 	return cursor._process_global_pos(self.global_position)
 

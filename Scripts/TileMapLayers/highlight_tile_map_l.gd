@@ -10,9 +10,13 @@ signal _resource_tiles_updated(collected_tiles: int)
 
 @export var bc: BuildingComponent
 
+var _all_tiles_in_buildable_radius: Dictionary[Vector2i, bool]
 var _valid_buildable_tiles: Dictionary[Vector2i, bool]
 var _built_tile_locations: Dictionary[Vector2i, bool]
 var _collected_resource_tiles: Dictionary[Vector2i, bool]
+var _return_all_tiles = func(pos: Rect2i) -> Dictionary[Vector2i, bool]: 
+	var dict : Dictionary[Vector2i, bool] = {Vector2i(0, 0): true}
+	return dict
 
 func _clear() -> void:
 	clear()
@@ -38,7 +42,10 @@ func highlight_resource_tiles(pos: Rect2i, radius: int,
 	var resource_tiles = _get_resource_tiles_in_radius(pos, radius, gm)
 	var atlas_coords = Vector2i(1, 0)
 	
-	for tile_pos in resource_tiles:
+	var available_resource_tiles = (GridMethods.exclude_collected_tiles(
+						resource_tiles, _collected_resource_tiles))
+	
+	for tile_pos in available_resource_tiles:
 		set_cell(tile_pos, 0, atlas_coords)
 
 func _get_tiles_in_radius(pos: Rect2i, radius: int,
@@ -72,8 +79,11 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
 	var radius = comp.building_resource.buildable_radius
 	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
-	var valid_tiles = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
+	var all_tiles = _get_tiles_in_radius(grid_rect_pos, radius, 
+											_return_all_tiles)
+	_all_tiles_in_buildable_radius.merge(all_tiles)
 	
+	var valid_tiles = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
 	_valid_buildable_tiles.merge(valid_tiles)
 	
 	for existing_bc in _built_tile_locations:

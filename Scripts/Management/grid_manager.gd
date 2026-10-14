@@ -44,6 +44,9 @@ func _get_tile_custom_data(pos: Vector2i,
 	
 	return {}
 
+func _is_cell_in_view_of_a_building(pos: Vector2i) -> bool:
+	return _highlight_tml._all_tiles_in_buildable_radius.has(pos)
+
 func _is_cell_currently_buildable(pos: Vector2i) -> bool:
 	return _highlight_tml._valid_buildable_tiles.has(pos)
 
@@ -56,7 +59,7 @@ func _is_area_currently_buildable(pos: Rect2i) -> bool:
 	var tile_list = tiles.keys()
 	var first_tml = GridMethods.get_first_tml(tile_list, self)
 #	gets the elevation of the layer of the first checkable tile
-	var target_elevation_layer = _tile_map_elevations.get(first_tml)
+	var target_elevation_layer = (_tile_map_elevations.get(first_tml) if first_tml != null else null) # Ternary operator
 	
 	var is_area_valid = GridMethods.get_is_area_valid(self, tile_list,
 														target_elevation_layer)

@@ -19,7 +19,14 @@ static func get_first_tml(tile_list: Array[Vector2i],
 #	checks for the layer of the first checkable tile 
 	var first_tml_dict = gm._get_tile_custom_data(tile_list[0],
 												gm._highlight_tml.IS_BUILDABLE)
-	return first_tml_dict.keys().front()
+	var first_tml_keys = first_tml_dict.keys()
+	var first_tml_key
+	if !first_tml_keys.is_empty():
+		first_tml_key = first_tml_dict.keys().front()
+	else:
+		return null
+	
+	return first_tml_key ###
 
 static func get_is_area_valid(gm: GridManager,
 							tile_list: Array[Vector2i],
@@ -28,15 +35,16 @@ static func get_is_area_valid(gm: GridManager,
 #		checks the tilemaplayer of each tile
 		var valid_dict = gm._get_tile_custom_data(tile_pos,
 												gm._highlight_tml.IS_BUILDABLE)
-		var valid_tml = valid_dict.keys().front()
-		#print(valid_tml)
+		var valid_tml_array = valid_dict.keys()
+		var valid_tml
+		
+		if !valid_tml_array.is_empty():
+			valid_tml = valid_dict.keys().front()
+		else:
+			return false
 		
 #		finds the associated elevation layer of that tilemaplayer
-		var elevation_layer = null
-		if valid_tml != null:
-			elevation_layer = gm._tile_map_elevations[valid_tml]
-		else: return false
-#		FIX ERROR LATER (OUTSIDE BOUNDS)
+		var elevation_layer = gm._tile_map_elevations[valid_tml]
 		
 #		passes for the tile if builidable is true for it on that layer,
 		return (valid_dict[valid_tml]
@@ -48,6 +56,7 @@ static func get_is_area_valid(gm: GridManager,
 	return is_area_valid
 
 static func refresh_grids(gm: GridManager) -> void:
+	gm._highlight_tml._all_tiles_in_buildable_radius.clear()
 	gm._highlight_tml._built_tile_locations.clear()
 	gm._highlight_tml._valid_buildable_tiles.clear()
 	gm._highlight_tml._collected_resource_tiles.clear()
@@ -114,3 +123,9 @@ static func is_tile_inside_circle(center_pos: Vector2, tile_pos: Vector2,
 	var distance_y = center_pos.y - (tile_pos.y + .5)
 	var distance_squared = (distance_x * distance_x) + (distance_y * distance_y)
 	return distance_squared <= radius * radius
+
+static func exclude_collected_tiles(resource_tiles: Dictionary[Vector2i,bool],
+									excluded_tiles: Dictionary[Vector2i,bool]) -> Dictionary[Vector2i, bool]:
+	for tile in excluded_tiles:
+		resource_tiles.erase(tile)
+	return resource_tiles
