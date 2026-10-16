@@ -7,9 +7,13 @@ extends Node
 @export var _base_building: Node2D
 @export var _gold_mine: GoldMine
 @export var _level_completed_screen_scene: PackedScene
+@export var _level_resource: BaseLevelResource
 
 func _ready():
 	_building_manager._game_ui._waiting_on_main.connect(_main_is_ready)
+	_building_manager.set_starting_resource_count(
+										_level_resource.starting_resource_count)
+	
 	_grid_manager._highlight_tml._grid_updated.connect(_on_grid_updated)
 	
 	_game_camera._set_boundary(_grid_manager._base_terrain_tml.get_used_rect())

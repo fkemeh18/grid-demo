@@ -12,9 +12,9 @@ const ACTION_RIGHT_CLICK: StringName = "right_click"
 @export var _game_ui: GameUI
 @export var _y_sort_root: Node2D
 @export var _building_ghost_scene: PackedScene
-@export var _base_resource_count: int
 
 var _building_resource: BuildingResource
+var _base_resource_count: int
 var _curr_resource_count: int
 var _used_resource_count: int
 var _curr_state: GameEventsAutoloader.State
@@ -26,7 +26,7 @@ func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
 	_game_ui._pressed_button_type.connect(_change_building)
-	#_game_ui._access_gm(_grid_manager)
+	
 	available_resource_count_changed.emit.call_deferred(
 											_available_resource_count.call())
 
@@ -53,6 +53,9 @@ func _process(delta):
 	if (root_cell != _grid_manager._get_mouse_grid_pos_without_update()):
 		_grid_manager._get_mouse_grid_pos()
 		_update_grid_pos()
+
+func set_starting_resource_count(count: int) -> void:
+	_base_resource_count = count
 
 func _update_grid_pos() -> void:
 	match _curr_state:
@@ -112,12 +115,6 @@ func _destroy_building() -> void:
 	if !target_building_array.is_empty():
 		target_building = target_building_array.front()
 	else: return
-	
-	#var target_buildin = buildings.filter(func(building): 
-		#return (building.building_resource.is_deletable
-				#&& building.is_tile_in_built_area(root_cell))).front()
-	
-	#if target_buildin == null: return
 	
 	_used_resource_count -= target_building.building_resource.resource_cost
 	
