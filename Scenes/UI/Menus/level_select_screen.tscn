@@ -1,13 +1,22 @@
 [gd_scene format=3 uid="uid://dis1uyfao8fdi"]
 
 [ext_resource type="PackedScene" uid="uid://ber53dy2ursh6" path="res://Scenes/UI/Menus/level_select_section.tscn" id="1_rp22f"]
+[ext_resource type="Script" uid="uid://d4af717lrvmbk" path="res://Scripts/UI/level_select_screen.gd" id="1_xr0rm"]
 
-[node name="LevelSelectScreen" type="MarginContainer" unique_id=990387306]
+[node name="LevelSelectScreen" type="MarginContainer" unique_id=990387306 node_paths=PackedStringArray("_grid_container", "_return_button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_xr0rm")
+_level_select_section_scene = ExtResource("1_rp22f")
+_grid_container = NodePath("PanelContainer/MarginContainer/GridContainer")
+_return_button = NodePath("ReturnButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=587170777]
 layout_mode = 2
@@ -27,5 +36,9 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 4
 
-[node name="LevelSelectSection" parent="PanelContainer/MarginContainer/GridContainer" unique_id=2088857616 instance=ExtResource("1_rp22f")]
+[node name="ReturnButton" type="Button" parent="." unique_id=646367282]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Return
+"

@@ -13,6 +13,7 @@ func _ready():
 	_building_manager._game_ui._waiting_on_main.connect(_main_is_ready)
 	_building_manager.set_starting_resource_count(
 										_level_resource.starting_resource_count)
+	_building_manager._emit_available_resource_count_changed()
 	
 	_grid_manager._highlight_tml._grid_updated.connect(_on_grid_updated)
 	

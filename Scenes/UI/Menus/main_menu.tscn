@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="4_ss2nv"]
 [ext_resource type="Texture2D" uid="uid://daqsd41ipt77n" path="res://Assets/Tiles/red cube.png" id="5_mjy7j"]
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/cursor_tile_map_layer.gd" id="6_na71f"]
+[ext_resource type="PackedScene" uid="uid://dis1uyfao8fdi" path="res://Scenes/UI/Menus/level_select_screen.tscn" id="8_mjy7j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("5_mjy7j")
@@ -17,11 +18,13 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_h2yge")
 
-[node name="MainMenu" type="Node" unique_id=1882690485 node_paths=PackedStringArray("_play_button", "_options_button", "_quit_button")]
+[node name="MainMenu" type="Node" unique_id=1882690485 node_paths=PackedStringArray("_main_menu_container", "_level_select_screen", "_play_button", "_options_button", "_quit_button")]
 script = ExtResource("1_ss2nv")
-_play_button = NodePath("CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PlayButton")
-_options_button = NodePath("CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/OptionsButton")
-_quit_button = NodePath("CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton")
+_main_menu_container = NodePath("CanvasLayer/MainMenuContainer")
+_level_select_screen = NodePath("CanvasLayer/LevelSelectScreen")
+_play_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/PlayButton")
+_options_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/OptionsButton")
+_quit_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162647465]
 position = Vector2(384, 256)
@@ -75,40 +78,43 @@ script = ExtResource("6_na71f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1801313391]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1364689889]
+[node name="MainMenuContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1364689889]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=65654737]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenuContainer" unique_id=65654737]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=605831731]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer" unique_id=605831731]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer" unique_id=1988739302]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer" unique_id=1988739302]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=787251893]
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=787251893]
 layout_mode = 2
 text = "Play"
 
-[node name="OptionsButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2057624547]
+[node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2057624547]
 layout_mode = 2
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1081858618]
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1081858618]
 layout_mode = 2
 text = "Quit"
+
+[node name="LevelSelectScreen" parent="CanvasLayer" unique_id=990387306 instance=ExtResource("8_mjy7j")]
+visible = false
 
 [editable path="YSortRoot/BaseTerrainLayer/ElevationLayer"]

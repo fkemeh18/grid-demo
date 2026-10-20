@@ -1,7 +1,7 @@
 class_name LevelManagerAutoloader
 extends Node
 
-@export var _level_scenes: Array[PackedScene]
+@export var _level_resources: Array[BaseLevelResource]
 
 static var _instance: LevelManagerAutoloader:
 	get:
@@ -15,12 +15,15 @@ func _notification(what):
 	if what == NOTIFICATION_SCENE_INSTANTIATED:
 		_instance = self
 
+func get_level_resource() -> Array[BaseLevelResource]:
+	return Array(_instance._level_resources)
+
 func change_to_level(level_index: int) -> void:
-	if level_index >= _level_scenes.size() || level_index < 0 : return
+	if level_index >= _level_resources.size() || level_index < 0 : return
 	
 	_curr_level_index = level_index
-	var level_scene = _level_scenes[_curr_level_index]
-	get_tree().change_scene_to_packed(level_scene)
+	var level_resource = _level_resources[_curr_level_index]
+	get_tree().change_scene_to_file(level_resource.level_scene_path)
 
 func change_to_next_level() -> void:
 	change_to_level(_curr_level_index + 1)

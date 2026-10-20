@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://ber53dy2ursh6"]
 
+[ext_resource type="Script" uid="uid://c3qwaqew605cf" path="res://Scripts/UI/level_select_section.gd" id="1_qmxxf"]
 [ext_resource type="Texture2D" uid="uid://bhqjkj3p62wsi" path="res://Assets/UI/wood_icon.png" id="1_rys38"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rp22f"]
 atlas = ExtResource("1_rys38")
 region = Rect2(39, 73, 32, 27)
 
-[node name="LevelSelectSection" type="PanelContainer" unique_id=2088857616]
+[node name="LevelSelectSection" type="PanelContainer" unique_id=2088857616 node_paths=PackedStringArray("_level_label", "_resource_label", "_button")]
 theme_type_variation = &"PanelContainerAlt"
+script = ExtResource("1_qmxxf")
+_level_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/LevelLabel")
+_resource_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResourceCountLabel")
+_button = NodePath("MarginContainer/VBoxContainer/Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1544091726]
 layout_mode = 2
@@ -23,7 +28,7 @@ theme_override_constants/separation = 16
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=2087768069]
+[node name="LevelLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=2087768069]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Level 1"
@@ -38,7 +43,7 @@ layout_mode = 2
 texture = SubResource("AtlasTexture_rp22f")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1579910246]
+[node name="ResourceCountLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1579910246]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "2"

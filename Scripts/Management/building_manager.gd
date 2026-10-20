@@ -26,9 +26,6 @@ func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
 	_game_ui._pressed_button_type.connect(_change_building)
-	
-	available_resource_count_changed.emit.call_deferred(
-											_available_resource_count.call())
 
 func _unhandled_input(event):
 	match(_curr_state):
@@ -56,6 +53,9 @@ func _process(delta):
 
 func set_starting_resource_count(count: int) -> void:
 	_base_resource_count = count
+
+func _emit_available_resource_count_changed() -> void:
+	available_resource_count_changed.emit(_available_resource_count.call())
 
 func _update_grid_pos() -> void:
 	match _curr_state:

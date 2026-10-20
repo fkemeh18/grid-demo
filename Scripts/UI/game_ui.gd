@@ -13,8 +13,9 @@ signal _pressed_button_type(resource: BuildingResource)
 
 func _ready():
 	_waiting_on_main.emit.call_deferred()
+	
 	_building_manager.available_resource_count_changed.connect(
-		_on_available_resource_count_changed)
+		_on_available_resource_count_changed, CONNECT_DEFERRED)
 
 func _create_building_sections() -> void:
 	_button_manager._create_building_sections(self,
