@@ -45,7 +45,7 @@ _building_ghost_scene = ExtResource("10_d1ilt")
 
 [node name="GridManager" parent="Management" unique_id=795174114 node_paths=PackedStringArray("_cursor_tml", "_highlight_tml", "_base_terrain_tml") instance=ExtResource("8_ynf5e")]
 _cursor_tml = NodePath("../../TMLs/YSortRoot/CursorTileMapLayer")
-_highlight_tml = NodePath("../../TMLs/HighlightTileMapL")
+_highlight_tml = NodePath("../../TMLs/YSortRoot/HighlightTileMapL")
 _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
 
 [node name="StateManager" type="Node" parent="Management" unique_id=513992422 node_paths=PackedStringArray("_gm")]
@@ -79,8 +79,9 @@ y_sort_enabled = true
 tile_set = SubResource("TileSet_ig7tw")
 script = ExtResource("3_kry3j")
 
-[node name="HighlightTileMapL" type="TileMapLayer" parent="TMLs" unique_id=32821524 node_paths=PackedStringArray("bc")]
+[node name="HighlightTileMapL" type="TileMapLayer" parent="TMLs/YSortRoot" unique_id=32821524 node_paths=PackedStringArray("bc")]
 modulate = Color(1, 1, 1, 0.49803922)
+y_sort_enabled = true
 tile_set = ExtResource("5_kry3j")
 script = ExtResource("4_21xkr")
-bc = NodePath("../YSortRoot/B-Base/BuildingComponent")
+bc = NodePath("../B-Base/BuildingComponent")

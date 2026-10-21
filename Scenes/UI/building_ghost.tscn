@@ -1,8 +1,169 @@
 [gd_scene format=3 uid="uid://cae17urkfnx6s"]
 
 [ext_resource type="Script" uid="uid://myf52nxcnc6q" path="res://Scripts/UI/building_ghost.gd" id="1_8v0ut"]
+[ext_resource type="Texture2D" uid="uid://vd7528kej8l8" path="res://Assets/UI/building_area_tl.png" id="2_h10tm"]
+[ext_resource type="Texture2D" uid="uid://katdmoersoj5" path="res://Assets/UI/building_area_tr.png" id="3_dpynp"]
+[ext_resource type="Texture2D" uid="uid://dl8xalwvaugsc" path="res://Assets/UI/building_area_bl.png" id="4_6j0pb"]
+[ext_resource type="Texture2D" uid="uid://dyi664duoqvi5" path="res://Assets/UI/building_area_br.png" id="5_2gfic"]
 
-[node name="BuildingGhost" type="Node2D" unique_id=551851122]
-visible = false
+[sub_resource type="Animation" id="Animation_os7yg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BuildingAreaTL/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildingAreaTR/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BuildingAreaBL/Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BuildingAreaBR/Sprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2gfic"]
+resource_name = "default"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BuildingAreaTL/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-7, -7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildingAreaTR/Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(7, -7)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BuildingAreaBL/Sprite2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-7, 7)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BuildingAreaBR/Sprite2D:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(7, 7)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_os7yg"]
+_data = {
+&"RESET": SubResource("Animation_os7yg"),
+&"default": SubResource("Animation_2gfic")
+}
+
+[node name="BuildingGhost" type="Node2D" unique_id=551851122 node_paths=PackedStringArray("_building_boundary_TL", "_building_boundary_TR", "_building_boundary_BL", "_building_boundary_BR")]
 y_sort_enabled = true
 script = ExtResource("1_8v0ut")
+_building_boundary_TL = NodePath("BuildingAreaTL")
+_building_boundary_TR = NodePath("BuildingAreaTR")
+_building_boundary_BL = NodePath("BuildingAreaBL")
+_building_boundary_BR = NodePath("BuildingAreaBR")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1420342211]
+libraries/ = SubResource("AnimationLibrary_os7yg")
+autoplay = &"default"
+
+[node name="BuildingAreaTL" type="Node2D" parent="." unique_id=1231642410]
+z_index = 1
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="BuildingAreaTL" unique_id=1917941569]
+texture = ExtResource("2_h10tm")
+centered = false
+offset = Vector2(-31, -33)
+
+[node name="BuildingAreaTR" type="Node2D" parent="." unique_id=395385079]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(64, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BuildingAreaTR" unique_id=150185595]
+texture = ExtResource("3_dpynp")
+centered = false
+offset = Vector2(-34, -33)
+
+[node name="BuildingAreaBL" type="Node2D" parent="." unique_id=1432537388]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="BuildingAreaBL" unique_id=21494466]
+texture = ExtResource("4_6j0pb")
+centered = false
+offset = Vector2(-31, -30)
+
+[node name="BuildingAreaBR" type="Node2D" parent="." unique_id=21796053]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(64, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="BuildingAreaBR" unique_id=1801198255]
+texture = ExtResource("5_2gfic")
+centered = false
+offset = Vector2(-34, -30)

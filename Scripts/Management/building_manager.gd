@@ -133,6 +133,7 @@ func _change_building(resource: BuildingResource):
 	var building_ghost_sprite = resource.sprite_scene.instantiate() as Sprite2D
 	_grid_manager._cursor_tml._cursor_sprite = building_ghost_sprite
 	_grid_manager._cursor_tml._ghost_cursor.add_child(building_ghost_sprite)
+	_grid_manager._cursor_tml._ghost_cursor.set_dimensions(resource.dimensions)
 	
 	_building_resource = resource
 	_update_grid_display()
