@@ -74,6 +74,8 @@ func _update_grid_display() -> void:
 			_building_resource.resource_radius)
 		_grid_manager._cursor_tml._ghost_cursor._set_valid()
 	else: _grid_manager._cursor_tml._ghost_cursor._set_invalid()
+	
+	_grid_manager._cursor_tml._ghost_cursor.play_hover_animation()
 
 func _is_building_placable(pos: Rect2i) -> bool:
 	
@@ -132,7 +134,8 @@ func _change_building(resource: BuildingResource):
 	
 	var building_ghost_sprite = resource.sprite_scene.instantiate() as Sprite2D
 	_grid_manager._cursor_tml._cursor_sprite = building_ghost_sprite
-	_grid_manager._cursor_tml._ghost_cursor.add_child(building_ghost_sprite)
+	_grid_manager._cursor_tml._ghost_cursor.add_sprite_node(
+														building_ghost_sprite)
 	_grid_manager._cursor_tml._ghost_cursor.set_dimensions(resource.dimensions)
 	
 	_building_resource = resource
