@@ -17,7 +17,6 @@ func set_tile(pos: Rect2i) -> void:
 
 func _toggle_visibility_on() -> void:
 	_ghost_cursor.visible = true
-	set_tile(Rect2i(process_mouse_pos(), Vector2i()))
 
 func _toggle_visibility_off() -> void:
 	_ghost_cursor.visible = false

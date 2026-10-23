@@ -45,10 +45,19 @@ func _unhandled_input(event):
 
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
+	var mouse_pos = _grid_manager._get_mouse_grid_pos_without_update()
+	
+	match _curr_state:
+		GameEventsAutoloader.State.Base:
+			pass
+		GameEventsAutoloader.State.PlacingBuilding:
+			_grid_manager._cursor_tml.set_tile(
+											Rect2i(mouse_pos, Vector2i()))
+	
 	var root_cell = _grid_manager._hovered_rect_pos.position
 	
-	if (root_cell != _grid_manager._get_mouse_grid_pos_without_update()):
-		_grid_manager._get_mouse_grid_pos()
+	if (root_cell != mouse_pos):
+		_grid_manager._hovered_rect_pos.position = mouse_pos
 		_update_grid_pos()
 
 func set_starting_resource_count(count: int) -> void:

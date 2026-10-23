@@ -5,7 +5,6 @@ extends Node
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
 
-var _curr_state = GameEventsAutoloader.State.Base
 var _hovered_rect_pos: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE)
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 var _tile_map_elevations: Dictionary[TileMapLayer,ElevationLayer]
@@ -15,13 +14,6 @@ func _ready():
 	GameEventsAutoloader._instance.building_destroyed.connect(_on_destroyed_building)
 	_all_tile_map_layers = _get_all_tile_map_layers(_base_terrain_tml)
 	_map_layers_to_elevations()
-
-func _process(delta):
-	match _curr_state:
-		GameEventsAutoloader.State.Base:
-			pass
-		GameEventsAutoloader.State.PlacingBuilding:
-			_cursor_tml.set_tile(_get_mouse_grid_pos())
 
 func _get_mouse_grid_pos() -> Rect2i:
 	_hovered_rect_pos.position = _get_mouse_grid_pos_without_update()
