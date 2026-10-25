@@ -45,12 +45,14 @@ func _unhandled_input(event):
 
 # passes updated mouse_pos to tile map class for tile
 func _process(delta):
-	var mouse_pos = _grid_manager._get_mouse_grid_pos_without_update()
+	var mouse_pos
 	
 	match _curr_state:
 		GameEventsAutoloader.State.Base:
-			pass
+			mouse_pos = _grid_manager._get_mouse_grid_pos_without_update()
 		GameEventsAutoloader.State.PlacingBuilding:
+			mouse_pos = _grid_manager.get_mouse_grid_pos_with_dimension_offset(
+									_grid_manager._cursor_tml.ghost_dimensions)
 			_grid_manager._cursor_tml.set_tile(
 											Rect2i(mouse_pos, Vector2i()))
 	
@@ -146,6 +148,7 @@ func _change_building(resource: BuildingResource):
 	_grid_manager._cursor_tml._ghost_cursor.add_sprite_node(
 														building_ghost_sprite)
 	_grid_manager._cursor_tml._ghost_cursor.set_dimensions(resource.dimensions)
+	_grid_manager._cursor_tml.ghost_dimensions = resource.dimensions
 	
 	_building_resource = resource
 	_update_grid_display()

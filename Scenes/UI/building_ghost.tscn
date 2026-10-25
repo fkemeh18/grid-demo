@@ -117,7 +117,7 @@ _data = {
 &"default": SubResource("Animation_2gfic")
 }
 
-[node name="BuildingGhost" type="Node2D" unique_id=551851122 node_paths=PackedStringArray("_building_boundary_TL", "_building_boundary_TR", "_building_boundary_BL", "_building_boundary_BR", "_sprite_root")]
+[node name="BuildingGhost" type="Node2D" unique_id=551851122 node_paths=PackedStringArray("_building_boundary_TL", "_building_boundary_TR", "_building_boundary_BL", "_building_boundary_BR", "_sprite_root", "_vertical_root")]
 y_sort_enabled = true
 script = ExtResource("1_8v0ut")
 _building_boundary_TL = NodePath("BuildingAreaTL")
@@ -125,6 +125,7 @@ _building_boundary_TR = NodePath("BuildingAreaTR")
 _building_boundary_BL = NodePath("BuildingAreaBL")
 _building_boundary_BR = NodePath("BuildingAreaBR")
 _sprite_root = NodePath("SpriteRoot")
+_vertical_root = NodePath("SpriteRoot/VerticalRoot")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1420342211]
 libraries/ = SubResource("AnimationLibrary_os7yg")
@@ -170,4 +171,7 @@ centered = false
 offset = Vector2(-34, -30)
 
 [node name="SpriteRoot" type="Node2D" parent="." unique_id=1478498575]
+top_level = true
 y_sort_enabled = true
+
+[node name="VerticalRoot" type="Node2D" parent="SpriteRoot" unique_id=2063229950]

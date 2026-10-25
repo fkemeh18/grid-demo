@@ -4,8 +4,13 @@ extends TileMapLayer
 @export var _ghost_cursor: BuildingGhost
 @export var _cursor_sprite: Sprite2D
 
+var ghost_dimensions: Vector2
+
+func get_mouse_pos() -> Vector2:
+	return get_global_mouse_position()
+
 func process_mouse_pos() -> Vector2i:
-	var grid_pos = local_to_map(to_local(get_global_mouse_position()))
+	var grid_pos = local_to_map(to_local(get_mouse_pos()))
 	return grid_pos
 
 func _process_global_pos(pos: Vector2) -> Vector2i:

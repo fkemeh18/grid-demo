@@ -22,6 +22,12 @@ func _get_mouse_grid_pos() -> Rect2i:
 func _get_mouse_grid_pos_without_update() -> Vector2i:
 	return _cursor_tml.process_mouse_pos()
 
+func get_mouse_grid_pos_with_dimension_offset(dimensions: Vector2) -> Vector2i:
+	var mouse_grid_pos = _cursor_tml.get_mouse_pos() / 64
+	mouse_grid_pos -= (dimensions / 2)
+	mouse_grid_pos = mouse_grid_pos.round()
+	return Vector2i(mouse_grid_pos.x as int, mouse_grid_pos.y as int)
+
 func _get_tile_custom_data(pos: Vector2i,
 						data_name: String) -> Dictionary[TileMapLayer,bool]:
 	var custom_data: Dictionary[TileMapLayer, bool]
