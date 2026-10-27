@@ -2,6 +2,7 @@ class_name BuildingManager
 extends Node
 
 signal available_resource_count_changed(available_resource_count: int)
+signal building_animation_time
 
 const ACTION_LEFT_CLICK: StringName = "left_click"
 const ACTION_CANCEL: StringName = "cancel"
@@ -97,9 +98,12 @@ func _is_building_placable(pos: Rect2i) -> bool:
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
-	var building = _building_resource.building_scene.instantiate() as Node2D
+	var building = _building_resource.building_scene.instantiate() as Buildings
 	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._hovered_rect_pos.position * 64
+	
+	if building.animator_component != null:
+		building.animator_component.play_in_animation()
 	
 	_used_resource_count += _building_resource.resource_cost
 	_state_manager._change_state(GameEventsAutoloader.State.Base, self)

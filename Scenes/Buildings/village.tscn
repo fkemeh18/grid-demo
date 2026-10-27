@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://dyuy6eeuqg57a"]
 
+[ext_resource type="Script" uid="uid://bek41ijihct6k" path="res://Scripts/Buildings/buildings.gd" id="1_mbkwl"]
 [ext_resource type="PackedScene" uid="uid://liji1b5j4u6a" path="res://Scenes/Components/building_component.tscn" id="1_qhwf0"]
 [ext_resource type="PackedScene" uid="uid://buasia7gbyvxr" path="res://Scenes/Buildings/Sprites/village_sprite.tscn" id="2_qhwf0"]
+[ext_resource type="PackedScene" uid="uid://cutbk56iji1d" path="res://Scenes/Components/building_animator_component.tscn" id="2_w8sir"]
 
-[node name="Village" type="Node2D" unique_id=388143148]
+[node name="Village" type="Node2D" unique_id=388143148 node_paths=PackedStringArray("animator_component")]
 y_sort_enabled = true
+script = ExtResource("1_mbkwl")
+animator_component = NodePath("BuildingAnimatorComponent")
 
 [node name="BuildingComponent" parent="." unique_id=1013691913 instance=ExtResource("1_qhwf0")]
 _building_resource_path = "uid://clq04tbn1cvrs"
 
-[node name="VillageSprite" parent="." unique_id=1133643605 instance=ExtResource("2_qhwf0")]
+[node name="BuildingAnimatorComponent" parent="." unique_id=1613588455 instance=ExtResource("2_w8sir")]
+
+[node name="VillageSprite" parent="BuildingAnimatorComponent" unique_id=1133643605 instance=ExtResource("2_qhwf0")]
