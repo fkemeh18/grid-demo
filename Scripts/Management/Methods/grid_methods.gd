@@ -61,13 +61,6 @@ static func refresh_grids(gm: GridManager) -> void:
 	gm._highlight_tml._valid_buildable_tiles.clear()
 	gm._highlight_tml._collected_resource_tiles.clear()
 
-static func get_other_building_components(bc: BuildingComponent,
-							building_nodes: Array) -> Array[BuildingComponent]:
-	var buildings: Array[BuildingComponent]
-	buildings.assign(building_nodes)
-	
-	return buildings.filter(func(building): return building != bc)
-
 static func update_tiles_for_other_bcs(buildings: Array[BuildingComponent], 
 										gm: GridManager) -> void:
 	for building in buildings:

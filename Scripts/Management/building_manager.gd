@@ -117,15 +117,10 @@ func _cancel_building() -> void:
 
 func _destroy_building() -> void:
 	var root_cell = _grid_manager._hovered_rect_pos.position
-	
-	var temp_buildings = get_tree().get_nodes_in_group(
-					GameEventsAutoloader.BUILDING_COMPONENT)
-	var buildings: Array[BuildingComponent]
-	
-	buildings.assign(temp_buildings)
-	
 	var target_building
-	var target_building_array = buildings.filter(func(building): 
+	var target_buildings = BuildingComponent.get_valid_building_components(self)
+	
+	var target_building_array = target_buildings.filter(func(building): 
 		return (building.building_resource.is_deletable
 				&& building.is_tile_in_built_area(root_cell)))
 	

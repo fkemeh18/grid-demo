@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cutbk56iji1d"]
 
 [ext_resource type="Script" uid="uid://bim1acauid3lb" path="res://Scenes/Components/building_animator_component.gd" id="1_0muio"]
+[ext_resource type="Texture2D" uid="uid://bhdc6fnkfjd1u" path="res://Assets/Buildings/building_mask.png" id="2_hc60v"]
 
 [node name="BuildingAnimatorComponent" type="Node2D" unique_id=1613588455]
 script = ExtResource("1_0muio")
+_mask_texture = ExtResource("2_hc60v")

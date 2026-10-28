@@ -10,8 +10,9 @@ y_sort_enabled = true
 script = ExtResource("1_jbdiw")
 animator_component = NodePath("BuildingAnimatorComponent")
 
-[node name="BuildingComponent" parent="." unique_id=1013691913 instance=ExtResource("1_wnsun")]
+[node name="BuildingComponent" parent="." unique_id=1013691913 node_paths=PackedStringArray("_animator_component") instance=ExtResource("1_wnsun")]
 _building_resource_path = "uid://dy1cir41tjt3f"
+_animator_component = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." unique_id=1613588455 instance=ExtResource("3_8vnxa")]
 

@@ -68,7 +68,7 @@ func _on_placed_building(bc: BuildingComponent) -> void:
 	_highlight_tml._update_collected_resource_tiles(bc, self)
 
 func _on_destroyed_building(bc: BuildingComponent) -> void:
-	_refresh_grid(bc)
+	_refresh_grid()
 
 func _update_grid() -> void:
 	_highlight_tml._clear()
@@ -83,14 +83,12 @@ func _update_expanded_tiles(pos: Rect2i, radius: int) -> void:
 func _update_resource_tiles(pos: Rect2i, radius: int) -> void:
 	_highlight_tml.highlight_resource_tiles(pos, radius, self)
 
-func _refresh_grid(excluded_bc: BuildingComponent) -> void:
+func _refresh_grid() -> void:
 	GridMethods.refresh_grids(self)
 	
-	var building_nodes: Array = (get_tree().get_nodes_in_group(
-					GameEventsAutoloader.BUILDING_COMPONENT))
-	var buildings = GridMethods.get_other_building_components(excluded_bc, 
-																building_nodes)
+	var buildings = BuildingComponent.get_valid_building_components(self)
 	
+	#affects here
 	GridMethods.update_tiles_for_other_bcs(buildings, self)
 	GridMethods.emit_tile_updates(self)
 
