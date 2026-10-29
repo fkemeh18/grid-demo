@@ -4,6 +4,8 @@ extends Node2D
 signal destroy_animation_finished
 
 @export var _mask_texture: Texture2D
+@export var _impact_particle_scene: PackedScene
+@export var _destroy_particle_scene: PackedScene
 
 var _active_tween: Tween
 var _animation_root_node : Node2D
@@ -23,6 +25,11 @@ func play_in_animation() -> void:
 		_animation_root_node, "position", Vector2.ZERO, 0.275
 		).from(Vector2.UP * 128).set_trans(Tween.TRANS_QUAD
 		).set_ease(Tween.EASE_IN)
+	_active_tween.tween_callback(func():
+		var impact_particles = _impact_particle_scene.instantiate() as Node2D
+		owner.get_parent().add_child(impact_particles)
+		impact_particles.global_position = global_position
+		)
 	_active_tween.tween_property(
 		_animation_root_node, "position", Vector2.UP * 16, 0.125
 		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -38,6 +45,10 @@ func play_destruction_animation() -> void:
 	
 	_mask_node.texture = _mask_texture
 	_mask_node.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	
+	var destroy_particle = _destroy_particle_scene.instantiate() as Node2D
+	owner.get_parent().add_child(destroy_particle)
+	destroy_particle.global_position = global_position
 	
 	_active_tween = create_tween()
 	_active_tween.tween_property(

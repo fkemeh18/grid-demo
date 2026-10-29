@@ -2,7 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bim1acauid3lb" path="res://Scenes/Components/building_animator_component.gd" id="1_0muio"]
 [ext_resource type="Texture2D" uid="uid://bhdc6fnkfjd1u" path="res://Assets/Buildings/building_mask.png" id="2_hc60v"]
+[ext_resource type="PackedScene" uid="uid://dk84l35byf7c3" path="res://Scenes/VFX/building_impact_particles.tscn" id="3_pgtor"]
+[ext_resource type="PackedScene" uid="uid://d0x4nmaa45wru" path="res://Scenes/VFX/building_destroy_particles.tscn" id="4_g7bc5"]
 
 [node name="BuildingAnimatorComponent" type="Node2D" unique_id=1613588455]
 script = ExtResource("1_0muio")
 _mask_texture = ExtResource("2_hc60v")
+_impact_particle_scene = ExtResource("3_pgtor")
+_destroy_particle_scene = ExtResource("4_g7bc5")
