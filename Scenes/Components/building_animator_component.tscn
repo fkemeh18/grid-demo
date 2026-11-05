@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d0x4nmaa45wru" path="res://Scenes/VFX/building_destroy_particles.tscn" id="4_g7bc5"]
 
 [node name="BuildingAnimatorComponent" type="Node2D" unique_id=1613588455]
+y_sort_enabled = true
 script = ExtResource("1_0muio")
 _mask_texture = ExtResource("2_hc60v")
 _impact_particle_scene = ExtResource("3_pgtor")

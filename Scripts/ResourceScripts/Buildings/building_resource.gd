@@ -12,6 +12,8 @@ extends Resource
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var resource_radius: int
 @export_custom(PROPERTY_HINT_NONE,"", 
+				PROPERTY_USAGE_DEFAULT) var danger_radius: int
+@export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var resource_cost: int
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var is_deletable: bool = true

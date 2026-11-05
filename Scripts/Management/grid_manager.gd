@@ -64,6 +64,7 @@ func _is_area_currently_buildable(pos: Rect2i) -> bool:
 	return is_area_valid
 
 func _on_placed_building(bc: BuildingComponent) -> void:
+	_highlight_tml._update_goblin_occupied_tiles(bc, self)
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
 	_highlight_tml._update_collected_resource_tiles(bc, self)
 
@@ -73,6 +74,7 @@ func _on_destroyed_building(bc: BuildingComponent) -> void:
 func _update_grid() -> void:
 	_highlight_tml._clear()
 	_update_highlight_tiles()
+	_highlight_tml.highlight_goblin_occupied_tiles()
 
 func _update_highlight_tiles() -> void:
 	_highlight_tml.highlight_buildable_tiles()

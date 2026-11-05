@@ -13,6 +13,7 @@ var _animation_height = 300
 var _mask_node: Sprite2D
 
 func _ready():
+	y_sort_enabled = false
 	_setup_nodes()
 	
 
