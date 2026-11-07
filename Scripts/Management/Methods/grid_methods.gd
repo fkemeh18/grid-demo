@@ -26,11 +26,12 @@ static func get_first_tml(tile_list: Array[Vector2i],
 	else:
 		return null
 	
-	return first_tml_key ###
+	return first_tml_key 
 
 static func get_is_area_valid(gm: GridManager,
 							tile_list: Array[Vector2i],
-							target_elevation_layer: ElevationLayer) -> bool:
+							target_elevation_layer: ElevationLayer, 
+							tiles_to_check: Dictionary[Vector2i, bool]) -> bool:
 	var is_area_valid = tile_list.all(func(tile_pos): 
 #		checks the tilemaplayer of each tile
 		var valid_dict = gm._get_tile_custom_data(tile_pos,
@@ -49,7 +50,7 @@ static func get_is_area_valid(gm: GridManager,
 #		passes for the tile if builidable is true for it on that layer,
 		return (valid_dict[valid_tml]
 #		if the tile is valid for building at that location,
-				&& gm._highlight_tml._valid_buildable_tiles.has(tile_pos)
+				&& tiles_to_check.has(tile_pos)
 #		and if the elevation level is the same as the target elevation
 				&& elevation_layer == target_elevation_layer))
 	
@@ -59,11 +60,14 @@ static func refresh_grids(gm: GridManager) -> void:
 	gm._highlight_tml._all_tiles_in_buildable_radius.clear()
 	gm._highlight_tml._built_tile_locations.clear()
 	gm._highlight_tml._valid_buildable_tiles.clear()
+	gm._highlight_tml._valid_attack_tiles.clear()
 	gm._highlight_tml._collected_resource_tiles.clear()
+	gm._highlight_tml._goblin_occupied_tiles.clear()
 
 static func update_tiles_for_other_bcs(buildings: Array[BuildingComponent], 
 										gm: GridManager) -> void:
 	for building in buildings:
+		gm._highlight_tml._update_goblin_occupied_tiles(building, gm)
 		gm._highlight_tml._update_valid_buildable_tiles(building, gm)
 		gm._highlight_tml._update_collected_resource_tiles(building, gm)
 
@@ -104,7 +108,7 @@ static func get_tiles_in_radius(pos: Rect2i, radius: int,
 			var tile_pos = Vector2i(i, j)
 			var custom_data = filter_func.call(Rect2i(tile_pos, pos.size))
 			var data_key = custom_data.keys()
-			if data_key.size() != 0:
+			if data_key.size() != 0 && radius > 0:
 				if ((!is_tile_inside_circle(tile_area_center, tile_pos, radius + radius_mod )) || !(custom_data.get(data_key[0]))): continue
 				tiles[tile_pos] = true
 	

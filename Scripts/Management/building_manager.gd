@@ -23,6 +23,9 @@ var _curr_state: GameEventsAutoloader.State
 var _available_resource_count = func() -> int: 
 	return _base_resource_count + _curr_resource_count - _used_resource_count
 
+#var is_attack_tiles = func() -> bool:
+	#return _building_resource.attack_radius > 0
+
 func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)
@@ -77,11 +80,15 @@ func _update_grid_pos() -> void:
 			_update_grid_display()
 
 func _update_grid_display() -> void:
-	_grid_manager._update_grid()
+	_grid_manager._update_grid(_building_resource.is_attack_building())
 	
 	if _is_building_placable(_grid_manager._hovered_rect_pos):
 		_grid_manager._update_expanded_tiles(_grid_manager._hovered_rect_pos, 
 			_building_resource.buildable_radius)
+		if _building_resource.is_attack_building():
+			_grid_manager._highlight_tml.highlight_attack_tiles(
+				_grid_manager._hovered_rect_pos,
+				_building_resource.attack_radius, _grid_manager)
 		_grid_manager._update_resource_tiles(_grid_manager._hovered_rect_pos, 
 			_building_resource.resource_radius)
 		_grid_manager._cursor_tml._ghost_cursor._set_valid()
@@ -90,8 +97,8 @@ func _update_grid_display() -> void:
 	_grid_manager._cursor_tml._ghost_cursor.play_hover_animation()
 
 func _is_building_placable(pos: Rect2i) -> bool:
-	
-	var all_tiles_buildable = _grid_manager._is_area_currently_buildable(pos)
+	var all_tiles_buildable = _grid_manager._is_area_currently_buildable(pos, 
+										_building_resource.is_attack_building())
 	
 	return all_tiles_buildable && (_available_resource_count.call() 
 			>= _building_resource.resource_cost)

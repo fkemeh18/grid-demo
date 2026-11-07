@@ -14,9 +14,11 @@ var _green_atlas_coords = Vector2i(1, 0)
 var _goblin_atlas_coords = Vector2i(2,0)
 var _all_tiles_in_buildable_radius: Dictionary[Vector2i, bool]
 var _valid_buildable_tiles: Dictionary[Vector2i, bool]
+var _valid_attack_tiles: Dictionary[Vector2i, bool]
 var _built_tile_locations: Dictionary[Vector2i, bool]
 var _collected_resource_tiles: Dictionary[Vector2i, bool]
 var _goblin_occupied_tiles: Dictionary[Vector2i, bool]
+
 var _return_all_tiles = func(pos: Rect2i) -> Dictionary[Vector2i, bool]: 
 	var dict : Dictionary[Vector2i, bool] = {Vector2i(0, 0): true}
 	return dict
@@ -24,8 +26,8 @@ var _return_all_tiles = func(pos: Rect2i) -> Dictionary[Vector2i, bool]:
 func _clear() -> void:
 	clear()
 
-func highlight_buildable_tiles() -> void:
-	for tile_pos in _valid_buildable_tiles:
+func highlight_buildable_tiles(is_attack_tiles: bool, gm: GridManager) -> void:
+	for tile_pos in gm._get_buildable_tile_dict(is_attack_tiles):
 		set_cell(tile_pos, 0, Vector2i())
 
 func highlight_expanded_buildable_tiles(pos: Rect2i, radius: int,
@@ -36,9 +38,20 @@ func highlight_expanded_buildable_tiles(pos: Rect2i, radius: int,
 		expanded_tiles.erase(tile)
 	for tile in _built_tile_locations:
 		expanded_tiles.erase(tile)
-	for tile in _goblin_occupied_tiles:
-		expanded_tiles.erase(tile)
+	
 	for tile_pos in expanded_tiles:
+		set_cell(tile_pos, 0, _green_atlas_coords)
+
+func highlight_attack_tiles(pos: Rect2i, radius: int, gm: GridManager) -> void:
+	var attack_tiles = _get_valid_tiles_in_radius(pos, radius, gm)
+	
+	for tile in _valid_attack_tiles:
+		attack_tiles.erase(tile)
+	
+	#for tile in _built_tile_locations:
+		#attack_tiles.erase(tile)
+	
+	for tile_pos in attack_tiles:
 		set_cell(tile_pos, 0, _green_atlas_coords)
 
 func highlight_resource_tiles(pos: Rect2i, radius: int,
@@ -96,6 +109,8 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	for existing_bc in _built_tile_locations:
 		_valid_buildable_tiles.erase(existing_bc)
 	
+	_valid_attack_tiles.merge(_valid_buildable_tiles)
+	
 	for goblin_tile in _goblin_occupied_tiles:
 		_valid_buildable_tiles.erase(goblin_tile)
 	
@@ -131,9 +146,6 @@ func _update_goblin_occupied_tiles(comp: BuildingComponent,
 	#updates the highlightable occupied goblin tiles based on that rect
 	if comp.building_resource.danger_radius > 0:
 		var tiles_in_radius = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
-		
-		#for built_tile in _built_tile_locations:
-			#tiles_in_radius.erase(built_tile)
 		
 		_goblin_occupied_tiles.merge(tiles_in_radius)
 		

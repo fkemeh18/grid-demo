@@ -15,4 +15,8 @@ func _button_pressed(button: BuildingResource,
 						game_ui: GameUI, gm: GridManager) -> void:
 	game_ui._pressed_button_type.emit(button)
 	gm._cursor_tml._toggle_visibility_on()
-	gm._update_highlight_tiles()
+	
+	var tile_update = (func() -> void:
+		gm._update_highlight_tiles(game_ui._building_manager._building_resource
+									.is_attack_building()))
+	tile_update.call_deferred()

@@ -45,10 +45,10 @@ func _get_tile_custom_data(pos: Vector2i,
 func _is_cell_in_view_of_a_building(pos: Vector2i) -> bool:
 	return _highlight_tml._all_tiles_in_buildable_radius.has(pos)
 
-func _is_cell_currently_buildable(pos: Vector2i) -> bool:
-	return _highlight_tml._valid_buildable_tiles.has(pos)
+#func _is_cell_currently_buildable(pos: Vector2i) -> bool:
+	#return _highlight_tml._valid_buildable_tiles.has(pos)
 
-func _is_area_currently_buildable(pos: Rect2i) -> bool:
+func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 	var tiles := GridMethods.to_tiles(pos)
 	
 #	stops if there are no checkable tiles
@@ -56,11 +56,18 @@ func _is_area_currently_buildable(pos: Rect2i) -> bool:
 	
 	var tile_list = tiles.keys()
 	var first_tml = GridMethods.get_first_tml(tile_list, self)
+	
 #	gets the elevation of the layer of the first checkable tile
 	var target_elevation_layer = (_tile_map_elevations.get(first_tml) if first_tml != null else null) # Ternary operator
 	
+	var temp_tiles = _get_buildable_tile_dict(is_attack_tiles)
+	var tiles_to_check = temp_tiles.duplicate()
+	if is_attack_tiles:
+		for tile in _highlight_tml._built_tile_locations:
+			tiles_to_check.erase(tile)
+	
 	var is_area_valid = GridMethods.get_is_area_valid(self, tile_list,
-														target_elevation_layer)
+										target_elevation_layer, tiles_to_check)
 	return is_area_valid
 
 func _on_placed_building(bc: BuildingComponent) -> void:
@@ -71,13 +78,18 @@ func _on_placed_building(bc: BuildingComponent) -> void:
 func _on_destroyed_building(bc: BuildingComponent) -> void:
 	_refresh_grid()
 
-func _update_grid() -> void:
+func _update_grid(is_attack_tiles: bool) -> void:
 	_highlight_tml._clear()
-	_update_highlight_tiles()
-	_highlight_tml.highlight_goblin_occupied_tiles()
+	
+	if is_attack_tiles:
+		_highlight_tml.highlight_goblin_occupied_tiles()
+		_update_highlight_tiles(true)
+	else:
+		_update_highlight_tiles(false)
+		_highlight_tml.highlight_goblin_occupied_tiles()
 
-func _update_highlight_tiles() -> void:
-	_highlight_tml.highlight_buildable_tiles()
+func _update_highlight_tiles(is_attack_tiles: bool) -> void:
+	_highlight_tml.highlight_buildable_tiles(is_attack_tiles, self)
 
 func _update_expanded_tiles(pos: Rect2i, radius: int) -> void:
 	_highlight_tml.highlight_expanded_buildable_tiles(pos, radius, self)
@@ -90,7 +102,6 @@ func _refresh_grid() -> void:
 	
 	var buildings = BuildingComponent.get_valid_building_components(self)
 	
-	#affects here
 	GridMethods.update_tiles_for_other_bcs(buildings, self)
 	GridMethods.emit_tile_updates(self)
 
@@ -98,6 +109,12 @@ func _get_all_tile_map_layers(
 		current_layer: Node2D) -> Dictionary[TileMapLayer, bool]:
 	var layer_list = GridMethods.get_layer_list(current_layer, self)
 	return layer_list
+
+func _get_buildable_tile_dict(is_attack_tiles: bool
+								) -> Dictionary[Vector2i,bool]:
+	var dict = (_highlight_tml._valid_buildable_tiles 
+		if is_attack_tiles == false else _highlight_tml._valid_attack_tiles)
+	return dict
 
 func _map_layers_to_elevations() -> void:
 	for layer in _all_tile_map_layers:
