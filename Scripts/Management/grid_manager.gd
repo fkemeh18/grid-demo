@@ -45,9 +45,6 @@ func _get_tile_custom_data(pos: Vector2i,
 func _is_cell_in_view_of_a_building(pos: Vector2i) -> bool:
 	return _highlight_tml._all_tiles_in_buildable_radius.has(pos)
 
-#func _is_cell_currently_buildable(pos: Vector2i) -> bool:
-	#return _highlight_tml._valid_buildable_tiles.has(pos)
-
 func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 	var tiles := GridMethods.to_tiles(pos)
 	
@@ -70,13 +67,42 @@ func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 										target_elevation_layer, tiles_to_check)
 	return is_area_valid
 
-func _on_placed_building(bc: BuildingComponent) -> void:
+func _update_building_component_grid_state(bc: BuildingComponent) -> void:
 	_highlight_tml._update_goblin_occupied_tiles(bc, self)
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
 	_highlight_tml._update_collected_resource_tiles(bc, self)
+	_highlight_tml._update_attack_tiles(bc, self)
+
+func _on_placed_building(bc: BuildingComponent) -> void:
+	_update_building_component_grid_state(bc)
+	_check_destruction_of_goblin_camps()
 
 func _on_destroyed_building(bc: BuildingComponent) -> void:
 	_refresh_grid()
+
+func _check_destruction_of_goblin_camps():
+	var is_camp_destroyed = false
+	var danger_buildings := BuildingComponent.get_danger_building_component(self)
+	
+	for building in danger_buildings:
+		var tile_area = building.get_tile_area(self)
+		var is_inside_attack_tile = (GridMethods.to_tiles(tile_area)
+			.keys().any(func(tile): 
+				return _highlight_tml._built_attack_tiles.has(tile)))
+		
+		if is_inside_attack_tile:
+			is_camp_destroyed = true
+			building._self_destruct()
+	
+	if is_camp_destroyed:
+		_recalculate_goblin_occupied_tiles()
+
+func _recalculate_goblin_occupied_tiles() -> void:
+	_highlight_tml._goblin_occupied_tiles.clear()
+	var danger_buildings := BuildingComponent.get_danger_building_component(self)
+	
+	for building in danger_buildings:
+		_highlight_tml._update_goblin_occupied_tiles(building, self)
 
 func _update_grid(is_attack_tiles: bool) -> void:
 	_highlight_tml._clear()

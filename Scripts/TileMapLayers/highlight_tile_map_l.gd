@@ -16,6 +16,7 @@ var _all_tiles_in_buildable_radius: Dictionary[Vector2i, bool]
 var _valid_buildable_tiles: Dictionary[Vector2i, bool]
 var _valid_attack_tiles: Dictionary[Vector2i, bool]
 var _built_tile_locations: Dictionary[Vector2i, bool]
+var _built_attack_tiles: Dictionary[Vector2i, bool]
 var _collected_resource_tiles: Dictionary[Vector2i, bool]
 var _goblin_occupied_tiles: Dictionary[Vector2i, bool]
 
@@ -96,9 +97,8 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	comp._calculate_occupied_cell_positions(gm._cursor_tml)
 	_built_tile_locations.merge(comp._get_occupied_cell_positions())
 	
-	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
+	var grid_rect_pos = comp.get_tile_area(gm)
 	var radius = comp.building_resource.buildable_radius
-	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
 	var all_tiles = _get_tiles_in_radius(grid_rect_pos, radius, 
 											_return_all_tiles)
 	_all_tiles_in_buildable_radius.merge(all_tiles)
@@ -118,9 +118,8 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 
 func _update_collected_resource_tiles(comp: BuildingComponent, 
 										gm: GridManager) -> void:
-	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
+	var grid_rect_pos = comp.get_tile_area(gm)
 	var radius = comp.building_resource.resource_radius
-	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
 	var resource_tiles = _get_resource_tiles_in_radius(grid_rect_pos, radius, 
 		gm)
 	var old_resource_tile_count = _collected_resource_tiles.size()
@@ -132,6 +131,16 @@ func _update_collected_resource_tiles(comp: BuildingComponent,
 	
 	_grid_updated.emit()
 
+func _update_attack_tiles(comp: BuildingComponent, gm: GridManager) -> void:
+	if !(comp.building_resource.is_attack_building()): return
+	
+	var grid_rect_pos = comp.get_tile_area(gm)
+	var radius = comp.building_resource.attack_radius
+	var attack_tiles = _get_tiles_in_radius(grid_rect_pos, radius, 
+											_return_all_tiles)
+	
+	_built_attack_tiles.merge(attack_tiles)
+
 func _update_goblin_occupied_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:
 	#gets goblin camp's tiles and adds them to built locations
@@ -139,12 +148,11 @@ func _update_goblin_occupied_tiles(comp: BuildingComponent,
 	_built_tile_locations.merge(comp._get_occupied_cell_positions())
 	
 	#gets the position and radius of camp and makes a rect from them
-	var grid_tile_pos := comp._get_grid_pos(gm._cursor_tml)
+	var grid_rect_pos = comp.get_tile_area(gm)
 	var radius = comp.building_resource.danger_radius
-	var grid_rect_pos = Rect2i(grid_tile_pos, comp.building_resource.dimensions)
 	
 	#updates the highlightable occupied goblin tiles based on that rect
-	if comp.building_resource.danger_radius > 0:
+	if comp.building_resource.is_danger_building():
 		var tiles_in_radius = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
 		
 		_goblin_occupied_tiles.merge(tiles_in_radius)

@@ -26,3 +26,6 @@ extends Resource
 
 func is_attack_building() -> bool:
 	return attack_radius > 0
+
+func is_danger_building() -> bool:
+	return danger_radius > 0

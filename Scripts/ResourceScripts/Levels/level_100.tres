@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_6llja")
 level_scene_path = "uid://bf70p4wiuksrr"
-starting_resource_count = 20
+starting_resource_count = 35
 metadata/_custom_type_script = "uid://xfm7h1jb8ygn"

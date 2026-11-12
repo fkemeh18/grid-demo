@@ -36,6 +36,18 @@ static func get_valid_building_components(node: Node
 		return !building_comp._is_being_destroyed_currently)
 	return building_comps
 
+static func get_danger_building_component(
+										node: Node) -> Array[BuildingComponent]:
+	var buildings := get_valid_building_components(node)
+	var danger_buildings = buildings.filter(func(bc): 
+		return bc.building_resource.is_danger_building())
+	return danger_buildings
+
+func get_tile_area(gm: GridManager) -> Rect2i:
+	var grid_tile_pos := _get_grid_pos(gm._cursor_tml)
+	var grid_rect_pos = Rect2i(grid_tile_pos, building_resource.dimensions)
+	return grid_rect_pos
+
 func _get_grid_pos(cursor: CursorTML) -> Vector2i:
 	return cursor._process_global_pos(self.global_position)
 
