@@ -64,6 +64,7 @@ static func refresh_grids(gm: GridManager) -> void:
 	gm._highlight_tml._collected_resource_tiles.clear()
 	gm._highlight_tml._goblin_occupied_tiles.clear()
 	gm._highlight_tml._built_attack_tiles.clear()
+	gm.building_to_buildable_tiles.clear()
 
 static func update_tiles_for_other_bcs(buildings: Array[BuildingComponent], 
 										gm: GridManager) -> void:

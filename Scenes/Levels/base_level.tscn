@@ -11,10 +11,15 @@
 [ext_resource type="Script" uid="uid://b8cbnbo0xyu3r" path="res://Scripts/Management/state_manager.gd" id="5_6iyac"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/Tiles/highlight_tileset.tres" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bhjmk6ehebf2m" path="res://Scenes/UI/game_camera.tscn" id="6_3o7cg"]
+[ext_resource type="Script" uid="uid://c5bhwn07x32bq" path="res://Resources/Custom/building_locations.gd" id="6_bi03b"]
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="8_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://dy2cptdx8fjs0" path="res://Scenes/Mgmt/grid_manager.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://cae17urkfnx6s" path="res://Scenes/UI/building_ghost.tscn" id="10_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="10_hptm8"]
+
+[sub_resource type="Resource" id="Resource_bi03b"]
+script = ExtResource("6_bi03b")
+metadata/_custom_type_script = "uid://c5bhwn07x32bq"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("2_jjvhh")
@@ -47,10 +52,10 @@ _building_ghost_scene = ExtResource("10_d1ilt")
 _cursor_tml = NodePath("../../TMLs/YSortRoot/CursorTileMapLayer")
 _highlight_tml = NodePath("../../TMLs/YSortRoot/HighlightTileMapL")
 _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
+building_area_resource = SubResource("Resource_bi03b")
 
-[node name="StateManager" type="Node" parent="Management" unique_id=513992422 node_paths=PackedStringArray("_gm")]
+[node name="StateManager" type="Node" parent="Management" unique_id=513992422]
 script = ExtResource("5_6iyac")
-_gm = NodePath("../GridManager")
 
 [node name="GameUI" parent="." unique_id=2137080717 node_paths=PackedStringArray("_building_manager") instance=ExtResource("4_d1ilt")]
 _building_manager = NodePath("../Management/BuildingManager")

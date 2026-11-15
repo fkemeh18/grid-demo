@@ -4,13 +4,17 @@ extends Node
 @export var _cursor_tml: CursorTML
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
+@export var building_area_resource: BuildingLocations
 
 var _hovered_rect_pos: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE)
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 var _tile_map_elevations: Dictionary[TileMapLayer,ElevationLayer]
+var building_to_buildable_tiles: Dictionary[BuildingComponent, BuildingLocations]
 
 func _ready():
 	GameEventsAutoloader._instance.building_placed.connect(_on_placed_building)
+	GameEventsAutoloader._instance.building_disabled.connect(_on_disabled_building)
+	GameEventsAutoloader._instance.building_enabled.connect(_on_enabled_building)
 	GameEventsAutoloader._instance.building_destroyed.connect(_on_destroyed_building)
 	_all_tile_map_layers = _get_all_tile_map_layers(_base_terrain_tml)
 	_map_layers_to_elevations()
@@ -67,6 +71,45 @@ func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 										target_elevation_layer, tiles_to_check)
 	return is_area_valid
 
+func can_destroy_building(bc: BuildingComponent) -> bool:
+	if bc.building_resource.buildable_radius > 0:
+		#checks each other established building...
+		var dependent_buildings = bc.get_valid_building_components(self
+			).filter(func(other_building): 
+				#for their location tiles...
+				var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
+				var tile_array = tile_dict.keys()
+				#and checks those tiles...
+				var any_tile_in_radius = tile_array.any(func(tile): 
+					var tile_resource = building_to_buildable_tiles[bc]
+					#for if they are in the target building's buildable range
+					return tile_resource.get_building_location_data().has(tile)
+					)
+				return other_building != bc && any_tile_in_radius
+				)
+		
+		var all_buildings_still_valid = dependent_buildings.all(func(valid_building):
+			#gets list of tiles this building is occupying...
+			var tiles_dict = GridMethods.to_tiles(valid_building.get_tile_area(self))
+			var tiles_for_building = tiles_dict.keys()
+			#checks through them...
+			return tiles_for_building.all(func(tile): 
+				var tile_is_in_set = building_to_buildable_tiles.keys().filter(
+					#making sure the tiles tied to the main building are exempt...
+					func(key): return key != bc
+				).any(func(building): 
+					#and checks if the tile is in the other buildings' set
+					var resource = building_to_buildable_tiles[building]
+					return resource.is_tile_in_set(tile)
+					)
+				return tile_is_in_set
+				)
+			)
+		if !all_buildings_still_valid:
+			return false
+	
+	return true
+
 func _update_building_component_grid_state(bc: BuildingComponent) -> void:
 	_highlight_tml._update_goblin_occupied_tiles(bc, self)
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
@@ -77,11 +120,16 @@ func _on_placed_building(bc: BuildingComponent) -> void:
 	_update_building_component_grid_state(bc)
 	_check_destruction_of_goblin_camps()
 
-func _on_destroyed_building(bc: BuildingComponent) -> void:
+func _on_disabled_building(_bc: BuildingComponent) -> void:
+	_refresh_grid()
+
+func _on_enabled_building(bc: BuildingComponent) -> void:
+	_update_building_component_grid_state(bc)
+
+func _on_destroyed_building(_bc: BuildingComponent) -> void:
 	_refresh_grid()
 
 func _check_destruction_of_goblin_camps():
-	var is_camp_destroyed = false
 	var danger_buildings := BuildingComponent.get_danger_building_component(self)
 	
 	for building in danger_buildings:
@@ -91,11 +139,9 @@ func _check_destruction_of_goblin_camps():
 				return _highlight_tml._built_attack_tiles.has(tile)))
 		
 		if is_inside_attack_tile:
-			is_camp_destroyed = true
-			building._self_destruct()
-	
-	if is_camp_destroyed:
-		_recalculate_goblin_occupied_tiles()
+			building.disable()
+		else:
+			building.enable()
 
 func _recalculate_goblin_occupied_tiles() -> void:
 	_highlight_tml._goblin_occupied_tiles.clear()
@@ -129,6 +175,7 @@ func _refresh_grid() -> void:
 	var buildings = BuildingComponent.get_valid_building_components(self)
 	
 	GridMethods.update_tiles_for_other_bcs(buildings, self)
+	_check_destruction_of_goblin_camps()
 	GridMethods.emit_tile_updates(self)
 
 func _get_all_tile_map_layers(

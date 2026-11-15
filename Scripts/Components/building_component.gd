@@ -10,6 +10,7 @@ extends Node2D
 var _occupied_tiles: Dictionary[Vector2i, bool]
 var bc_name: StringName
 var _is_being_destroyed_currently: bool
+var _is_disabled: bool #private set
 
 func _ready():
 	if _building_resource_path != null:
@@ -69,6 +70,16 @@ func is_tile_in_built_area(tile: Vector2i) -> bool:
 
 func _on_destroy_animation_finished() -> void:
 	owner.queue_free()
+
+func disable() -> void:
+	if _is_disabled: return
+	_is_disabled = true
+	GameEvents.emit_on_building_disabled(self)
+
+func enable() -> void:
+	if !_is_disabled: return
+	_is_disabled = false
+	GameEvents.emit_on_building_enabled(self)
 
 func _self_destruct() -> void:
 	_is_being_destroyed_currently = true

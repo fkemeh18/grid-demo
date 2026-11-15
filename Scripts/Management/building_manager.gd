@@ -135,6 +135,8 @@ func _destroy_building() -> void:
 		target_building = target_building_array.front()
 	else: return
 	
+	if !_grid_manager.can_destroy_building(target_building): return
+	
 	_used_resource_count -= target_building.building_resource.resource_cost
 	
 	if target_building.building_resource.display_name != "Base":

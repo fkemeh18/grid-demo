@@ -99,12 +99,19 @@ func _update_valid_buildable_tiles(comp: BuildingComponent,
 	
 	var grid_rect_pos = comp.get_tile_area(gm)
 	var radius = comp.building_resource.buildable_radius
-	var all_tiles = _get_tiles_in_radius(grid_rect_pos, radius, 
-											_return_all_tiles)
-	_all_tiles_in_buildable_radius.merge(all_tiles)
 	
-	var valid_tiles = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
-	_valid_buildable_tiles.merge(valid_tiles)
+	if comp.building_resource.buildable_radius > 0:
+		var all_tiles = _get_tiles_in_radius(grid_rect_pos, radius, 
+											_return_all_tiles)
+		_all_tiles_in_buildable_radius.merge(all_tiles)
+		
+		var valid_tiles = _get_valid_tiles_in_radius(grid_rect_pos, radius, gm)
+		
+		var new_building_location := gm.building_area_resource.duplicate(true)
+		new_building_location.set_building_location_data(valid_tiles)
+		gm.building_to_buildable_tiles[comp] = new_building_location
+		
+		_valid_buildable_tiles.merge(valid_tiles)
 	
 	for existing_bc in _built_tile_locations:
 		_valid_buildable_tiles.erase(existing_bc)
@@ -143,9 +150,11 @@ func _update_attack_tiles(comp: BuildingComponent, gm: GridManager) -> void:
 
 func _update_goblin_occupied_tiles(comp: BuildingComponent, 
 									gm: GridManager) -> void:
-	#gets goblin camp's tiles and adds them to built locations
+	#gets goblin camp's location tiles and adds them to built locations
 	comp._calculate_occupied_cell_positions(gm._cursor_tml)
 	_built_tile_locations.merge(comp._get_occupied_cell_positions())
+	
+	if comp._is_disabled: return
 	
 	#gets the position and radius of camp and makes a rect from them
 	var grid_rect_pos = comp.get_tile_area(gm)
@@ -159,4 +168,3 @@ func _update_goblin_occupied_tiles(comp: BuildingComponent,
 		
 		for built_tile in _built_tile_locations:
 			_goblin_occupied_tiles.erase(built_tile)
-		
