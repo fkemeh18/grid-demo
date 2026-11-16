@@ -44,6 +44,13 @@ static func get_danger_building_component(
 		return bc.building_resource.is_danger_building())
 	return danger_buildings
 
+static func get_friendly_building_components(
+										node: Node) -> Array[BuildingComponent]:
+	var buildings := get_valid_building_components(node)
+	var friendly_buildings = buildings.filter(func(bc): 
+		return !bc.building_resource.is_danger_building())
+	return friendly_buildings
+
 func get_tile_area(gm: GridManager) -> Rect2i:
 	var grid_tile_pos := _get_grid_pos(gm._cursor_tml)
 	var grid_rect_pos = Rect2i(grid_tile_pos, building_resource.dimensions)

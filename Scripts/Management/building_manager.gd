@@ -139,7 +139,7 @@ func _destroy_building() -> void:
 	
 	_used_resource_count -= target_building.building_resource.resource_cost
 	
-	if target_building.building_resource.display_name != "Base":
+	if !target_building.building_resource.is_base:
 		target_building._self_destruct()
 		available_resource_count_changed.emit(_available_resource_count.call())
 

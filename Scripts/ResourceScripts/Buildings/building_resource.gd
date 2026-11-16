@@ -18,11 +18,16 @@ extends Resource
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var resource_cost: int
 @export_custom(PROPERTY_HINT_NONE,"", 
+				PROPERTY_USAGE_DEFAULT) var is_base: bool
+@export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var is_deletable: bool = true
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var building_scene: PackedScene
 @export_custom(PROPERTY_HINT_NONE,"", 
 				PROPERTY_USAGE_DEFAULT) var sprite_scene: PackedScene
+
+func is_expansion_building() -> bool:
+	return buildable_radius > 0
 
 func is_attack_building() -> bool:
 	return attack_radius > 0

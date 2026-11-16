@@ -73,42 +73,98 @@ func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 
 func can_destroy_building(bc: BuildingComponent) -> bool:
 	if bc.building_resource.buildable_radius > 0:
-		#checks each other established building...
-		var dependent_buildings = bc.get_valid_building_components(self
-			).filter(func(other_building): 
-				#for their location tiles...
-				var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
-				var tile_array = tile_dict.keys()
-				#and checks those tiles...
-				var any_tile_in_radius = tile_array.any(func(tile): 
-					var tile_resource = building_to_buildable_tiles[bc]
-					#for if they are in the target building's buildable range
-					return tile_resource.get_building_location_data().has(tile)
-					)
-				return other_building != bc && any_tile_in_radius
-				)
-		
-		var all_buildings_still_valid = dependent_buildings.all(func(valid_building):
-			#gets list of tiles this building is occupying...
-			var tiles_dict = GridMethods.to_tiles(valid_building.get_tile_area(self))
-			var tiles_for_building = tiles_dict.keys()
-			#checks through them...
-			return tiles_for_building.all(func(tile): 
-				var tile_is_in_set = building_to_buildable_tiles.keys().filter(
-					#making sure the tiles tied to the main building are exempt...
-					func(key): return key != bc
-				).any(func(building): 
-					#and checks if the tile is in the other buildings' set
-					var resource = building_to_buildable_tiles[building]
-					return resource.is_tile_in_set(tile)
-					)
-				return tile_is_in_set
-				)
-			)
-		if !all_buildings_still_valid:
-			return false
-	
+		return (!will_destroying_building_isolate_other_buildings(bc)
+					&& is_building_network_connected(bc))
 	return true
+
+func will_destroying_building_isolate_other_buildings(
+								condemned_building: BuildingComponent) -> bool:
+	#checks each other established building...
+	var dependent_buildings = BuildingComponent.get_friendly_building_components(
+		self).filter(func(other_building): 
+		if other_building == condemned_building: return false
+		if other_building.building_resource.is_base: return false
+		
+		#for their location tiles...
+		var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
+		var tile_array = tile_dict.keys()
+		#and checks those tiles...
+		var any_tile_in_radius = tile_array.any(func(tile): 
+			var tile_resource = building_to_buildable_tiles[condemned_building]
+			#for if they are in the target building's buildable range
+			return tile_resource.get_building_location_data().has(tile)
+			)
+		return any_tile_in_radius
+		)
+		
+	var all_buildings_still_valid = dependent_buildings.all(func(dependent_building):
+		#gets list of tiles this building is occupying...
+		var tiles_dict = GridMethods.to_tiles(dependent_building.get_tile_area(self))
+		var tiles_for_building = tiles_dict.keys()
+		var buildings_to_check = building_to_buildable_tiles.keys().filter(
+				func(key): return key != condemned_building && key != dependent_building
+			)
+		#iterates through them...
+		return tiles_for_building.all(func(tile): 
+			#making sure the tiles tied to the main building are exempt...
+			var tile_is_in_set = buildings_to_check.any(func(building):
+				#and checks if the tile is in the other buildings' set
+				var resource = building_to_buildable_tiles[building]
+				return resource.is_tile_in_set(tile)
+				)
+			return tile_is_in_set
+			)
+		)
+	if !all_buildings_still_valid:
+		return true
+	
+	return false
+
+func is_building_network_connected(bc: BuildingComponent) -> bool:
+	#gets the first building that is labled as a base building from an array of all buildings in the level
+	var base_building = bc.get_valid_building_components(self
+		).filter(func(building): return building.building_resource.is_base
+		).front()
+	var visited_buildings: Dictionary[BuildingComponent, bool]
+	visit_all_connected_buildings(base_building, bc, visited_buildings)
+	
+	#gets number of towers and other expansion buildings currently available in the level
+	var total_buildings_to_visit = BuildingComponent.get_valid_building_components(
+		self).filter(func(visitable_building): 
+			return (visitable_building.building_resource.is_expansion_building()
+			&& visitable_building != bc)).size()
+	
+	return total_buildings_to_visit == visited_buildings.size()
+
+func visit_all_connected_buildings(root_building: BuildingComponent,
+				excluded_building: BuildingComponent,
+				visited_buildings: Dictionary[BuildingComponent, bool]) -> void:
+	var dependent_buildings_array = BuildingComponent.get_friendly_building_components(self
+		).filter(func(other_building): 
+			#only check buildings that expand the buildable areas
+			if !other_building.building_resource.is_expansion_building(): return false
+			if visited_buildings.has(other_building): return false
+			
+			var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
+			var tile_array = tile_dict.keys()
+			#and checks those tiles...
+			var any_tile_in_radius = tile_array.all(func(tile): 
+				var tile_resource = building_to_buildable_tiles[root_building]
+				#for if they are in the target building's buildable range
+				return tile_resource.get_building_location_data().has(tile)
+				)
+			return other_building != excluded_building && any_tile_in_radius
+			)
+	
+	var dependent_buildings: Dictionary[BuildingComponent, bool]
+	for dependent_building in dependent_buildings_array.duplicate():
+		dependent_buildings[dependent_building] = true
+	
+	visited_buildings.merge(dependent_buildings)
+	
+	for dependent_building in dependent_buildings:
+		visit_all_connected_buildings(
+			dependent_building, excluded_building,visited_buildings)
 
 func _update_building_component_grid_state(bc: BuildingComponent) -> void:
 	_highlight_tml._update_goblin_occupied_tiles(bc, self)
