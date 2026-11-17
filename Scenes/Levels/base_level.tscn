@@ -11,8 +11,10 @@
 [ext_resource type="Script" uid="uid://b8cbnbo0xyu3r" path="res://Scripts/Management/state_manager.gd" id="5_6iyac"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/Tiles/highlight_tileset.tres" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bhjmk6ehebf2m" path="res://Scenes/UI/game_camera.tscn" id="6_3o7cg"]
-[ext_resource type="Script" uid="uid://c5bhwn07x32bq" path="res://Resources/Custom/building_locations.gd" id="6_bi03b"]
+[ext_resource type="Script" uid="uid://c5bhwn07x32bq" path="res://Scripts/ResourceScripts/Buildings/building_locations.gd" id="6_bi03b"]
+[ext_resource type="Script" uid="uid://dlyjw70gi85kj" path="res://Scripts/ResourceScripts/Buildings/danger_locations.gd" id="7_a8n0m"]
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="8_fdnlq"]
+[ext_resource type="Script" uid="uid://dfxat5u7ya8eh" path="res://Scripts/ResourceScripts/Buildings/attack_locations.gd" id="8_txu3m"]
 [ext_resource type="PackedScene" uid="uid://dy2cptdx8fjs0" path="res://Scenes/Mgmt/grid_manager.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://cae17urkfnx6s" path="res://Scenes/UI/building_ghost.tscn" id="10_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="10_hptm8"]
@@ -20,6 +22,14 @@
 [sub_resource type="Resource" id="Resource_bi03b"]
 script = ExtResource("6_bi03b")
 metadata/_custom_type_script = "uid://c5bhwn07x32bq"
+
+[sub_resource type="Resource" id="Resource_txu3m"]
+script = ExtResource("7_a8n0m")
+metadata/_custom_type_script = "uid://dlyjw70gi85kj"
+
+[sub_resource type="Resource" id="Resource_xat8b"]
+script = ExtResource("8_txu3m")
+metadata/_custom_type_script = "uid://dfxat5u7ya8eh"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("2_jjvhh")
@@ -53,6 +63,8 @@ _cursor_tml = NodePath("../../TMLs/YSortRoot/CursorTileMapLayer")
 _highlight_tml = NodePath("../../TMLs/YSortRoot/HighlightTileMapL")
 _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
 building_area_resource = SubResource("Resource_bi03b")
+danger_area_resource = SubResource("Resource_txu3m")
+attack_area_resource = SubResource("Resource_xat8b")
 
 [node name="StateManager" type="Node" parent="Management" unique_id=513992422]
 script = ExtResource("5_6iyac")
@@ -85,7 +97,7 @@ tile_set = SubResource("TileSet_ig7tw")
 script = ExtResource("3_kry3j")
 
 [node name="HighlightTileMapL" type="TileMapLayer" parent="TMLs/YSortRoot" unique_id=32821524 node_paths=PackedStringArray("bc")]
-modulate = Color(1, 1, 1, 0.49803922)
+modulate = Color(1, 1, 1, 0.7058824)
 y_sort_enabled = true
 tile_set = ExtResource("5_kry3j")
 script = ExtResource("4_21xkr")

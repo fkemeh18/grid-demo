@@ -23,9 +23,6 @@ var _curr_state: GameEventsAutoloader.State
 var _available_resource_count = func() -> int: 
 	return _base_resource_count + _curr_resource_count - _used_resource_count
 
-#var is_attack_tiles = func() -> bool:
-	#return _building_resource.attack_radius > 0
-
 func _ready():
 	_grid_manager._highlight_tml._resource_tiles_updated.connect(
 		_on_resource_tiles_updated)

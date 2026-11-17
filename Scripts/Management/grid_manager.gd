@@ -5,11 +5,15 @@ extends Node
 @export var _highlight_tml: HighlightTML
 @export var _base_terrain_tml: TileMapLayer
 @export var building_area_resource: BuildingLocations
+@export var danger_area_resource: DangerLocations
+@export var attack_area_resource: AttackLocations
 
 var _hovered_rect_pos: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE)
 var _all_tile_map_layers: Dictionary[TileMapLayer, bool]
 var _tile_map_elevations: Dictionary[TileMapLayer,ElevationLayer]
 var building_to_buildable_tiles: Dictionary[BuildingComponent, BuildingLocations]
+var danger_building_to_blocked_tiles: Dictionary[BuildingComponent, DangerLocations]
+var attack_building_to_attacked_tiles: Dictionary[BuildingComponent, AttackLocations]
 
 func _ready():
 	GameEventsAutoloader._instance.building_placed.connect(_on_placed_building)
@@ -72,10 +76,55 @@ func _is_area_currently_buildable(pos: Rect2i, is_attack_tiles: bool) -> bool:
 	return is_area_valid
 
 func can_destroy_building(bc: BuildingComponent) -> bool:
-	if bc.building_resource.buildable_radius > 0:
+	if bc.building_resource.is_expansion_building():
 		return (!will_destroying_building_isolate_other_buildings(bc)
 					&& is_building_network_connected(bc))
+	elif bc.building_resource.is_attack_building():
+		return _can_destroy_barracks(bc)
 	return true
+
+func _can_destroy_barracks(attacker: BuildingComponent) -> bool:
+	var disabled_danger_buildings := BuildingComponent.get_danger_building_component(
+	self).filter(func(building): 
+		var danger_dict = building._get_occupied_cell_positions()
+		return danger_dict.keys().any(func(tile):
+			var attack_building = attack_building_to_attacked_tiles[attacker]
+			var attack_location = attack_building.get_attack_location_data()
+			return attack_location.has(tile))
+	)
+	
+	#checks if there are no active danger buildings near attacker
+	if disabled_danger_buildings.is_empty(): return true
+	
+	var still_disabled_danger_buildings = disabled_danger_buildings.all(
+	func(danger_building): return danger_building._get_occupied_cell_positions().keys().any(
+		func(tile): return attack_building_to_attacked_tiles.keys().filter(
+			func(other_attacker): return other_attacker != attacker
+				).any(func(other_attacker): 
+					var attack_building = attack_building_to_attacked_tiles[other_attacker]
+					var attack_location = attack_building.get_attack_location_data()
+					return attack_location.has(tile)
+					)
+			)
+	)
+	#checks if all danger buildings are disabled due to other attack buildings
+	if still_disabled_danger_buildings: return true
+	
+	var friendly_buildings = BuildingComponent.get_friendly_building_components(
+		self).filter(func(friend): return friend != attacker)
+	
+	var danger_building_traps_any_friendly_building = disabled_danger_buildings.any(
+		func(danger_building): 
+			var danger_buildings = danger_building_to_blocked_tiles[danger_building]
+			var danger_tiles = danger_buildings.get_danger_location_data()
+			return friendly_buildings.any(func(friendly_building): 
+				var friendly_tiles = friendly_building._get_occupied_cell_positions().keys()
+				return friendly_tiles.any(func(tile): 
+					return danger_tiles.has(tile))
+				)
+	)
+	#checks if any friendly building is within the scope of a danger building
+	return !danger_building_traps_any_friendly_building
 
 func will_destroying_building_isolate_other_buildings(
 								condemned_building: BuildingComponent) -> bool:
@@ -86,7 +135,7 @@ func will_destroying_building_isolate_other_buildings(
 		if other_building.building_resource.is_base: return false
 		
 		#for their location tiles...
-		var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
+		var tile_dict = other_building._get_occupied_cell_positions()
 		var tile_array = tile_dict.keys()
 		#and checks those tiles...
 		var any_tile_in_radius = tile_array.any(func(tile): 
@@ -99,7 +148,7 @@ func will_destroying_building_isolate_other_buildings(
 		
 	var all_buildings_still_valid = dependent_buildings.all(func(dependent_building):
 		#gets list of tiles this building is occupying...
-		var tiles_dict = GridMethods.to_tiles(dependent_building.get_tile_area(self))
+		var tiles_dict = dependent_building._get_occupied_cell_positions()
 		var tiles_for_building = tiles_dict.keys()
 		var buildings_to_check = building_to_buildable_tiles.keys().filter(
 				func(key): return key != condemned_building && key != dependent_building
@@ -145,7 +194,7 @@ func visit_all_connected_buildings(root_building: BuildingComponent,
 			if !other_building.building_resource.is_expansion_building(): return false
 			if visited_buildings.has(other_building): return false
 			
-			var tile_dict = GridMethods.to_tiles(other_building.get_tile_area(self))
+			var tile_dict = other_building._get_occupied_cell_positions()
 			var tile_array = tile_dict.keys()
 			#and checks those tiles...
 			var any_tile_in_radius = tile_array.all(func(tile): 
@@ -167,7 +216,7 @@ func visit_all_connected_buildings(root_building: BuildingComponent,
 			dependent_building, excluded_building,visited_buildings)
 
 func _update_building_component_grid_state(bc: BuildingComponent) -> void:
-	_highlight_tml._update_goblin_occupied_tiles(bc, self)
+	_highlight_tml._update_danger_occupied_tiles(bc, self)
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
 	_highlight_tml._update_collected_resource_tiles(bc, self)
 	_highlight_tml._update_attack_tiles(bc, self)
@@ -189,9 +238,8 @@ func _check_destruction_of_goblin_camps():
 	var danger_buildings := BuildingComponent.get_danger_building_component(self)
 	
 	for building in danger_buildings:
-		var tile_area = building.get_tile_area(self)
-		var is_inside_attack_tile = (GridMethods.to_tiles(tile_area)
-			.keys().any(func(tile): 
+		var is_inside_attack_tile = (building._get_occupied_cell_positions()
+		.keys().any(func(tile): 
 				return _highlight_tml._built_attack_tiles.has(tile)))
 		
 		if is_inside_attack_tile:
@@ -200,21 +248,21 @@ func _check_destruction_of_goblin_camps():
 			building.enable()
 
 func _recalculate_goblin_occupied_tiles() -> void:
-	_highlight_tml._goblin_occupied_tiles.clear()
+	_highlight_tml._danger_occupied_tiles.clear()
 	var danger_buildings := BuildingComponent.get_danger_building_component(self)
 	
 	for building in danger_buildings:
-		_highlight_tml._update_goblin_occupied_tiles(building, self)
+		_highlight_tml._update_danger_occupied_tiles(building, self)
 
 func _update_grid(is_attack_tiles: bool) -> void:
 	_highlight_tml._clear()
 	
 	if is_attack_tiles:
-		_highlight_tml.highlight_goblin_occupied_tiles()
+		_highlight_tml.highlight_danger_occupied_tiles()
 		_update_highlight_tiles(true)
 	else:
 		_update_highlight_tiles(false)
-		_highlight_tml.highlight_goblin_occupied_tiles()
+		_highlight_tml.highlight_danger_occupied_tiles()
 
 func _update_highlight_tiles(is_attack_tiles: bool) -> void:
 	_highlight_tml.highlight_buildable_tiles(is_attack_tiles, self)
