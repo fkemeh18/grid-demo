@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://c363mum1vdtvy" path="res://Scripts/TileMapLayers/cursor_tile_map_layer.gd" id="3_kry3j"]
 [ext_resource type="Script" uid="uid://dvskfcvyxqcil" path="res://Scripts/TileMapLayers/highlight_tile_map_l.gd" id="4_21xkr"]
 [ext_resource type="PackedScene" uid="uid://c4newqswu33l4" path="res://Scenes/UI/game_ui.tscn" id="4_d1ilt"]
-[ext_resource type="Script" uid="uid://b8cbnbo0xyu3r" path="res://Scripts/Management/state_manager.gd" id="5_6iyac"]
+[ext_resource type="Script" uid="uid://b8cbnbo0xyu3r" path="res://Scripts/Management/Managers/state_manager.gd" id="5_6iyac"]
 [ext_resource type="TileSet" uid="uid://cl0lir1ju5mss" path="res://Resources/Tiles/highlight_tileset.tres" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bhjmk6ehebf2m" path="res://Scenes/UI/game_camera.tscn" id="6_3o7cg"]
 [ext_resource type="Script" uid="uid://c5bhwn07x32bq" path="res://Scripts/ResourceScripts/Buildings/building_locations.gd" id="6_bi03b"]

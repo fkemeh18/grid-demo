@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ber53dy2ursh6" path="res://Scenes/UI/Menus/level_select_section.tscn" id="1_rp22f"]
 [ext_resource type="Script" uid="uid://d4af717lrvmbk" path="res://Scripts/UI/level_select_screen.gd" id="1_xr0rm"]
 
-[node name="LevelSelectScreen" type="MarginContainer" unique_id=990387306 node_paths=PackedStringArray("_grid_container", "_return_button")]
+[node name="LevelSelectScreen" type="MarginContainer" unique_id=990387306 node_paths=PackedStringArray("_grid_container", "_return_button", "_prev_page_button", "_next_page_button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,26 +15,61 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 script = ExtResource("1_xr0rm")
 _level_select_section_scene = ExtResource("1_rp22f")
-_grid_container = NodePath("PanelContainer/MarginContainer/GridContainer")
+_grid_container = NodePath("HBoxContainer/PanelContainer/MarginContainer/GridContainer")
 _return_button = NodePath("ReturnButton")
+_prev_page_button = NodePath("HBoxContainer/PrevPageButton")
+_next_page_button = NodePath("HBoxContainer/NextPageButton")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=587170777]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=104929103]
+layout_mode = 2
+
+[node name="PrevPageButton" type="Button" parent="HBoxContainer" unique_id=1033898517]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "<<<"
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=587170777]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=342253170]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer" unique_id=342253170]
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer" unique_id=445211847]
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/MarginContainer" unique_id=445211847]
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
-columns = 4
+columns = 3
+
+[node name="LevelSelectSection" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=2088857616 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="LevelSelectSection2" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=1501467552 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="LevelSelectSection3" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=1235939928 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="LevelSelectSection4" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=1627741778 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="LevelSelectSection5" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=1304480977 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="LevelSelectSection6" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" unique_id=1085074207 instance=ExtResource("1_rp22f")]
+layout_mode = 2
+
+[node name="NextPageButton" type="Button" parent="HBoxContainer" unique_id=1427843528]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+text = ">>>"
 
 [node name="ReturnButton" type="Button" parent="." unique_id=646367282]
 layout_mode = 2
