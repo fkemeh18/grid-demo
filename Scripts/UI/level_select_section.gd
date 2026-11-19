@@ -5,6 +5,7 @@ signal _level_selected(level_index: int)
 
 @export var _level_label: Label
 @export var _resource_label: Label
+@export var _check_mark: TextureRect
 @export var _button: Button
 
 var _level_index
@@ -14,6 +15,7 @@ func _ready():
 
 func set_level_resource_info(level_resource: BaseLevelResource) -> void:
 	_resource_label.text = "%s" % level_resource.starting_resource_count
+	_check_mark.visible = SaveManager.is_level_completed(level_resource.level_id)
 
 func set_level_label(index: int) -> void:
 	_level_index = index

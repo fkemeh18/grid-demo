@@ -15,7 +15,6 @@ var _mask_node: Sprite2D
 func _ready():
 	y_sort_enabled = false
 	_setup_nodes()
-	
 
 func play_in_animation() -> void:
 	if _animation_root_node == null: return
@@ -30,6 +29,7 @@ func play_in_animation() -> void:
 		var impact_particles = _impact_particle_scene.instantiate() as Node2D
 		owner.get_parent().add_child(impact_particles)
 		impact_particles.global_position = global_position
+		GameCamera.shake()
 		)
 	_active_tween.tween_property(
 		_animation_root_node, "position", Vector2.UP * 16, 0.125
@@ -50,6 +50,8 @@ func play_destruction_animation() -> void:
 	var destroy_particle = _destroy_particle_scene.instantiate() as Node2D
 	owner.get_parent().add_child(destroy_particle)
 	destroy_particle.global_position = global_position
+	
+	GameCamera.shake()
 	
 	_active_tween = create_tween()
 	_active_tween.tween_property(

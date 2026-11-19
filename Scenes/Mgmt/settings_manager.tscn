@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c1h71sqampa0e"]
+
+[ext_resource type="Script" uid="uid://bwix32kixak7n" path="res://Scripts/Management/Managers/settings_manager.gd" id="1_fptip"]
+
+[node name="SettingsManager" type="Node" unique_id=1844956999]
+script = ExtResource("1_fptip")

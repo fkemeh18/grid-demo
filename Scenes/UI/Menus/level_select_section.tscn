@@ -2,16 +2,18 @@
 
 [ext_resource type="Script" uid="uid://c3qwaqew605cf" path="res://Scripts/UI/level_select_section.gd" id="1_qmxxf"]
 [ext_resource type="Texture2D" uid="uid://bhqjkj3p62wsi" path="res://Assets/UI/wood_icon.png" id="1_rys38"]
+[ext_resource type="Texture2D" uid="uid://bs0x2tpnx266s" path="res://Assets/UI/check.png" id="3_cfdii"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rp22f"]
 atlas = ExtResource("1_rys38")
 region = Rect2(39, 73, 32, 27)
 
-[node name="LevelSelectSection" type="PanelContainer" unique_id=2088857616 node_paths=PackedStringArray("_level_label", "_resource_label", "_button")]
+[node name="LevelSelectSection" type="PanelContainer" unique_id=2088857616 node_paths=PackedStringArray("_level_label", "_resource_label", "_check_mark", "_button")]
 theme_type_variation = &"PanelContainerAlt"
 script = ExtResource("1_qmxxf")
 _level_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/LevelLabel")
 _resource_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResourceCountLabel")
+_check_mark = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/CheckMark")
 _button = NodePath("MarginContainer/VBoxContainer/Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1544091726]
@@ -36,7 +38,6 @@ text = "Level 1"
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1529790601]
 layout_mode = 2
 theme_override_constants/separation = 8
-alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=264714348]
 layout_mode = 2
@@ -46,7 +47,13 @@ stretch_mode = 3
 [node name="ResourceCountLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1579910246]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "2"
+text = "3"
+
+[node name="CheckMark" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=558171398]
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("3_cfdii")
+stretch_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=273907913]
 layout_mode = 2

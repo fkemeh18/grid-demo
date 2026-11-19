@@ -12,6 +12,8 @@ config_version=5
 
 config/name="GridDemo"
 run/main_scene="uid://bfug7xggmm36m"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="GridDemoSaveDir"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/Other/icon.svg"
 
@@ -20,12 +22,12 @@ config/icon="res://Assets/Other/icon.svg"
 LevelManager="*uid://c0a6b8tregm0t"
 GameEvents="*uid://du1qp4tpa11yp"
 SaveManager="*uid://cmu27k4j46gld"
+SettingsManager="*uid://c1h71sqampa0e"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="canvas_items"
 
 [gui]
 

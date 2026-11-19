@@ -9,6 +9,8 @@ extends Node
 @export var _level_completed_screen_scene: PackedScene
 @export var _level_resource: BaseLevelResource
 
+var _is_complete: bool
+
 func _ready():
 	_building_manager._game_ui._waiting_on_main.connect(_main_is_ready)
 	_building_manager.set_starting_resource_count(
@@ -23,13 +25,21 @@ func _ready():
 func _main_is_ready():
 	_building_manager._game_ui._create_building_sections()
 
+func _show_level_complete() -> void:
+	_is_complete = true
+	SaveManager.save_level_completion(_level_resource)
+	
+	var level_complete_screen = (
+		_level_completed_screen_scene.instantiate() as LevelCompleteScreen)
+	
+	add_child(level_complete_screen)
+	_gold_mine._set_active()
+	_building_manager._game_ui.hide_UI()
+
 func _on_grid_updated() -> void:
+	if _is_complete: return
 	var _gold_mine_pos = _grid_manager._cursor_tml._process_global_pos(
 							_gold_mine.global_position)
+	
 	if _grid_manager._is_cell_in_view_of_a_building(_gold_mine_pos):
-		var level_complete_screen = (_level_completed_screen_scene.instantiate()
-									as LevelCompleteScreen) 
-		add_child(level_complete_screen)
-		
-		_gold_mine._set_active()
-		_building_manager._game_ui.hide_UI()
+		_show_level_complete()

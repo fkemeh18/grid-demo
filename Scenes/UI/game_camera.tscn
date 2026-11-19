@@ -2,5 +2,12 @@
 
 [ext_resource type="Script" uid="uid://s4ldotuxiud3" path="res://Scripts/UI/game_camera.gd" id="1_1bepr"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1bepr"]
+noise_type = 3
+seed = 73
+frequency = 0.75
+offset = Vector3(1, 1, 1)
+
 [node name="GameCamera" type="Camera2D" unique_id=380319505]
 script = ExtResource("1_1bepr")
+_shake_noise = SubResource("FastNoiseLite_1bepr")
