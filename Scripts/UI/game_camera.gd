@@ -65,5 +65,3 @@ func _apply_camera_shake(delta: float) -> void:
 	
 	offset = Vector2(MAX_CAMERA_OFFSET * x_sample, 
 		MAX_CAMERA_OFFSET * y_sample) * _current_shake_percentage
-	
-	print(offset)

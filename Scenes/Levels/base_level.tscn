@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="8_fdnlq"]
 [ext_resource type="Script" uid="uid://dfxat5u7ya8eh" path="res://Scripts/ResourceScripts/Buildings/attack_locations.gd" id="8_txu3m"]
 [ext_resource type="PackedScene" uid="uid://dy2cptdx8fjs0" path="res://Scenes/Mgmt/grid_manager.tscn" id="8_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://dx6fwwfv731py" path="res://Scenes/Mgmt/resource_manager.tscn" id="9_xat8b"]
 [ext_resource type="PackedScene" uid="uid://cae17urkfnx6s" path="res://Scenes/UI/building_ghost.tscn" id="10_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="10_hptm8"]
 
@@ -65,6 +66,9 @@ _base_terrain_tml = NodePath("../../TMLs/YSortRoot/BaseTerrainLayer")
 building_area_resource = SubResource("Resource_bi03b")
 danger_area_resource = SubResource("Resource_txu3m")
 attack_area_resource = SubResource("Resource_xat8b")
+
+[node name="ResourceManager" parent="Management" unique_id=61573362 node_paths=PackedStringArray("_grid_manager") instance=ExtResource("9_xat8b")]
+_grid_manager = NodePath("../GridManager")
 
 [node name="StateManager" type="Node" parent="Management" unique_id=513992422]
 script = ExtResource("5_6iyac")

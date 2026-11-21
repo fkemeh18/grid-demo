@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://c1352gc8vcqai"]
+
+[ext_resource type="Texture2D" uid="uid://cyvfrbsje62vu" path="res://Assets/UI/wood_spawn.png" id="1_knj52"]
+[ext_resource type="Script" uid="uid://clo7rq0sju1k8" path="res://Scripts/UI/resource_indicator.gd" id="1_ywx86"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywx86"]
+atlas = ExtResource("1_knj52")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60ryn"]
+atlas = ExtResource("1_knj52")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jslbn"]
+atlas = ExtResource("1_knj52")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdk6w"]
+atlas = ExtResource("1_knj52")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k2hi"]
+atlas = ExtResource("1_knj52")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wvxi"]
+atlas = ExtResource("1_knj52")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbfry"]
+atlas = ExtResource("1_knj52")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8waxh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywx86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60ryn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jslbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdk6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4k2hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wvxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbfry")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ResourceIndicator" type="Node2D" unique_id=1325122413 node_paths=PackedStringArray("_animated_sprite")]
+position = Vector2(1, 0)
+script = ExtResource("1_ywx86")
+_animated_sprite = NodePath("Node2D/AnimatedSprite2D")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=154430341]
+position = Vector2(32, 10)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D" unique_id=656703439]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_8waxh")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0

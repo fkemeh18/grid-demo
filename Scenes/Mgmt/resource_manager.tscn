@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dx6fwwfv731py"]
+
+[ext_resource type="Script" uid="uid://brk04cjvfo36f" path="res://Scripts/Management/Managers/resource_manager.gd" id="1_ufa4t"]
+[ext_resource type="PackedScene" uid="uid://c1352gc8vcqai" path="res://Scenes/UI/resource_indicator.tscn" id="2_ir2ft"]
+
+[node name="ResourceManager" type="Node" unique_id=61573362]
+script = ExtResource("1_ufa4t")
+_resource_indicator_scene = ExtResource("2_ir2ft")

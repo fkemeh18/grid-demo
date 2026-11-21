@@ -215,6 +215,9 @@ func visit_all_connected_buildings(root_building: BuildingComponent,
 		visit_all_connected_buildings(
 			dependent_building, excluded_building,visited_buildings)
 
+func get_collected_resource_tiles() -> Dictionary[Vector2i, bool]:
+	return _highlight_tml._collected_resource_tiles.duplicate()
+
 func _update_building_component_grid_state(bc: BuildingComponent) -> void:
 	_highlight_tml._update_danger_occupied_tiles(bc, self)
 	_highlight_tml._update_valid_buildable_tiles(bc, self)
