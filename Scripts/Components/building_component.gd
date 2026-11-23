@@ -1,6 +1,9 @@
 class_name BuildingComponent
 extends Node2D
 
+signal disabled
+signal enabled
+
 @export_custom(PROPERTY_HINT_FILE, 
 				"*.tres") var _building_resource_path: String
 @export_custom(PROPERTY_HINT_NONE,"", 
@@ -66,7 +69,6 @@ func _calculate_occupied_cell_positions(
 	for x in range(grid_pos.x, grid_pos.x + building_resource.dimensions.x):
 		for y in range(grid_pos.y, grid_pos.y + building_resource.dimensions.y):
 			_occupied_tiles[Vector2i(x,y)] = true
-	
 
 func _get_occupied_cell_positions() -> Dictionary[Vector2i, bool]:
 	var tiles := _occupied_tiles
@@ -81,11 +83,13 @@ func _on_destroy_animation_finished() -> void:
 func disable() -> void:
 	if _is_disabled: return
 	_is_disabled = true
+	disabled.emit()
 	GameEvents.emit_on_building_disabled(self)
 
 func enable() -> void:
 	if !_is_disabled: return
 	_is_disabled = false
+	enabled.emit()
 	GameEvents.emit_on_building_enabled(self)
 
 func _self_destruct() -> void:

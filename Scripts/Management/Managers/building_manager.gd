@@ -38,8 +38,7 @@ func _unhandled_input(event):
 				_state_manager._change_state(GameEventsAutoloader.State.Base, self)
 			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
 					&& _building_resource != null
-					&& _grid_manager._cursor_tml._ghost_cursor.visible
-					&& _is_building_placable(_grid_manager._hovered_rect_pos)):
+					&& _grid_manager._cursor_tml._ghost_cursor.visible):
 				_place_building()
 		_:
 			pass
@@ -97,11 +96,21 @@ func _is_building_placable(pos: Rect2i) -> bool:
 	var all_tiles_buildable = _grid_manager._is_area_currently_buildable(pos, 
 										_building_resource.is_attack_building())
 	
-	return all_tiles_buildable && (_available_resource_count.call() 
-			>= _building_resource.resource_cost)
+	return all_tiles_buildable && _can_afford_building()
+
+func _can_afford_building() -> bool:
+	return _available_resource_count.call() >= _building_resource.resource_cost
 
 #deals with the placement of sprite "building"
 func _place_building() -> void:
+	if !_can_afford_building():
+		ErrorManager.show_message("Can't Afford this!")
+		return
+	
+	if !_is_building_placable(_grid_manager._hovered_rect_pos):
+		ErrorManager.show_message("Can't build here!")
+		return
+	
 	var building = _building_resource.building_scene.instantiate() as Buildings
 	_y_sort_root.add_child(building)
 	building.global_position = _grid_manager._hovered_rect_pos.position * 64
@@ -132,7 +141,9 @@ func _destroy_building() -> void:
 		target_building = target_building_array.front()
 	else: return
 	
-	if !_grid_manager.can_destroy_building(target_building): return
+	if !_grid_manager.can_destroy_building(target_building): 
+		ErrorManager.show_message("Can't Destroy This!")
+		return
 	
 	_used_resource_count -= target_building.building_resource.resource_cost
 	

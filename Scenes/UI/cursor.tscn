@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://m1in0infpg5x"]
+
+[ext_resource type="Texture2D" uid="uid://bb16bncuo2fyy" path="res://Assets/UI/cursor.png" id="1_2k2pw"]
+[ext_resource type="Script" uid="uid://rm2oj04hwiou" path="res://Scripts/UI/cursor.gd" id="1_ua2ut"]
+
+[node name="Cursor" type="CanvasLayer" unique_id=78340285 node_paths=PackedStringArray("cursor_sprite")]
+layer = 10
+script = ExtResource("1_ua2ut")
+cursor_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=384242713]
+texture = ExtResource("1_2k2pw")
+centered = false
+offset = Vector2(-24, -19)

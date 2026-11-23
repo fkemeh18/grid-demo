@@ -23,6 +23,7 @@ LevelManager="*uid://c0a6b8tregm0t"
 GameEvents="*uid://du1qp4tpa11yp"
 SaveManager="*uid://cmu27k4j46gld"
 SettingsManager="*uid://c1h71sqampa0e"
+Cursor="*uid://m1in0infpg5x"
 
 [display]
 

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cbwb13iu0l2fu"]
+
+[ext_resource type="Script" uid="uid://bjc2r3a3wdxg2" path="res://Scripts/Management/Managers/error_manager.gd" id="1_22s2d"]
+[ext_resource type="PackedScene" uid="uid://yf1nots3et32" path="res://Scenes/UI/floating_text.tscn" id="2_fiwha"]
+
+[node name="ErrorManager" type="Node" unique_id=1810484438]
+script = ExtResource("1_22s2d")
+_floating_text_scene = ExtResource("2_fiwha")

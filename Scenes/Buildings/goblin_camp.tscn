@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://cvnvywcht4lb8"]
 
+[ext_resource type="Script" uid="uid://drjqqg0r6srpw" path="res://Scripts/Buildings/goblin_camp.gd" id="1_0s82r"]
 [ext_resource type="PackedScene" uid="uid://liji1b5j4u6a" path="res://Scenes/Components/building_component.tscn" id="1_2ltrq"]
 [ext_resource type="PackedScene" uid="uid://cutbk56iji1d" path="res://Scenes/Components/building_animator_component.tscn" id="2_d3h27"]
 [ext_resource type="Texture2D" uid="uid://dkk2xvelht6bd" path="res://Assets/Buildings/wood_tower_red.png" id="3_d3h27"]
+[ext_resource type="Texture2D" uid="uid://dmr18wjtlua0w" path="res://Assets/Buildings/wood_tower_destroyed.png" id="4_qfhj0"]
+[ext_resource type="Texture2D" uid="uid://f482icvad65c" path="res://Assets/VFX/fire.png" id="5_muh7o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfhj0"]
 atlas = ExtResource("3_d3h27")
@@ -38,10 +41,79 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_qfhj0")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
 }]
 
-[node name="GoblinCamp" type="Node2D" unique_id=2029593927]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ted6v"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a535"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etn3m"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6gp5"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xq7at"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y04nn"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3b7r"]
+atlas = ExtResource("5_muh7o")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lomc2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ted6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a535")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etn3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6gp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xq7at")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y04nn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3b7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="GoblinCamp" type="Node2D" unique_id=2029593927 node_paths=PackedStringArray("_animated_building", "_flame_animation", "_bc")]
 y_sort_enabled = true
+script = ExtResource("1_0s82r")
+_animated_building = NodePath("BuildingAnimatorComponent/AnimatedBuilding")
+_flame_animation = NodePath("BuildingAnimatorComponent/AnimatedBuilding/FlameAnimation")
+_bc = NodePath("BuildingComponent")
 
 [node name="BuildingComponent" parent="." unique_id=1013691913 node_paths=PackedStringArray("_animator_component") instance=ExtResource("1_2ltrq")]
 _building_resource_path = "uid://d24h7yi3i3hq6"
@@ -49,10 +121,17 @@ _animator_component = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." unique_id=1613588455 instance=ExtResource("2_d3h27")]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent" unique_id=1000448025]
+[node name="AnimatedBuilding" type="AnimatedSprite2D" parent="BuildingAnimatorComponent" unique_id=1000448025]
 position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_ted6v")
 autoplay = "default"
-frame_progress = 0.77553433
+frame_progress = 0.47077757
 centered = false
 offset = Vector2(-128, -160)
+
+[node name="FlameAnimation" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedBuilding" unique_id=1562117693]
+visible = false
+position = Vector2(0, -83)
+sprite_frames = SubResource("SpriteFrames_lomc2")
+autoplay = "default"
+frame_progress = 0.6246306

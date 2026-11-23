@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dx6fwwfv731py" path="res://Scenes/Mgmt/resource_manager.tscn" id="9_xat8b"]
 [ext_resource type="PackedScene" uid="uid://cae17urkfnx6s" path="res://Scenes/UI/building_ghost.tscn" id="10_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="10_hptm8"]
+[ext_resource type="PackedScene" uid="uid://cbwb13iu0l2fu" path="res://Scenes/Mgmt/error_manager.tscn" id="11_5xk34"]
 
 [sub_resource type="Resource" id="Resource_bi03b"]
 script = ExtResource("6_bi03b")
@@ -72,6 +73,8 @@ _grid_manager = NodePath("../GridManager")
 
 [node name="StateManager" type="Node" parent="Management" unique_id=513992422]
 script = ExtResource("5_6iyac")
+
+[node name="ErrorManager" parent="Management" unique_id=1810484438 instance=ExtResource("11_5xk34")]
 
 [node name="GameUI" parent="." unique_id=2137080717 node_paths=PackedStringArray("_building_manager") instance=ExtResource("4_d1ilt")]
 _building_manager = NodePath("../Management/BuildingManager")
