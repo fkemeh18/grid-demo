@@ -34,6 +34,10 @@ func highlight_buildable_tiles(is_attack_tiles: bool, gm: GridManager) -> void:
 func highlight_expanded_buildable_tiles(pos: Rect2i, radius: int,
 		gm: GridManager) -> void:
 	var expanded_tiles = _get_valid_tiles_in_radius(pos, radius, gm)
+	var gold_mine_pos = GridMethods.check_for_gold_mine_pos(pos, radius, gm)
+	
+	if !gold_mine_pos.is_empty():
+		expanded_tiles.merge(gold_mine_pos)
 	
 	for tile in _valid_buildable_tiles:
 		expanded_tiles.erase(tile)
@@ -48,9 +52,6 @@ func highlight_attack_tiles(pos: Rect2i, radius: int, gm: GridManager) -> void:
 	
 	for tile in _valid_attack_tiles:
 		attack_tiles.erase(tile)
-	
-	#for tile in _built_tile_locations:
-		#attack_tiles.erase(tile)
 	
 	for tile_pos in attack_tiles:
 		set_cell(tile_pos, 0, _green_atlas_coords)

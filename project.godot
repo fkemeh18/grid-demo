@@ -17,6 +17,10 @@ config/custom_user_dir_name="GridDemoSaveDir"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/Other/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://urjy63w8c81x"
+
 [autoload]
 
 LevelManager="*uid://c0a6b8tregm0t"
@@ -24,6 +28,7 @@ GameEvents="*uid://du1qp4tpa11yp"
 SaveManager="*uid://cmu27k4j46gld"
 SettingsManager="*uid://c1h71sqampa0e"
 Cursor="*uid://m1in0infpg5x"
+AudioManager="*uid://crlnntejpfvxc"
 
 [display]
 

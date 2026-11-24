@@ -17,6 +17,8 @@ func _ready():
 										_level_resource.starting_resource_count)
 	_building_manager._emit_available_resource_count_changed()
 	
+	_grid_manager.set_gold_mine_pos(_grid_manager._cursor_tml
+					._process_global_pos(_gold_mine.global_position))
 	_grid_manager._highlight_tml._grid_updated.connect(_on_grid_updated)
 	
 	_game_camera._set_boundary(_grid_manager._base_terrain_tml.get_used_rect())

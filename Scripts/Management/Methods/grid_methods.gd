@@ -128,3 +128,20 @@ static func exclude_collected_tiles(resource_tiles: Dictionary[Vector2i,bool],
 	for tile in excluded_tiles:
 		resource_tiles.erase(tile)
 	return resource_tiles
+
+static func check_for_gold_mine_pos(pos: Rect2i, radius: int, gm: GridManager
+										) -> Dictionary[Vector2i, bool]:
+	var gold_mine_pos: Dictionary[Vector2i, bool]
+	
+	var rect_2F = Rect2(pos.position, pos.size)
+	var tile_area_center = rect_2F.get_center()
+	var radius_mod = max(rect_2F.size.x, rect_2F.size.y) / 2
+	
+	for i in range(pos.position.x - radius, pos.end.x + (radius + 1)):
+		for j in range(pos.position.y - radius, pos.end.y + (radius + 1)):
+			var tile_pos = Vector2i(i, j)
+			if (tile_pos == gm.gold_mine_pos 
+			&& is_tile_inside_circle(tile_area_center, tile_pos, radius + radius_mod )):
+				gold_mine_pos[tile_pos] = true
+				return gold_mine_pos
+	return {}

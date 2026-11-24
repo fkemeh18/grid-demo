@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://crlnntejpfvxc"]
+
+[ext_resource type="Script" uid="uid://c4fnagwoy7atr" path="res://Scripts/Management/Managers/audio_manager.gd" id="1_3n28h"]
+[ext_resource type="AudioStream" uid="uid://dh1rw6hka40uo" path="res://Assets/audio/explosion_01.wav" id="1_dce0c"]
+[ext_resource type="AudioStream" uid="uid://cvwqflk38u3bh" path="res://Assets/audio/explosion_02.wav" id="2_3n28h"]
+[ext_resource type="AudioStream" uid="uid://dsrt5d8cwchyv" path="res://Assets/audio/Dancing at the Inn.mp3" id="2_655yg"]
+[ext_resource type="AudioStream" uid="uid://bnggipbmg4eka" path="res://Assets/audio/explosion_03.wav" id="3_44xy3"]
+[ext_resource type="AudioStream" uid="uid://c7rju2467x8jh" path="res://Assets/audio/click.wav" id="5_44xy3"]
+[ext_resource type="AudioStream" uid="uid://ckjyjs7i67sru" path="res://Assets/audio/victory.wav" id="6_xs1ls"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xs1ls"]
+streams_count = 3
+stream_0/stream = ExtResource("1_dce0c")
+stream_1/stream = ExtResource("2_3n28h")
+stream_2/stream = ExtResource("3_44xy3")
+
+[node name="AudioManager" type="Node" unique_id=1709774835 node_paths=PackedStringArray("_music_asp", "_explosion_asp", "_click_asp", "_victory_asp")]
+script = ExtResource("1_3n28h")
+_music_asp = NodePath("MusicAudioStreamPlayer")
+_explosion_asp = NodePath("ExplosionAudioStreamPlayer")
+_click_asp = NodePath("ClickAudioStreamPlayer")
+_victory_asp = NodePath("VictoryAudioStreamPlayer")
+
+[node name="MusicAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2080590848]
+stream = ExtResource("2_655yg")
+volume_db = -5.0
+autoplay = true
+bus = &"Music"
+
+[node name="ExplosionAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=258625880]
+stream = SubResource("AudioStreamRandomizer_xs1ls")
+max_polyphony = 3
+bus = &"SFX"
+
+[node name="ClickAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=135537500]
+stream = ExtResource("5_44xy3")
+bus = &"SFX"
+
+[node name="VictoryAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=799573071]
+stream = ExtResource("6_xs1ls")
+bus = &"SFX"

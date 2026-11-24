@@ -6,6 +6,7 @@ signal destroy_animation_finished
 @export var _mask_texture: Texture2D
 @export var _impact_particle_scene: PackedScene
 @export var _destroy_particle_scene: PackedScene
+@export var _impact_asp: AudioStreamPlayer
 
 var _active_tween: Tween
 var _animation_root_node : Node2D
@@ -29,6 +30,7 @@ func play_in_animation() -> void:
 		var impact_particles = _impact_particle_scene.instantiate() as Node2D
 		owner.get_parent().add_child(impact_particles)
 		impact_particles.global_position = global_position
+		_impact_asp.play()
 		GameCamera.shake()
 		)
 	_active_tween.tween_property(
@@ -51,6 +53,7 @@ func play_destruction_animation() -> void:
 	owner.get_parent().add_child(destroy_particle)
 	destroy_particle.global_position = global_position
 	
+	AudioManagerAutoloader.play_building_destruction()
 	GameCamera.shake()
 	
 	_active_tween = create_tween()
@@ -72,9 +75,12 @@ func play_destruction_animation() -> void:
 
 func _setup_nodes() -> void:
 	#get sprite
-	var sprite_node_list = get_children()
-	if sprite_node_list.is_empty(): return
-	var sprite_node = sprite_node_list[0] as Node2D
+	#var sprite_node_list = get_children()
+	#if sprite_node_list.is_empty(): return
+#	sprite_node_list[0] as Node2D
+	var sprite_node = NodeMethods.get_first_node_of_type(self, Node2D)
+	if sprite_node == null: 
+		return
 	
 	#remove it from tree and alter this node's position
 	remove_child(sprite_node)

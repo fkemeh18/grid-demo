@@ -9,6 +9,8 @@ signal select_button_pressed
 @export var select_button: Button
 
 func _ready():
+	AudioManagerAutoloader.register_buttons(ButtonMethods.register_buttons([
+		select_button]))
 	select_button.pressed.connect(_on_select_button_pressed)
 
 func set_building_section(br: BuildingResource) -> void:

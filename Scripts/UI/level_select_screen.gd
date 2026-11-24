@@ -16,6 +16,9 @@ var _max_page_index: int
 var _level_resources: Array[BaseLevelResource]
 
 func _ready():
+	AudioManagerAutoloader.register_buttons(ButtonMethods.register_buttons([
+		_return_button, _prev_page_button, _next_page_button]))
+	
 	_level_resources = LevelManager.get_level_resource()
 	_return_button.pressed.connect(_on_return_button_pressed)
 	_prev_page_button.pressed.connect(_on_page_changed.bind(-1))

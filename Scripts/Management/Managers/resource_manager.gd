@@ -3,6 +3,7 @@ extends Node
 
 @export var _grid_manager: GridManager
 @export var _resource_indicator_scene: PackedScene
+@export var _asp: AudioStreamPlayer
 
 var _indicated_tiles: Dictionary[Vector2i, bool]
 var _tiles_to_resource_indicator: Dictionary[Vector2i, ResourceIndicator]
@@ -14,6 +15,9 @@ func _ready():
 func _update_indicators(
 		new_indicated_tiles: Dictionary[Vector2i, bool],
 		to_remove_tiles: Dictionary[Vector2i, bool]) -> void:
+	if new_indicated_tiles.size() > 0:
+		_asp.play()
+	
 	for new_tile in new_indicated_tiles:
 		var indicator = _resource_indicator_scene.instantiate() as ResourceIndicator
 		add_child(indicator)

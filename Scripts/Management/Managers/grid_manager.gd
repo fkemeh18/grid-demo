@@ -14,6 +14,7 @@ var _tile_map_elevations: Dictionary[TileMapLayer,ElevationLayer]
 var building_to_buildable_tiles: Dictionary[BuildingComponent, BuildingLocations]
 var danger_building_to_blocked_tiles: Dictionary[BuildingComponent, DangerLocations]
 var attack_building_to_attacked_tiles: Dictionary[BuildingComponent, AttackLocations]
+var gold_mine_pos: Vector2i
 
 func _ready():
 	GameEventsAutoloader._instance.building_placed.connect(_on_placed_building)
@@ -49,6 +50,9 @@ func _get_tile_custom_data(pos: Vector2i,
 		return custom_data
 	
 	return {}
+
+func set_gold_mine_pos(pos: Vector2i) -> void:
+	gold_mine_pos = pos
 
 func _is_cell_in_view_of_a_building(pos: Vector2i) -> bool:
 	return _highlight_tml._all_tiles_in_buildable_radius.has(pos)

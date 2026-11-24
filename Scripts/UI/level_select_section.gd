@@ -11,6 +11,8 @@ signal _level_selected(level_index: int)
 var _level_index
 
 func _ready():
+	AudioManagerAutoloader.register_buttons(ButtonMethods.register_buttons([
+		_button]))
 	_button.pressed.connect(_on_button_pressed)
 
 func set_level_resource_info(level_resource: BaseLevelResource) -> void:

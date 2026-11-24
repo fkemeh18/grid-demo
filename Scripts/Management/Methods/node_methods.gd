@@ -3,16 +3,9 @@ extends Node
 
 signal _animate_building
 
-
-static func get_first_node_of_type(node: Variant) -> Variant:
+static func get_first_node_of_type(node: Node, type: Variant) -> Variant:
+	var children = node.get_children()
 	
-	var children
-	var first_node
-	
-	if node is Node: children = node.get_children()
-	if !children.is_empty(): first_node = children[0]
-	
+	var first_node = children.filter(func(child): return is_instance_of(child, type)
+		).front()
 	return first_node
-
-
-	

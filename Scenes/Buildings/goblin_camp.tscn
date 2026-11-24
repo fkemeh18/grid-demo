@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://drjqqg0r6srpw" path="res://Scripts/Buildings/goblin_camp.gd" id="1_0s82r"]
 [ext_resource type="PackedScene" uid="uid://liji1b5j4u6a" path="res://Scenes/Components/building_component.tscn" id="1_2ltrq"]
 [ext_resource type="PackedScene" uid="uid://cutbk56iji1d" path="res://Scenes/Components/building_animator_component.tscn" id="2_d3h27"]
+[ext_resource type="AudioStream" uid="uid://fbp7r77djbp6" path="res://Assets/audio/poof.wav" id="2_em7l1"]
 [ext_resource type="Texture2D" uid="uid://dkk2xvelht6bd" path="res://Assets/Buildings/wood_tower_red.png" id="3_d3h27"]
 [ext_resource type="Texture2D" uid="uid://dmr18wjtlua0w" path="res://Assets/Buildings/wood_tower_destroyed.png" id="4_qfhj0"]
 [ext_resource type="Texture2D" uid="uid://f482icvad65c" path="res://Assets/VFX/fire.png" id="5_muh7o"]
@@ -108,12 +109,17 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="GoblinCamp" type="Node2D" unique_id=2029593927 node_paths=PackedStringArray("_animated_building", "_flame_animation", "_bc")]
+[node name="GoblinCamp" type="Node2D" unique_id=2029593927 node_paths=PackedStringArray("_animated_building", "_flame_animation", "_bc", "_asp")]
 y_sort_enabled = true
 script = ExtResource("1_0s82r")
 _animated_building = NodePath("BuildingAnimatorComponent/AnimatedBuilding")
 _flame_animation = NodePath("BuildingAnimatorComponent/AnimatedBuilding/FlameAnimation")
 _bc = NodePath("BuildingComponent")
+_asp = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1921124457]
+stream = ExtResource("2_em7l1")
+bus = &"SFX"
 
 [node name="BuildingComponent" parent="." unique_id=1013691913 node_paths=PackedStringArray("_animator_component") instance=ExtResource("1_2ltrq")]
 _building_resource_path = "uid://d24h7yi3i3hq6"

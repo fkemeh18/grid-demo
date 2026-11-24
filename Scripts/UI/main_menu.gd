@@ -8,6 +8,8 @@ extends Node
 @export var _quit_button: Button
 
 func _ready():
+	AudioManagerAutoloader.register_buttons(ButtonMethods.register_buttons([
+		_play_button, _quit_button]))
 	_main_menu_container.visible = true
 	_level_select_screen.visible = false
 	_play_button.pressed.connect(_on_play_button_pressed)
