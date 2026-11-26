@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://busj06wb011ll"]
+
+[ext_resource type="Script" uid="uid://lnubcbybl5lx" path="res://Scripts/UI/options_menu.gd" id="1_10if7"]
+
+[node name="OptionsMenu" type="CanvasLayer" unique_id=1144507250 node_paths=PackedStringArray("_music_label", "_sfx_label", "_music_down_button", "_music_up_button", "_sfx_down_button", "_sfx_up_button", "_window_button", "_done_button")]
+layer = 12
+script = ExtResource("1_10if7")
+_music_label = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer/MusicLabel")
+_sfx_label = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer/SFXLabel")
+_music_down_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer/MusicDownButton")
+_music_up_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer/MusicUpButton")
+_sfx_down_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer/SFXDownButton")
+_sfx_up_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer/SFXUpButton")
+_window_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/WindowContainer/HBoxContainer/WindowButton")
+_done_button = NodePath("MarginContainer/PanelContainer/MarginContainer/VBoxContainer/DoneButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=857723096]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=155591443]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=2114175665]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=125966316]
+layout_mode = 2
+
+[node name="MusicContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1443630979]
+layout_mode = 2
+theme_type_variation = &"PanelContainerAlt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer" unique_id=1866251366]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer" unique_id=1384258984]
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+text = "Music"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer" unique_id=1576654083]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 16
+
+[node name="MusicDownButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer" unique_id=2074469109]
+layout_mode = 2
+text = "<<<"
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer" unique_id=1969344360]
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+text = "10"
+
+[node name="MusicUpButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/HBoxContainer/HBoxContainer" unique_id=1549627837]
+layout_mode = 2
+text = ">>>"
+
+[node name="SFXContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=110756157]
+layout_mode = 2
+theme_type_variation = &"PanelContainerAlt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer" unique_id=1886211936]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer" unique_id=828109006]
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+text = "SFX"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer" unique_id=225111590]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 16
+
+[node name="SFXDownButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer" unique_id=1737459704]
+layout_mode = 2
+text = "<<<"
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer" unique_id=238824085]
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+text = "10"
+
+[node name="SFXUpButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SFXContainer/HBoxContainer/HBoxContainer" unique_id=908377440]
+layout_mode = 2
+text = ">>>"
+
+[node name="WindowContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1503278199]
+layout_mode = 2
+theme_type_variation = &"PanelContainerAlt"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/WindowContainer" unique_id=133448032]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/WindowContainer/HBoxContainer" unique_id=638039717]
+layout_mode = 2
+theme_type_variation = &"OptionLabel"
+text = "Window Mode"
+
+[node name="WindowButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/WindowContainer/HBoxContainer" unique_id=485247950]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="DoneButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1552186724]
+layout_mode = 2
+text = "Done"

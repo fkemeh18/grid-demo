@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://be6a4quhouuq0"]
+
+[ext_resource type="Script" uid="uid://743bc0iflqd" path="res://Scripts/Management/Managers/options_manager.gd" id="1_gswxl"]
+
+[node name="OptionsManager" type="Node" unique_id=450720772]
+script = ExtResource("1_gswxl")

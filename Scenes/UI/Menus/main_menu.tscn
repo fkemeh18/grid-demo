@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ct4vgbqm7glif" path="res://Scripts/UI/main_menu.gd" id="1_ss2nv"]
 [ext_resource type="TileSet" uid="uid://cv4rfmwn0q5k7" path="res://Resources/Tiles/terrain_tileset.tres" id="2_hqjfr"]
+[ext_resource type="PackedScene" uid="uid://busj06wb011ll" path="res://Scenes/UI/Menus/options_menu.tscn" id="2_na71f"]
 [ext_resource type="PackedScene" uid="uid://cl6uejf0lvjgg" path="res://Scenes/Levels/elevation_layer.tscn" id="3_cxfnb"]
 [ext_resource type="PackedScene" uid="uid://fm74f8qhflqi" path="res://Scenes/Buildings/b-base.tscn" id="3_pmpos"]
 [ext_resource type="PackedScene" uid="uid://cecwlpcyueh01" path="res://Scenes/Buildings/gold_mine.tscn" id="4_ss2nv"]
@@ -22,6 +23,7 @@ sources/1 = SubResource("TileSetAtlasSource_h2yge")
 script = ExtResource("1_ss2nv")
 _main_menu_container = NodePath("CanvasLayer/MainMenuContainer")
 _level_select_screen = NodePath("CanvasLayer/LevelSelectScreen")
+_options_menu = ExtResource("2_na71f")
 _play_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/PlayButton")
 _options_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/OptionsButton")
 _quit_button = NodePath("CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton")

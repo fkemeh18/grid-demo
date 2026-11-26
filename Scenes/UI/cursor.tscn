@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://rm2oj04hwiou" path="res://Scripts/UI/cursor.gd" id="1_ua2ut"]
 
 [node name="Cursor" type="CanvasLayer" unique_id=78340285 node_paths=PackedStringArray("cursor_sprite")]
-layer = 10
+layer = 20
 script = ExtResource("1_ua2ut")
 cursor_sprite = NodePath("Sprite2D")
 

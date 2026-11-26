@@ -33,13 +33,16 @@ func _unhandled_input(event):
 		GameEventsAutoloader.State.Base:
 			if event.is_action_pressed(ACTION_RIGHT_CLICK):
 				_destroy_building()
+				get_viewport().set_input_as_handled()
 		GameEventsAutoloader.State.PlacingBuilding:
 			if (event.is_action_pressed(ACTION_CANCEL)):
 				_state_manager._change_state(GameEventsAutoloader.State.Base, self)
+				get_viewport().set_input_as_handled()
 			elif (event.is_action_pressed(ACTION_LEFT_CLICK) 
 					&& _building_resource != null
 					&& _grid_manager._cursor_tml._ghost_cursor.visible):
 				_place_building()
+				get_viewport().set_input_as_handled()
 		_:
 			pass
 
