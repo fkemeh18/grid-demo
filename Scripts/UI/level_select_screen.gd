@@ -52,7 +52,7 @@ func _update_button_visibility() -> void:
 	_next_page_button.modulate = Color.TRANSPARENT if _page_index >= _max_page_index else Color.WHITE
 
 func _on_level_selected(level_index) -> void:
-	LevelManagerAutoloader._instance.change_to_level(level_index)
+	LevelManagerAutoloader.change_to_level(level_index)
 
 func _on_return_button_pressed() -> void:
 	_return_button_pressed.emit()

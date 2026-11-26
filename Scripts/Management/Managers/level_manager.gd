@@ -9,7 +9,7 @@ static var _instance: LevelManagerAutoloader:
 	set(value):
 		_instance = value
 
-var _curr_level_index: int
+static var _curr_level_index: int
 
 func _notification(what):
 	if what == NOTIFICATION_SCENE_INSTANTIATED:
@@ -18,12 +18,15 @@ func _notification(what):
 func get_level_resource() -> Array[BaseLevelResource]:
 	return Array(_instance._level_resources)
 
-func change_to_level(level_index: int) -> void:
-	if level_index >= _level_resources.size() || level_index < 0 : return
+static func change_to_level(level_index: int) -> void:
+	if level_index >= _instance._level_resources.size() || level_index < 0 : return
 	
 	_curr_level_index = level_index
-	var level_resource = _level_resources[_curr_level_index]
-	get_tree().change_scene_to_file(level_resource.level_scene_path)
+	var level_resource = _instance._level_resources[_curr_level_index]
+	_instance.get_tree().change_scene_to_file(level_resource.level_scene_path)
 
-func change_to_next_level() -> void:
+static func change_to_next_level() -> void:
 	change_to_level(_curr_level_index + 1)
+
+static func is_last_level() -> bool:
+	return _curr_level_index == _instance._level_resources.size() - 1

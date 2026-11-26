@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BaseLevelResource" format=3 uid="uid://bf06hdpcxqhhj"]
+
+[ext_resource type="Script" uid="uid://xfm7h1jb8ygn" path="res://Scripts/ResourceScripts/Levels/base_level_resource.gd" id="1_bq5cj"]
+
+[resource]
+script = ExtResource("1_bq5cj")
+level_scene_path = "uid://b6lsnna2sv1qb"
+level_id = "eyGdLn2u"
+starting_resource_count = 30
+metadata/_custom_type_script = "uid://xfm7h1jb8ygn"

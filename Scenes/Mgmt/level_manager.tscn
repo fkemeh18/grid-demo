@@ -9,7 +9,10 @@
 [ext_resource type="Resource" uid="uid://m5rw35xhtddk" path="res://Scripts/ResourceScripts/Levels/level_004.tres" id="6_a1drf"]
 [ext_resource type="Resource" uid="uid://ddjip8mhc0lwo" path="res://Scripts/ResourceScripts/Levels/level_006.tres" id="7_a1drf"]
 [ext_resource type="Resource" uid="uid://dv2ldojualtyd" path="res://Scripts/ResourceScripts/Levels/level_008.tres" id="8_qn26n"]
+[ext_resource type="Resource" uid="uid://co3j2i145ryi1" path="res://Scripts/ResourceScripts/Levels/level_007.tres" id="9_qn26n"]
+[ext_resource type="Resource" uid="uid://cvmqp8y8nje6k" path="res://Scripts/ResourceScripts/Levels/level_009.tres" id="11_tfgfo"]
+[ext_resource type="Resource" uid="uid://bf06hdpcxqhhj" path="res://Scripts/ResourceScripts/Levels/level_010.tres" id="12_xvg6v"]
 
 [node name="LevelManager" type="Node" unique_id=524515653]
 script = ExtResource("1_um1rx")
-_level_resources = Array[ExtResource("2_36ufn")]([ExtResource("3_54rm7"), ExtResource("3_h14gj"), ExtResource("4_3imxm"), ExtResource("6_a1drf"), ExtResource("5_54rm7"), ExtResource("7_a1drf"), ExtResource("8_qn26n")])
+_level_resources = Array[ExtResource("2_36ufn")]([ExtResource("3_54rm7"), ExtResource("3_h14gj"), ExtResource("4_3imxm"), ExtResource("6_a1drf"), ExtResource("5_54rm7"), ExtResource("7_a1drf"), ExtResource("9_qn26n"), ExtResource("8_qn26n"), ExtResource("11_tfgfo"), ExtResource("12_xvg6v")])
